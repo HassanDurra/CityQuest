@@ -4,5 +4,5 @@ class GlobalColors {
   // Main Color will be that
 
   static HexColor mainColor = HexColor('#00416a');
-  static HexColor textColor = HexColor('#126180');
+  static HexColor textColor = HexColor('#ffff');
 }

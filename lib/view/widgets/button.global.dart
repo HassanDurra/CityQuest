@@ -2,12 +2,12 @@ import 'package:cityquest/assets/colors.dart';
 import 'package:flutter/material.dart';
 
 class ButtonGlobal extends StatelessWidget {
-  const ButtonGlobal({ Key? key}) : super(key: key);
+  const ButtonGlobal({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         // ignore: avoid_print
         print('Login');
       },
@@ -15,20 +15,23 @@ class ButtonGlobal extends StatelessWidget {
         alignment: Alignment.center,
         height: 55,
         decoration: BoxDecoration(
-          color: GlobalColors.mainColor,
+          color: Color.fromARGB(255, 189, 140, 5),
           borderRadius: BorderRadius.circular(6),
+          border: Border.all(color: Color.fromARGB(255, 148, 97, 2) , width: 1.5),
           boxShadow: [
             BoxShadow(
-           color: Colors.black.withOpacity(0.1),
-           blurRadius: 10,
-            ) 
+              color: Color.fromARGB(255, 4, 5, 4),
+              blurRadius: 10,
+              
+            )
           ],
         ),
-        child: const Text('Sign In', 
-        style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.w600,
-        ),
+        child: const Text(
+          'Sign In',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );
