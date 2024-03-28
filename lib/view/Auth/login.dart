@@ -1,15 +1,9 @@
-import 'dart:math';
-import 'dart:ui';
-
 import 'package:cityquest/assets/colors.dart';
 import 'package:cityquest/view/widgets/button.global.dart';
 import 'package:cityquest/view/widgets/social.login.dart';
 import 'package:cityquest/view/widgets/text.form.global.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
 class LoginView extends StatelessWidget {
   LoginView({
@@ -21,90 +15,56 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        physics: ClampingScrollPhysics(),
-        child: Stack(
-          children: [
-            SizedBox(height: 5),
-            Container(
-              child: SafeArea(
-                child: Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(20.5),
-                  margin: EdgeInsets.symmetric(
-                      horizontal: 20, vertical: 40), // Margin set kiya gaya hai
-                  decoration: BoxDecoration(
-                    color: Colors.white, // Border radius set kiya gaya hai
-                    // Background color set kiya gaya hai
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height: 10),
-                      Container(
-                        alignment: Alignment.center,
-                        child: Image.asset(
-                          'images/mainlogo.png',
-                          width: 70,
-                          height: 50,
-                          fit: BoxFit.cover,
-                          alignment: Alignment.center,
-                        ),
-                      ),
-
-                      SizedBox(height: 15),
-                      Padding(padding: EdgeInsets.all(10)),
-                      Text(
-                        "Login to your account",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Poppins',
-                        ),
-                      ),
-                      SizedBox(height: 15),
-
-                      ///email input
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: TextFormGlobal(
-                          controller: emailController,
-                          text: 'Email',
-                          obscure: false,
-                          textInputType: TextInputType.emailAddress,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-
-                      ///password input
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: TextFormGlobal(
-                          controller: passwordController,
-                          text: 'Password',
-                          obscure: true,
-                          textInputType: TextInputType.text,
-                        ),
-                      ),
-                      //button
-                      SizedBox(height: 20),
-                      ButtonGlobal(),
-                      //social login
-
-                      SizedBox(height: 25),
-                      SociaLogin(),
-                    ],
+      body: Center(
+        child: SingleChildScrollView(
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            padding: EdgeInsets.all(20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 20),
+                Image.asset(
+                  'images/mainlogo.png',
+                  width: 70,
+                  height: 70,
+                  fit: BoxFit.contain,
+                ),
+                SizedBox(height: 20),
+                Text(
+                  "Login to your account",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Poppins',
                   ),
                 ),
-              ),
+                SizedBox(height: 20),
+                TextFormGlobal(
+                  controller: emailController,
+                  text: 'Email',
+                  obscure: false,
+                  textInputType: TextInputType.emailAddress,
+                ),
+                SizedBox(height: 10),
+                TextFormGlobal(
+                  controller: passwordController,
+                  text: 'Password',
+                  obscure: true,
+                  textInputType: TextInputType.text,
+                ),
+                SizedBox(height: 20),
+                ButtonGlobal(),
+                SizedBox(height: 25),
+                SociaLogin(),
+              ],
             ),
-          ],
+          ),
         ),
       ),
       bottomNavigationBar: Container(
