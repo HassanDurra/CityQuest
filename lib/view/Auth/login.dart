@@ -19,7 +19,7 @@ class LoginView extends StatelessWidget {
       child: SafeArea(
           child: Container(
               width: double.infinity,
-              padding: EdgeInsets.all(15.0),
+              padding: EdgeInsets.all(20.5),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
