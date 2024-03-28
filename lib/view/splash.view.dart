@@ -7,10 +7,11 @@ import 'package:get/get.dart';
 class SplashView extends StatelessWidget {
   const SplashView({super.key});
 
+
   @override
   Widget build(BuildContext context) {
     Timer(const Duration(seconds: 2), () {
-      Get.to(const LoginView());
+      Get.to( LoginView());
     });
     return const Scaffold(
         backgroundColor: Colors.white10,
