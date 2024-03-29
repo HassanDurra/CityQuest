@@ -14,58 +14,70 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.8,
-            padding: EdgeInsets.all(20.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: 20),
-                Image.asset(
-                  'images/mainlogo.png',
-                  width: 70,
-                  height: 70,
-                  fit: BoxFit.contain,
-                ),
-                SizedBox(height: 20),
-                Text(
-                  "Login to your account",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Poppins',
-                  ),
-                ),
-                SizedBox(height: 20),
-                TextFormGlobal(
-                  controller: emailController,
-                  text: 'Email',
-                  obscure: false,
-                  textInputType: TextInputType.emailAddress,
-                ),
-                SizedBox(height: 10),
-                TextFormGlobal(
-                  controller: passwordController,
-                  text: 'Password',
-                  obscure: true,
-                  textInputType: TextInputType.text,
-                ),
-                SizedBox(height: 20),
-                ButtonGlobal(),
-                SizedBox(height: 25),
-                SociaLogin(),
-              ],
-            ),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child:
+                Image.asset('assets/images/background.png', fit: BoxFit.cover),
           ),
-        ),
+          Center(
+            child: SingleChildScrollView(
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.8,
+                padding: EdgeInsets.all(20.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10.0),
+                  boxShadow: [
+                    BoxShadow(color: Color.fromARGB(41, 0, 0, 0), blurRadius: 7)
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 20),
+                    Image.asset(
+                      'images/mainlogo.png',
+                      width: 70,
+                      height: 70,
+                      fit: BoxFit.contain,
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      "Login to your account",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Poppins',
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    TextFormGlobal(
+                      controller: emailController,
+                      text: 'Email',
+                      obscure: false,
+                      textInputType: TextInputType.emailAddress,
+                    ),
+                    SizedBox(height: 10),
+                    TextFormGlobal(
+                      controller: passwordController,
+                      text: 'Password',
+                      obscure: true,
+                      textInputType: TextInputType.text,
+                    ),
+                    SizedBox(height: 15),
+                    ButtonGlobal(),
+                    SizedBox(height: 15),
+                    SociaLogin(),
+                  ],
+                ),
+              ),
+            ),
+          )
+        ],
       ),
       bottomNavigationBar: Container(
         height: 50,

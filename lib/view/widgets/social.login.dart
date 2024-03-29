@@ -15,10 +15,10 @@ class SociaLogin extends StatelessWidget {
         Container(
           alignment: Alignment.center,
           child: Text(
-            '-Or sign in with-',
+            '- Or sign in with -',
             style: TextStyle(
-              color: GlobalColors.textColor,
-              fontWeight: FontWeight.w600,
+              color: const Color.fromARGB(214, 0, 0, 0),
+              fontFamily: 'poppins',
             ),
           ),
         ),
@@ -37,8 +37,9 @@ class SociaLogin extends StatelessWidget {
                     borderRadius: BorderRadius.circular(6),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 10,
+                        color:
+                            const Color.fromARGB(118, 0, 0, 0).withOpacity(0.1),
+                        blurRadius: 5,
                       ),
                     ],
                   ),
@@ -59,8 +60,9 @@ class SociaLogin extends StatelessWidget {
                     borderRadius: BorderRadius.circular(6),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 10,
+                        color:
+                            const Color.fromARGB(118, 0, 0, 0).withOpacity(0.1),
+                        blurRadius: 5,
                       ),
                     ],
                   ),
@@ -83,13 +85,12 @@ class SociaLogin extends StatelessWidget {
                       borderRadius: BorderRadius.circular(6),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 10,
+                          color: Color.fromARGB(188, 0, 0, 0).withOpacity(0.1),
+                          blurRadius: 5,
                         ),
                       ],
                     ),
-                    child:
-                        const Icon(Ionicons.logo_github)),
+                    child: const Icon(Ionicons.logo_github)),
               ),
             ],
           ),
