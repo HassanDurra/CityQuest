@@ -50,21 +50,23 @@ class ButtonGlobal extends StatelessWidget {
         } else if (!isValidEmail(emailController.text)) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-                content: Row(
-              children: [
-                Icon(
-                  Ionicons.alert_circle_outline,
-                  color: Colors.white,
-                ),
-                SizedBox(width: 5),
-                Text(
-                  "Enter a valid Email address",
-                  style: TextStyle(fontFamily: 'poppins'),
-                )
-              ],
-            )),
-            duration: Duration(seconds: 2),
-            backgroundColor: Colors.red,
+              content: Row(
+                children: [
+                  Icon(
+                    Ionicons.alert_circle_outline,
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 5),
+                  Text(
+                    "Please Enter Valid Email Address",
+                    style: TextStyle(fontFamily: 'poppins'),
+                  )
+                ],
+              ),
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.red,
+            ),
+           
           );
         } else if (passwordController.text.isEmpty) {
           ScaffoldMessenger.of(context).showSnackBar(
