@@ -16,7 +16,10 @@ class SplashView extends StatelessWidget {
     return const Scaffold(
         backgroundColor: Colors.white10,
         body: Center(
-          child: Text(
+          child:
+          
+          
+          Text(
             'Logo',
             style: TextStyle(
                 color: Colors.black, fontSize: 35, fontWeight: FontWeight.bold),

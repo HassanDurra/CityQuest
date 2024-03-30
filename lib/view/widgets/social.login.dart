@@ -26,7 +26,7 @@ class SociaLogin extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.8,
           child: Row(
             children: [
-              ///google
+     ///google
               Expanded(
                 child: Container(
                   alignment: Alignment.center,
@@ -48,7 +48,7 @@ class SociaLogin extends StatelessWidget {
 
               const SizedBox(width: 10),
 
-              ///facebook
+  ///facebook
               Expanded(
                 child: Container(
                   alignment: Alignment.center,
@@ -70,7 +70,7 @@ class SociaLogin extends StatelessWidget {
 
               const SizedBox(width: 10),
 
-              ///TWITTER
+   ///TWITTER
               Expanded(
                 child: Container(
                   alignment: Alignment.center,
