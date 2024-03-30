@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ionicons/ionicons.dart';
 
 class SociaLogin extends StatelessWidget {
   const SociaLogin({Key? key}) : super(key: key);
@@ -14,10 +15,10 @@ class SociaLogin extends StatelessWidget {
         Container(
           alignment: Alignment.center,
           child: Text(
-            '-Or sign in with-',
+            '- Or sign in with -',
             style: TextStyle(
-              color: GlobalColors.textColor,
-              fontWeight: FontWeight.w600,
+              color: const Color.fromARGB(214, 0, 0, 0),
+              fontFamily: 'poppins',
             ),
           ),
         ),
@@ -36,13 +37,14 @@ class SociaLogin extends StatelessWidget {
                     borderRadius: BorderRadius.circular(6),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 10,
+                        color:
+                            const Color.fromARGB(118, 0, 0, 0).withOpacity(0.1),
+                        blurRadius: 5,
                       ),
                     ],
                   ),
                   child: SvgPicture.asset('assets/images/googlesvg.svg',
-                      height: 25),
+                      height: 20),
                 ),
               ),
 
@@ -58,13 +60,16 @@ class SociaLogin extends StatelessWidget {
                     borderRadius: BorderRadius.circular(6),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 10,
+                        color:
+                            const Color.fromARGB(118, 0, 0, 0).withOpacity(0.1),
+                        blurRadius: 5,
                       ),
                     ],
                   ),
-                  child: SvgPicture.asset('assets/images/Facebook.svg',
-                      height: 20),
+                  child: Icon(
+                    Icons.facebook,
+                    color: Colors.blue,
+                  ),
                 ),
               ),
 
@@ -73,21 +78,19 @@ class SociaLogin extends StatelessWidget {
    ///TWITTER
               Expanded(
                 child: Container(
-                  alignment: Alignment.center,
-                  height: 55,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(6),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 10,
-                      ),
-                    ],
-                  ),
-                  child:
-                      SvgPicture.asset('assets/images/Twitter.svg', height: 20),
-                ),
+                    alignment: Alignment.center,
+                    height: 55,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(6),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color.fromARGB(188, 0, 0, 0).withOpacity(0.1),
+                          blurRadius: 5,
+                        ),
+                      ],
+                    ),
+                    child: const Icon(Ionicons.logo_github)),
               ),
             ],
           ),

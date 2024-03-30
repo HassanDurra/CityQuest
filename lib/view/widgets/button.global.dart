@@ -7,22 +7,22 @@ class ButtonGlobal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        // ignore: avoid_print
-        print('Login');
+      onTap: (ButtonGlobal) {
+       
       },
       child: Container(
         alignment: Alignment.center,
         height: 55,
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 189, 140, 5),
+          color: Color.fromARGB(255, 8, 111, 145),
           borderRadius: BorderRadius.circular(6),
-          border: Border.all(color: Color.fromARGB(255, 148, 97, 2) , width: 1.5),
+          border:
+              Border.all(color: Color.fromARGB(255, 8, 111, 145),
+ width: 1.5),
           boxShadow: [
             BoxShadow(
-              color: Color.fromARGB(255, 4, 5, 4),
-              blurRadius: 10,
-              
+              color:  Color.fromARGB(82, 4, 5, 5),
+              blurRadius: 5,
             )
           ],
         ),
@@ -30,7 +30,9 @@ class ButtonGlobal extends StatelessWidget {
           'Sign In',
           style: TextStyle(
             color: Colors.white,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w300,
+              fontFamily: 'poppins',
+
           ),
         ),
       ),
