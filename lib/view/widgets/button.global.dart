@@ -7,7 +7,7 @@ class ButtonGlobal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (ButtonGlobal) {
+      onTap: () {
        
       },
       child: Container(

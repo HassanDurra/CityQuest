@@ -20,7 +20,7 @@ class LoginView extends StatelessWidget {
         children: [
           Positioned.fill(
             child:
-                Image.asset('assets/images/background.png', fit: BoxFit.cover),
+               Image.asset("images/background.png" , fit: BoxFit.cover,)
           ),
           Center(
             child: SingleChildScrollView(
