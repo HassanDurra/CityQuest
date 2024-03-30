@@ -14,14 +14,14 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       body: Stack(
         children: [
           Positioned.fill(
-            child:
-               Image.asset("images/background.png" , fit: BoxFit.cover,)
-          ),
+              child: Image.asset(
+            "images/background.png",
+            fit: BoxFit.cover,
+          )),
           Center(
             child: SingleChildScrollView(
               child: Container(
@@ -69,7 +69,9 @@ class LoginView extends StatelessWidget {
                       textInputType: TextInputType.text,
                     ),
                     SizedBox(height: 15),
-                    ButtonGlobal(),
+                    ButtonGlobal(
+                        emailController: emailController,
+                        passwordController: passwordController),
                     SizedBox(height: 15),
                     SociaLogin(),
                   ],
