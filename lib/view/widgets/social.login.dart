@@ -43,7 +43,7 @@ class SociaLogin extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: SvgPicture.asset('assets/images/googlesvg.svg',
+                  child: SvgPicture.asset('images/googlesvg.svg',
                       height: 20),
                 ),
               ),
