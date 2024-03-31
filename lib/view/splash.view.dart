@@ -11,7 +11,7 @@ class SplashView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Timer(const Duration(seconds: 2), () {
-      Get.to(RegisterView());
+      Get.to(LoginView());
     });
     return Scaffold(
       backgroundColor: Colors.white10,

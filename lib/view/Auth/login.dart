@@ -1,10 +1,13 @@
 import 'package:cityquest/assets/colors.dart';
 import 'package:cityquest/view/Auth/register.dart';
 import 'package:cityquest/view/widgets/button.global.dart';
+import 'package:cityquest/view/widgets/forgot_password.dart';
 import 'package:cityquest/view/widgets/social.login.dart';
 import 'package:cityquest/view/widgets/text.form.global.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
 class LoginView extends StatelessWidget {
   LoginView({
@@ -74,6 +77,21 @@ class LoginView extends StatelessWidget {
                       textInputType: TextInputType.text,
                     ),
                     /////button
+                    SizedBox(height: 10),
+                    InkWell(
+                      onTap: () => {Get.to(ForgotPasswordView())},
+                      child: Container(
+                        alignment: Alignment.bottomRight,
+                        child: Text(
+                          "Forget Password ? ",
+                          style: TextStyle(
+                              color: GlobalColors.mainColor,
+                              fontSize: 13,
+                              fontFamily: 'poppins'),
+                        ),
+                      ),
+                    ),
+
                     SizedBox(height: 15),
                     ButtonGlobal(
                         emailController: emailController,
