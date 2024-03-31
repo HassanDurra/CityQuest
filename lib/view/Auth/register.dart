@@ -1,5 +1,6 @@
 import 'package:cityquest/assets/colors.dart';
 import 'package:cityquest/view/widgets/button.global.dart';
+import 'package:cityquest/view/widgets/forgot_password.dart';
 import 'package:cityquest/view/widgets/register.button.dart';
 import 'package:cityquest/view/widgets/social.login.dart';
 import 'package:cityquest/view/widgets/text.form.global.dart';
@@ -12,7 +13,7 @@ class RegisterView extends StatelessWidget {
   }) : super(key: key);
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-    final TextEditingController confirmpasswordController = TextEditingController();
+  final TextEditingController confirmpasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,8 @@ class RegisterView extends StatelessWidget {
                       fit: BoxFit.contain,
                     ),
 
-                    
+
+
                     SizedBox(height: 20),
                     Text(
                       "Create Account",
@@ -59,7 +61,8 @@ class RegisterView extends StatelessWidget {
                       ),
                     ),
 
-         //email
+
+         ///email
                     SizedBox(height: 20),
                     TextFormGlobal(
                       controller: emailController,
@@ -67,31 +70,57 @@ class RegisterView extends StatelessWidget {
                       obscure: false,
                       textInputType: TextInputType.emailAddress,
                     ),
-          
-          //password
-                     SizedBox(height: 10),
+       ///password
+                    SizedBox(height: 10),
                     TextFormGlobal(
                       controller: passwordController,
                       text: 'Password',
                       obscure: true,
                       textInputType: TextInputType.text,
                     ),
-                 
-                          
-          //confirm password
-                     SizedBox(height: 10),
+   ///confirm password
+                    SizedBox(height: 10),
                     TextFormGlobal(
                       controller: confirmpasswordController,
                       text: 'Confirm Password',
                       obscure: true,
                       textInputType: TextInputType.text,
                     ),
-
-          //button
+     // button
                     SizedBox(height: 15),
-                   RegisterButton(),
+                    RegisterButton(),
 
-                  
+     //Forgot Password
+                    SizedBox(height: 10), 
+                    InkWell(
+  onTap: () {
+    // Navigate to Forgot Password view
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ForgotPasswordView(),
+      ),
+    );
+  },
+  child: Text(
+    'Forgot Password?',
+    style: TextStyle(
+      color: GlobalColors.mainColor,
+    ),
+  ),
+),
+
+                    // InkWell(
+                    //   onTap: () {
+                      
+                    //   },
+                    //   child: Text(
+                    //     'Forgot Password?',
+                    //     style: TextStyle(
+                    //       color: GlobalColors.mainColor,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

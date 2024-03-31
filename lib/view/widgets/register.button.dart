@@ -1,5 +1,6 @@
-import 'package:cityquest/assets/colors.dart';
+import 'package:cityquest/view/Auth/login.dart';
 import 'package:flutter/material.dart';
+import 'login_page.dart'; 
 
 class RegisterButton extends StatelessWidget {
   const RegisterButton({Key? key}) : super(key: key);
@@ -8,7 +9,11 @@ class RegisterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-       
+     
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LoginView()),
+        );
       },
       child: Container(
         alignment: Alignment.center,
@@ -16,12 +21,13 @@ class RegisterButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: Color.fromARGB(255, 8, 111, 145),
           borderRadius: BorderRadius.circular(6),
-          border:
-              Border.all(color: Color.fromARGB(255, 8, 111, 145),
- width: 1.5),
+          border: Border.all(
+            color: Color.fromARGB(255, 8, 111, 145),
+            width: 1.5,
+          ),
           boxShadow: [
             BoxShadow(
-              color:  Color.fromARGB(82, 4, 5, 5),
+              color: Color.fromARGB(82, 4, 5, 5),
               blurRadius: 5,
             )
           ],
@@ -31,8 +37,7 @@ class RegisterButton extends StatelessWidget {
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w300,
-              fontFamily: 'poppins',
-
+            fontFamily: 'poppins',
           ),
         ),
       ),

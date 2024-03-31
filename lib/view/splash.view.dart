@@ -13,17 +13,18 @@ class SplashView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Timer(const Duration(seconds: 2), () {
-      Get.to( LoginView());
+      Get.to(RegisterView());
     });
-    return const Scaffold(
-        backgroundColor: Colors.white10,
-        body: Center(
-          child:  Text(
-            'Logo',
-            style: TextStyle(
-                color: Colors.black, fontSize: 35, fontWeight: FontWeight.bold),
-          ),
-        ));
+    return Scaffold(
+      backgroundColor: Colors.white10,
+      body: Center(
+        child: Image.asset(
+          'assets/images/mainlogo.png', 
+          width: 180, 
+          height: 180, 
+        ),
+      ),
+    );
   }
 }
 
