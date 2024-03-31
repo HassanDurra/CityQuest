@@ -1,4 +1,5 @@
 import 'package:cityquest/assets/colors.dart';
+import 'package:cityquest/view/Auth/login.dart';
 import 'package:cityquest/view/widgets/button.global.dart';
 import 'package:cityquest/view/widgets/forgot_password.dart';
 import 'package:cityquest/view/widgets/register.button.dart';
@@ -13,18 +14,19 @@ class RegisterView extends StatelessWidget {
   }) : super(key: key);
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmpasswordController = TextEditingController();
+  final TextEditingController confirmpasswordController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       body: Stack(
         children: [
           Positioned.fill(
-            child:
-               Image.asset("images/background.png" , fit: BoxFit.cover,)
-          ),
+              child: Image.asset(
+            "images/background.png",
+            fit: BoxFit.cover,
+          )),
           Center(
             child: SingleChildScrollView(
               child: Container(
@@ -48,8 +50,6 @@ class RegisterView extends StatelessWidget {
                       fit: BoxFit.contain,
                     ),
 
-
-
                     SizedBox(height: 20),
                     Text(
                       "Create Account",
@@ -61,8 +61,7 @@ class RegisterView extends StatelessWidget {
                       ),
                     ),
 
-
-         ///email
+                    ///email
                     SizedBox(height: 20),
                     TextFormGlobal(
                       controller: emailController,
@@ -70,7 +69,8 @@ class RegisterView extends StatelessWidget {
                       obscure: false,
                       textInputType: TextInputType.emailAddress,
                     ),
-       ///password
+
+                    ///password
                     SizedBox(height: 10),
                     TextFormGlobal(
                       controller: passwordController,
@@ -78,7 +78,8 @@ class RegisterView extends StatelessWidget {
                       obscure: true,
                       textInputType: TextInputType.text,
                     ),
-   ///confirm password
+
+                    ///confirm password
                     SizedBox(height: 10),
                     TextFormGlobal(
                       controller: confirmpasswordController,
@@ -86,41 +87,32 @@ class RegisterView extends StatelessWidget {
                       obscure: true,
                       textInputType: TextInputType.text,
                     ),
-     // button
+                    // button
                     SizedBox(height: 15),
-                    RegisterButton(),
+                    RegisterButton(
+                        emailController: emailController,
+                        passwordController: passwordController,
+                        confirmController: confirmpasswordController),
 
-     //Forgot Password
-                    SizedBox(height: 10), 
+                    //Forgot Password
+                    SizedBox(height: 10),
                     InkWell(
-  onTap: () {
-    // Navigate to Forgot Password view
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ForgotPasswordView(),
-      ),
-    );
-  },
-  child: Text(
-    'Forgot Password?',
-    style: TextStyle(
-      color: GlobalColors.mainColor,
-    ),
-  ),
-),
-
-                    // InkWell(
-                    //   onTap: () {
-                      
-                    //   },
-                    //   child: Text(
-                    //     'Forgot Password?',
-                    //     style: TextStyle(
-                    //       color: GlobalColors.mainColor,
-                    //     ),
-                    //   ),
-                    // ),
+                      onTap: () {
+                        // Navigate to Forgot Password view
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginView(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Already have an Account ?',
+                        style: TextStyle(
+                          color: GlobalColors.mainColor,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -137,11 +129,18 @@ class RegisterView extends StatelessWidget {
           children: [
             Text(
               'By signing up, you agree to our',
+              style: TextStyle(
+                fontSize: 10,
+              ),
+            ),
+            SizedBox(
+              width: 10,
             ),
             InkWell(
               child: Text(
-                'Terms , Privacy Policy and Cookies Policy .',
+                'Terms , Privacy Policy and Cookies Policy.',
                 style: TextStyle(
+                  fontSize: 10,
                   color: GlobalColors.mainColor,
                 ),
               ),

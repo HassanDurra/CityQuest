@@ -5,10 +5,8 @@ import 'package:cityquest/view/widgets/register.button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class SplashView extends StatelessWidget {
   const SplashView({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +17,11 @@ class SplashView extends StatelessWidget {
       backgroundColor: Colors.white10,
       body: Center(
         child: Image.asset(
-          'assets/images/mainlogo.png', 
-          width: 180, 
-          height: 180, 
+          'assets/images/mainlogo.png',
+          width: 180,
+          height: 180,
         ),
       ),
     );
   }
 }
-

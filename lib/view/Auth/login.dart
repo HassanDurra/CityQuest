@@ -1,4 +1,5 @@
 import 'package:cityquest/assets/colors.dart';
+import 'package:cityquest/view/Auth/register.dart';
 import 'package:cityquest/view/widgets/button.global.dart';
 import 'package:cityquest/view/widgets/social.login.dart';
 import 'package:cityquest/view/widgets/text.form.global.dart';
@@ -55,7 +56,7 @@ class LoginView extends StatelessWidget {
                       ),
                     ),
 
-             /////email       
+                    /////email
                     SizedBox(height: 20),
                     TextFormGlobal(
                       controller: emailController,
@@ -63,7 +64,8 @@ class LoginView extends StatelessWidget {
                       obscure: false,
                       textInputType: TextInputType.emailAddress,
                     ),
-            ///password   
+
+                    ///password
                     SizedBox(height: 10),
                     TextFormGlobal(
                       controller: passwordController,
@@ -71,13 +73,13 @@ class LoginView extends StatelessWidget {
                       obscure: true,
                       textInputType: TextInputType.text,
                     ),
-           /////button         
+                    /////button
                     SizedBox(height: 15),
                     ButtonGlobal(
                         emailController: emailController,
                         passwordController: passwordController),
 
-           //social img           
+                    //social img
                     SizedBox(height: 15),
                     SociaLogin(),
                   ],
@@ -98,6 +100,10 @@ class LoginView extends StatelessWidget {
               'Don\'t have an account?',
             ),
             InkWell(
+              onTap: () => {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => RegisterView()))
+              },
               child: Text(
                 'Sign Up',
                 style: TextStyle(
