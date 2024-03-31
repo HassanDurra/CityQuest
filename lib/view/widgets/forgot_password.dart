@@ -2,30 +2,31 @@ import 'package:cityquest/assets/colors.dart';
 import 'package:cityquest/view/Auth/register.dart';
 import 'package:cityquest/view/widgets/button.global.dart';
 import 'package:cityquest/view/widgets/forgot_password.dart';
+import 'package:cityquest/view/widgets/register.button.dart';
+import 'package:cityquest/view/widgets/send.link.dart';
 import 'package:cityquest/view/widgets/social.login.dart';
 import 'package:cityquest/view/widgets/text.form.global.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
 
-class LoginView extends StatelessWidget {
-  LoginView({
+class ForgotPasswordView extends StatelessWidget {
+  ForgotPasswordView({
     Key? key,
   }) : super(key: key);
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController newpasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       body: Stack(
         children: [
           Positioned.fill(
-              child: Image.asset(
-            "images/background.png",
-            fit: BoxFit.cover,
-          )),
+            child:
+               Image.asset("images/background.png" , fit: BoxFit.cover,)
+          ),
           Center(
             child: SingleChildScrollView(
               child: Container(
@@ -48,9 +49,12 @@ class LoginView extends StatelessWidget {
                       height: 70,
                       fit: BoxFit.contain,
                     ),
+
+
+
                     SizedBox(height: 20),
                     Text(
-                      "Login to your account",
+                      "Trouble logging in?",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
@@ -59,7 +63,21 @@ class LoginView extends StatelessWidget {
                       ),
                     ),
 
-                    /////email
+                    
+                    SizedBox(height: 20),
+                    Text(
+                      "Enter your email, phone, or username and we'll  send you a link to get back into your account.",
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 107, 104, 104),
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Poppins',
+                      ),
+                    ),
+
+
+
+         ///email
                     SizedBox(height: 20),
                     TextFormGlobal(
                       controller: emailController,
@@ -67,39 +85,24 @@ class LoginView extends StatelessWidget {
                       obscure: false,
                       textInputType: TextInputType.emailAddress,
                     ),
+     
+     // button
+                    //  SizedBox(height: 15),
+                    // RegisterView(),
 
-                    ///password
-                    SizedBox(height: 10),
-                    TextFormGlobal(
-                      controller: passwordController,
-                      text: 'Password',
-                      obscure: true,
-                      textInputType: TextInputType.text,
-                    ),
-                    /////button
-                    SizedBox(height: 10),
+
+ 
+                    SizedBox(height: 10), 
                     InkWell(
-                      onTap: () => {Get.to(ForgotPasswordView())},
-                      child: Container(
-                        alignment: Alignment.bottomRight,
-                        child: Text(
-                          "Forget Password ? ",
-                          style: TextStyle(
-                              color: GlobalColors.mainColor,
-                              fontSize: 13,
-                              fontFamily: 'poppins'),
+                      onTap: () {                     
+                      },
+                      child: Text(
+                        'cannot reset yor password',
+                        style: TextStyle(
+                          color: GlobalColors.mainColor,
                         ),
                       ),
                     ),
-
-                    SizedBox(height: 15),
-                    ButtonGlobal(
-                        emailController: emailController,
-                        passwordController: passwordController),
-
-                    //social img
-                    SizedBox(height: 15),
-                    SociaLogin(),
                   ],
                 ),
               ),
@@ -115,15 +118,11 @@ class LoginView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Don\'t have an account?',
+              'By signing up, you agree to our',
             ),
             InkWell(
-              onTap: () => {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => RegisterView()))
-              },
               child: Text(
-                'Sign Up',
+                'Terms , Privacy Policy and Cookies Policy .',
                 style: TextStyle(
                   color: GlobalColors.mainColor,
                 ),
