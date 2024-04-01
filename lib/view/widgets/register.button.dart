@@ -1,15 +1,18 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:cityquest/view/Auth/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'login_page.dart';
+import 'package:http/http.dart' as http;
 
 class RegisterButton extends StatelessWidget {
   final TextEditingController emailController;
   final TextEditingController passwordController;
   final TextEditingController confirmController;
+
   const RegisterButton({
     Key? key,
     required this.emailController,
@@ -19,6 +22,83 @@ class RegisterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> insertUsers() async {
+      try {
+        final url = Uri.parse("http://localhost/CityQuestWEB/User/insert");
+        var response = await http.post(url, body: {
+          'email': emailController.text,
+          'password': passwordController.text
+        });
+        if (response.statusCode == 200) {
+          var jsonResponse = json.decode(response.body);
+          if (jsonResponse['message'] == "success") {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Row(
+                children: [
+                  Icon(Ionicons.checkbox_outline, color: Colors.white),
+                  SizedBox(width: 5),
+                  Text(
+                    'Registration successful. Redirecting to login...',
+                    style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.white,
+                        fontFamily: 'poppins'),
+                  )
+                ],
+              ),
+              duration: Duration(seconds: 2),
+              backgroundColor: const Color.fromARGB(255, 5, 182, 97),
+            ));
+            Timer(const Duration(seconds: 2), () {
+              Get.to(LoginView());
+            });
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Row(
+                children: [
+                  Icon(
+                    Ionicons.alert_circle,
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 5),
+                  Text(
+                    jsonResponse['message'] ?? 'Unknown error occurred',
+                    style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.white,
+                        fontFamily: 'poppins'),
+                  )
+                ],
+              ),
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.red,
+            ));
+          }
+        } else {
+          // Handle non-200 status code
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+              'Error: ${response.statusCode}',
+              style: TextStyle(
+                  fontSize: 13, color: Colors.white, fontFamily: 'poppins'),
+            ),
+            duration: Duration(seconds: 2),
+            backgroundColor: Colors.red,
+          ));
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+            'Error: $e',
+            style: TextStyle(
+                fontSize: 13, color: Colors.white, fontFamily: 'poppins'),
+          ),
+          duration: Duration(seconds: 2),
+          backgroundColor: Colors.red,
+        ));
+      }
+    }
+
     bool isValidEmail(String email) {
       RegExp emailRegx = RegExp(
         r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
@@ -159,24 +239,7 @@ class RegisterButton extends StatelessWidget {
         // Password Validation Ends here
         // From here we will send the data to our db
         else {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Row(
-              children: [
-                Icon(Ionicons.checkbox_outline, color: Colors.white),
-                SizedBox(width: 5),
-                Text(
-                  'Registeration successfull redirecting to login..',
-                  style: TextStyle(
-                      fontSize: 13, color: Colors.white, fontFamily: 'poppins'),
-                )
-              ],
-            ),
-            duration: Duration(seconds: 2),
-            backgroundColor: const Color.fromARGB(255, 5, 182, 97),
-          ));
-          Timer(const Duration(seconds: 2), () {
-            Get.to(LoginView());
-          });
+          insertUsers();
         }
       },
       child: Container(
