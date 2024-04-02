@@ -5,7 +5,6 @@ import 'package:cityquest/view/Auth/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
-import 'login_page.dart';
 import 'package:http/http.dart' as http;
 
 class RegisterButton extends StatelessWidget {
@@ -24,7 +23,7 @@ class RegisterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     Future<void> insertUsers() async {
       try {
-        final url = Uri.parse("http://localhost/CityQuestWEB/User/insert");
+        final url = Uri.parse("http://localhost/CityQuestWEB/User/register");
         var response = await http.post(url, body: {
           'email': emailController.text,
           'password': passwordController.text
