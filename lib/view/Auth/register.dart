@@ -1,6 +1,6 @@
 import 'package:cityquest/assets/colors.dart';
 import 'package:cityquest/view/Auth/login.dart';
-import 'package:cityquest/view/widgets/button.global.dart';
+import 'package:cityquest/view/widgets/login.button.dart';
 import 'package:cityquest/view/widgets/forgot_password.dart';
 import 'package:cityquest/view/widgets/register.button.dart';
 import 'package:cityquest/view/widgets/social.login.dart';

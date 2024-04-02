@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ionicons/ionicons.dart';
 
-class ButtonGlobal extends StatelessWidget {
+class LoginButton extends StatelessWidget {
   final TextEditingController emailController;
   final TextEditingController passwordController;
 
-  const ButtonGlobal({
+  const LoginButton({
     Key? key,
     required this.emailController,
     required this.passwordController,
@@ -66,7 +66,6 @@ class ButtonGlobal extends StatelessWidget {
               duration: Duration(seconds: 2),
               backgroundColor: Colors.red,
             ),
-           
           );
         } else if (passwordController.text.isEmpty) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -89,7 +88,7 @@ class ButtonGlobal extends StatelessWidget {
             ),
           );
         } else {
-          // Perform your sign-in action here
+          
         }
       },
       child: Container(
