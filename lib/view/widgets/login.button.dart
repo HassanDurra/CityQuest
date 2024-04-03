@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:cityquest/assets/colors.dart';
 import 'package:cityquest/view/Auth/login.dart';
+import 'package:cityquest/view/widgets/User/home.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -10,7 +10,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginButton extends StatelessWidget {
+class LoginButton extends StatefulWidget {
   final TextEditingController emailController;
   final TextEditingController passwordController;
 
@@ -21,8 +21,14 @@ class LoginButton extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<LoginButton> createState() => _LoginButtonState();
+}
+
+class _LoginButtonState extends State<LoginButton> {
+  @override
   Widget build(BuildContext context) {
     // Login Function
+
     Future<void> storeData(data) async {
       var pref = await SharedPreferences.getInstance();
       await pref.setString('user', data);
@@ -32,8 +38,8 @@ class LoginButton extends StatelessWidget {
       try {
         final URL = Uri.parse("http://localhost/CityQuestWEB/User/login");
         var response = await http.post(URL, body: {
-          'email': emailController.text,
-          'password': passwordController.text,
+          'email': widget.emailController.text,
+          'password': widget.passwordController.text,
         });
         // If response is valid
         if (response.statusCode == 200) {
@@ -52,16 +58,17 @@ class LoginButton extends StatelessWidget {
                   Text(
                     'Login successfull redirecting to home..!',
                     style: TextStyle(color: Colors.white),
-                  )
+                  ),
                 ],
               ),
               backgroundColor: const Color.fromARGB(255, 5, 182, 97),
               duration: Duration(seconds: 2),
             ));
             // Storing The User data to shared Procedure Storage
-            Map<String, dynamic> userData = jsonDecode(jsonResponse['user']);
-            storeData(userData);
-            
+            storeData(jsonResponse['user']);
+            Timer(Duration(seconds: 2), () {
+              Get.to(HomeView());
+            });
           } else if (jsonResponse['message'] == 'invalid email') {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Row(
@@ -180,7 +187,7 @@ class LoginButton extends StatelessWidget {
     return InkWell(
       onTap: () {
         // Check if email or password is empty
-        if (emailController.text.isEmpty) {
+        if (widget.emailController.text.isEmpty) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Row(
@@ -200,7 +207,7 @@ class LoginButton extends StatelessWidget {
               backgroundColor: Colors.red,
             ),
           );
-        } else if (!isValidEmail(emailController.text)) {
+        } else if (!isValidEmail(widget.emailController.text)) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Row(
@@ -220,7 +227,7 @@ class LoginButton extends StatelessWidget {
               backgroundColor: Colors.red,
             ),
           );
-        } else if (passwordController.text.isEmpty) {
+        } else if (widget.passwordController.text.isEmpty) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Row(
