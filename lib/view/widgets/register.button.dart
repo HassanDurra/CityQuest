@@ -34,7 +34,7 @@ class RegisterButton extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Row(
                 children: [
-                  Icon(Ionicons.checkbox_outline, color: Colors.white),
+                  Icon(Ionicons.checkmark_circle_outline, color: Colors.white),
                   SizedBox(width: 5),
                   Text(
                     'Registration successful. Redirecting to login...',
