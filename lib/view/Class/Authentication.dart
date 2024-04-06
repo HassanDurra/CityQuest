@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class Authentication {
+
   //To Store Data of User In Shared Preferences
   Future<void> storeData(data) async {
     var pref = await SharedPreferences.getInstance();

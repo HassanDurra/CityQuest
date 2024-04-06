@@ -89,11 +89,11 @@ class RegisterView extends StatelessWidget {
                     ),
                     // button
                     SizedBox(height: 15),
+
                     RegisterButton(
                         emailController: emailController,
                         passwordController: passwordController,
-                        confirmController: confirmpasswordController),
-
+                        confirmpasswordController: confirmpasswordController),
                     //Forgot Password
                     SizedBox(height: 10),
                     InkWell(
