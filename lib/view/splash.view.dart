@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'package:cityquest/view/Auth/forgot_password.dart';
 import 'package:cityquest/view/Auth/login.dart';
 import 'package:cityquest/view/Auth/register.dart';
 import 'package:cityquest/view/widgets/User/home.dart';
 import 'package:cityquest/view/Auth/buttons/register.button.dart';
+import 'package:cityquest/view/widgets/User/partial/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,9 +36,10 @@ class _SplashViewState extends State<SplashView> {
     getData();
     Timer(const Duration(seconds: 2), () {
       if (userData.isNotEmpty) {
-        Get.offAll(() => HomeView());
+        Get.offAll(() => Navbar());
       } else {
-        Get.offAll(() => LoginView());
+        // Get.offAll(() => LoginView());
+        Get.offAll(() => ForgotPasswordView());
       }
     });
   }

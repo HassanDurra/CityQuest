@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:cityquest/assets/colors.dart';
 import 'package:cityquest/view/Class/Authentication.dart';
-import 'package:cityquest/view/widgets/User/partial/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -64,9 +63,6 @@ class _HomeViewState extends State<HomeView> {
               ))
         ]),
       ),
-      // Navigation Bar
-      // bottomNavigationBar: Container(child: Navbar())
-      // End of Navigation Bar
     );
   }
 }

@@ -1,19 +1,32 @@
 import 'package:cityquest/assets/colors.dart';
 import 'package:cityquest/view/Auth/login.dart';
 import 'package:cityquest/view/Auth/buttons/login.button.dart';
-import 'package:cityquest/view/Auth/buttons/forgot_password.dart';
+import 'package:cityquest/view/Auth/forgot_password.dart';
 import 'package:cityquest/view/Auth/buttons/register.button.dart';
 import 'package:cityquest/view/widgets/social.login.dart';
 import 'package:cityquest/view/widgets/text.form.global.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class RegisterView extends StatelessWidget {
+class RegisterView extends StatefulWidget {
   RegisterView({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<RegisterView> createState() => _RegisterViewState();
+}
+
+class _RegisterViewState extends State<RegisterView> {
+  bool _isObscure = true;
+  bool _isObscurepassword = true;
+
+  final TextEditingController userNameController = TextEditingController();
+
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
+
   final TextEditingController confirmpasswordController =
       TextEditingController();
 
@@ -60,37 +73,113 @@ class RegisterView extends StatelessWidget {
                         fontFamily: 'Poppins',
                       ),
                     ),
+                    SizedBox(height: 20),
 
                     ///email
-                    SizedBox(height: 20),
-                    TextFormGlobal(
-                      controller: emailController,
-                      text: 'Email',
-                      obscure: false,
-                      textInputType: TextInputType.emailAddress,
+                    Container(
+                      height: 50,
+                      child: TextFormField(
+                        controller: userNameController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          hintText: 'Enter Username',
+                          contentPadding: EdgeInsets.all(10),
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      height: 50,
+                      child: TextFormField(
+                        controller: emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          hintText: 'Enter Email',
+                          contentPadding: EdgeInsets.all(10),
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
                     ),
 
                     ///password
                     SizedBox(height: 10),
-                    TextFormGlobal(
-                      controller: passwordController,
-                      text: 'Password',
-                      obscure: true,
-                      textInputType: TextInputType.text,
+                    Container(
+                      height: 50,
+                      child: TextFormField(
+                        controller: passwordController,
+                        keyboardType: TextInputType.text,
+                        obscureText:
+                            _isObscurepassword, // Use the _isObscure variable to toggle visibility
+                        decoration: InputDecoration(
+                          hintText: 'Enter Password',
+                          contentPadding: EdgeInsets.all(10),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _isObscurepassword
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: _isObscurepassword
+                                  ? Colors.grey
+                                  : GlobalColors
+                                      .mainColor, // Change icon color based on visibility state
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _isObscurepassword =
+                                    !_isObscurepassword; // Toggle visibility state
+                              });
+                            },
+                          ),
+                        ),
+                      ),
                     ),
 
                     ///confirm password
                     SizedBox(height: 10),
-                    TextFormGlobal(
-                      controller: confirmpasswordController,
-                      text: 'Confirm Password',
-                      obscure: true,
-                      textInputType: TextInputType.text,
+
+                    Container(
+                      height: 50,
+                      child: TextFormField(
+                        controller: confirmpasswordController,
+                        keyboardType: TextInputType.text,
+                        obscureText:
+                            _isObscure, // Use the _isObscure variable to toggle visibility
+                        decoration: InputDecoration(
+                          hintText: 'Confirm Password',
+                          contentPadding: EdgeInsets.all(10),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _isObscure
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: _isObscure
+                                  ? Colors.grey
+                                  : GlobalColors
+                                      .mainColor, // Change icon color based on visibility state
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _isObscure =
+                                    !_isObscure; // Toggle visibility state
+                              });
+                            },
+                          ),
+                        ),
+                      ),
                     ),
+
                     // button
                     SizedBox(height: 15),
 
                     RegisterButton(
+                        usernameController: userNameController,
                         emailController: emailController,
                         passwordController: passwordController,
                         confirmpasswordController: confirmpasswordController),

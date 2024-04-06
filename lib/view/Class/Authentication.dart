@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:cityquest/view/Auth/login.dart';
 import 'package:cityquest/view/widgets/User/home.dart';
+import 'package:cityquest/view/widgets/User/partial/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
@@ -16,11 +17,14 @@ class Authentication {
     await pref.setString('user', data);
   }
 
-  Future<void> Register(BuildContext context, email, password) async {
+  Future<void> Register(BuildContext context, email, password, username) async {
     try {
       final url = Uri.parse("http://localhost/CityQuestWEB/User/register");
-      var response =
-          await http.post(url, body: {'email': email, 'password': password});
+      var response = await http.post(url, body: {
+        'email': email,
+        'password': password,
+        'username': username,
+      });
       if (response.statusCode == 200) {
         var jsonResponse = json.decode(response.body);
         if (jsonResponse['message'] == "success") {
@@ -120,7 +124,7 @@ class Authentication {
           // Storing The User data to shared Procedure Storage
           storeData(jsonResponse['user']);
           Timer(Duration(seconds: 2), () {
-            Get.offAll(() => HomeView());
+            Get.offAll(() => Navbar());
           });
         } else if (jsonResponse['message'] == 'invalid email') {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(

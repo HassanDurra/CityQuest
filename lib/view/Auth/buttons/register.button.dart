@@ -12,12 +12,13 @@ class RegisterButton extends StatefulWidget {
   final TextEditingController emailController;
   final TextEditingController passwordController;
   final TextEditingController confirmpasswordController;
-
+  final TextEditingController usernameController;
   const RegisterButton(
       {super.key,
       required this.emailController,
       required this.passwordController,
-      required this.confirmpasswordController});
+      required this.confirmpasswordController,
+      required this.usernameController});
 
   @override
   State<RegisterButton> createState() => _RegisterButtonState();
@@ -44,7 +45,33 @@ class _RegisterButtonState extends State<RegisterButton> {
                 is_loading = true;
               });
               if (is_loading) {
-                if (widget.emailController.text.isEmpty) {
+                if (widget.usernameController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Row(
+                      children: [
+                        Icon(
+                          Ionicons.alert_circle_outline,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          'User name  for Registeration is required',
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.white,
+                              fontFamily: 'poppins'),
+                        )
+                      ],
+                    ),
+                    duration: Duration(seconds: 2),
+                    backgroundColor: Colors.red,
+                  ));
+                  setState(() {
+                    is_loading = false;
+                  });
+                } else if (widget.emailController.text.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Row(
                       children: [
@@ -203,8 +230,11 @@ class _RegisterButtonState extends State<RegisterButton> {
                 // From here we will send the data to our db
                 else {
                   Authentication auth = new Authentication();
-                  auth.Register(context, widget.emailController.text,
-                      widget.passwordController.text);
+                  auth.Register(
+                      context,
+                      widget.emailController.text,
+                      widget.passwordController.text,
+                      widget.usernameController.text);
                   setState(() {
                     is_loading = true;
                   });

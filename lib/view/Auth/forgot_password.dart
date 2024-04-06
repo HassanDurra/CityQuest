@@ -1,13 +1,17 @@
 import 'package:cityquest/assets/colors.dart';
+import 'package:cityquest/view/Auth/login.dart';
 import 'package:cityquest/view/Auth/register.dart';
 import 'package:cityquest/view/Auth/buttons/login.button.dart';
-import 'package:cityquest/view/Auth/buttons/forgot_password.dart';
+import 'package:cityquest/view/Auth/forgot_password.dart';
 import 'package:cityquest/view/Auth/buttons/register.button.dart';
 import 'package:cityquest/view/widgets/send.link.dart';
 import 'package:cityquest/view/widgets/social.login.dart';
 import 'package:cityquest/view/widgets/text.form.global.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
 class ForgotPasswordView extends StatelessWidget {
   ForgotPasswordView({
@@ -19,14 +23,14 @@ class ForgotPasswordView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       body: Stack(
         children: [
           Positioned.fill(
-            child:
-               Image.asset("images/background.png" , fit: BoxFit.cover,)
-          ),
+              child: Image.asset(
+            "images/background.png",
+            fit: BoxFit.cover,
+          )),
           Center(
             child: SingleChildScrollView(
               child: Container(
@@ -50,8 +54,6 @@ class ForgotPasswordView extends StatelessWidget {
                       fit: BoxFit.contain,
                     ),
 
-
-
                     SizedBox(height: 20),
                     Text(
                       "Trouble logging in?",
@@ -63,7 +65,6 @@ class ForgotPasswordView extends StatelessWidget {
                       ),
                     ),
 
-                    
                     SizedBox(height: 20),
                     Text(
                       "Enter your email, phone, or username and we'll  send you a link to get back into your account.",
@@ -75,34 +76,59 @@ class ForgotPasswordView extends StatelessWidget {
                       ),
                     ),
 
-
-
-         ///email
+                    ///email
                     SizedBox(height: 20),
-                    TextFormGlobal(
-                      controller: emailController,
-                      text: 'Email',
-                      obscure: false,
-                      textInputType: TextInputType.emailAddress,
-                    ),
-     
-     // button
-                    //  SizedBox(height: 15),
-                    // RegisterView(),
-
-
- 
-                    SizedBox(height: 10), 
-                    InkWell(
-                      onTap: () {                     
-                      },
-                      child: Text(
-                        'cannot reset yor password',
-                        style: TextStyle(
-                          color: GlobalColors.mainColor,
+                    Container(
+                      height: 50,
+                      child: TextFormField(
+                        controller: emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          hintText: 'Enter Email',
+                          contentPadding: EdgeInsets.all(10),
+                          border: OutlineInputBorder(),
                         ),
                       ),
                     ),
+                    // button
+                    //  SizedBox(height: 15),
+                    // RegisterView(),
+
+                    SizedBox(height: 10),
+                    InkWell(
+                      onTap: () {},
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 8, 111, 145),
+                            borderRadius: BorderRadius.circular(6),
+                            border: Border.all(
+                              color: Color.fromARGB(255, 8, 111, 145),
+                              width: 1.5,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromARGB(82, 4, 5, 5),
+                                blurRadius: 5,
+                              ),
+                            ]),
+                        child: Text("Send Verification",
+                            style: TextStyle(color: Colors.white)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Get.offAll(() => LoginView());
+                      },
+                      child: Text(
+                        "Back to Login ?",
+                        style: TextStyle(color: GlobalColors.mainColor),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -119,11 +145,16 @@ class ForgotPasswordView extends StatelessWidget {
           children: [
             Text(
               'By signing up, you agree to our',
+              style: TextStyle(fontSize: 10),
+            ),
+            SizedBox(
+              width: 5,
             ),
             InkWell(
               child: Text(
                 'Terms , Privacy Policy and Cookies Policy .',
                 style: TextStyle(
+                  fontSize: 10,
                   color: GlobalColors.mainColor,
                 ),
               ),
