@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:cityquest/assets/colors.dart';
-import 'package:cityquest/view/Auth/logout.dart';
+import 'package:cityquest/view/Class/Authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
