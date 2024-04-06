@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:cityquest/view/Auth/login.dart';
 import 'package:cityquest/view/Auth/register.dart';
 import 'package:cityquest/view/widgets/User/home.dart';
-import 'package:cityquest/view/widgets/register.button.dart';
+import 'package:cityquest/view/Auth/buttons/register.button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';

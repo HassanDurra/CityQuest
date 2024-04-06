@@ -1,7 +1,7 @@
 import 'package:cityquest/assets/colors.dart';
 import 'package:cityquest/view/Auth/register.dart';
-import 'package:cityquest/view/widgets/login.button.dart';
-import 'package:cityquest/view/widgets/forgot_password.dart';
+import 'package:cityquest/view/Auth/buttons/login.button.dart';
+import 'package:cityquest/view/Auth/buttons/forgot_password.dart';
 import 'package:cityquest/view/widgets/social.login.dart';
 import 'package:cityquest/view/widgets/text.form.global.dart';
 import 'package:flutter/cupertino.dart';

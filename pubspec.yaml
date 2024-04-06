@@ -42,6 +42,7 @@ dependencies:
   ionicons: ^0.2.2
   http: ^1.2.1
   shared_preferences: ^2.2.2
+  animated_icon: ^0.0.9
 dev_dependencies:
   flutter_test:
     sdk: flutter

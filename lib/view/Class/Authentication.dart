@@ -10,7 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class Authentication {
-
   //To Store Data of User In Shared Preferences
   Future<void> storeData(data) async {
     var pref = await SharedPreferences.getInstance();
@@ -121,7 +120,7 @@ class Authentication {
           // Storing The User data to shared Procedure Storage
           storeData(jsonResponse['user']);
           Timer(Duration(seconds: 2), () {
-            Get.to(HomeView());
+            Get.offAll(() => HomeView());
           });
         } else if (jsonResponse['message'] == 'invalid email') {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
