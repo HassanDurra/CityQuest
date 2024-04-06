@@ -77,7 +77,11 @@ class _LoginViewState extends State<LoginView> {
                         decoration: InputDecoration(
                           hintText: 'Enter Email',
                           contentPadding: EdgeInsets.all(10),
-                          border: OutlineInputBorder(),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color:
+                                    const Color.fromARGB(210, 158, 158, 158)),
+                          ),
                         ),
                       ),
                     ),
@@ -95,7 +99,8 @@ class _LoginViewState extends State<LoginView> {
                           hintText: 'Enter Password',
                           contentPadding: EdgeInsets.all(10),
                           border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey),
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(210, 158, 158, 158)),
                           ),
                           suffixIcon: IconButton(
                             icon: Icon(
@@ -157,6 +162,9 @@ class _LoginViewState extends State<LoginView> {
           children: [
             Text(
               'Don\'t have an account?',
+            ),
+            SizedBox(
+              width: 5,
             ),
             InkWell(
               onTap: () => {
