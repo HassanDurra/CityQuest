@@ -236,4 +236,6 @@ class Authentication {
     pref.remove('user');
     Get.to(LoginView());
   }
+  
+
 }

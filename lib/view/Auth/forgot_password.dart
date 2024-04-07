@@ -1,12 +1,8 @@
 import 'package:cityquest/assets/colors.dart';
 import 'package:cityquest/view/Auth/login.dart';
-import 'package:cityquest/view/Auth/register.dart';
-import 'package:cityquest/view/Auth/buttons/login.button.dart';
 import 'package:cityquest/view/Auth/forgot_password.dart';
-import 'package:cityquest/view/Auth/buttons/register.button.dart';
-import 'package:cityquest/view/widgets/send.link.dart';
-import 'package:cityquest/view/widgets/social.login.dart';
-import 'package:cityquest/view/widgets/text.form.global.dart';
+import 'package:cityquest/view/Auth/buttons/forget.button.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -95,28 +91,7 @@ class ForgotPasswordView extends StatelessWidget {
                     // RegisterView(),
 
                     SizedBox(height: 10),
-                    InkWell(
-                      onTap: () {},
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: 50,
-                        decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 8, 111, 145),
-                            borderRadius: BorderRadius.circular(6),
-                            border: Border.all(
-                              color: Color.fromARGB(255, 8, 111, 145),
-                              width: 1.5,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color.fromARGB(82, 4, 5, 5),
-                                blurRadius: 5,
-                              ),
-                            ]),
-                        child: Text("Send Verification",
-                            style: TextStyle(color: Colors.white)),
-                      ),
-                    ),
+                    ForgetButton(emailController: emailController),
                     SizedBox(
                       height: 20,
                     ),
