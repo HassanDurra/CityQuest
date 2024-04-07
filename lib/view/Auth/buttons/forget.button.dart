@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:cityquest/view/Auth/login.dart';
+import 'package:cityquest/view/Auth/verification.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
@@ -28,7 +29,7 @@ class _ForgetButtonState extends State<ForgetButton> {
       return emailRegx.hasMatch(email);
     }
 
-    Future<void> sendVerification(email, isLoading) async {
+    Future<void> sendVerification(email) async {
       try {
         final URL = Uri.parse(
             'http://localhost/CityQuestWEB/Verification/verification_code');
@@ -56,9 +57,6 @@ class _ForgetButtonState extends State<ForgetButton> {
             setState(() {
               is_Loading = false;
             });
-            Timer(Duration(seconds: 1), () {
-              Get.offAll(() => LoginView());
-            });
           } else if (jsonResponse['message'] == 'success') {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Row(
@@ -79,6 +77,11 @@ class _ForgetButtonState extends State<ForgetButton> {
             setState(() {
               is_Loading = true;
             });
+            Timer(Duration(seconds: 2), () {
+              Get.offAll(VerificationView(
+                email: widget.emailController.text,
+              ));
+            });
           }
         } else {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -90,9 +93,6 @@ class _ForgetButtonState extends State<ForgetButton> {
             duration: Duration(seconds: 2),
             backgroundColor: Colors.red,
           ));
-          setState(() {
-            is_Loading = false;
-          });
         }
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -104,9 +104,6 @@ class _ForgetButtonState extends State<ForgetButton> {
           duration: Duration(seconds: 2),
           backgroundColor: Colors.red,
         ));
-        setState(() {
-          is_Loading = false;
-        });
       }
     }
 
