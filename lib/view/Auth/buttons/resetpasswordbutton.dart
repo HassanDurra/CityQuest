@@ -1,32 +1,36 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:cityquest/view/Auth/reset_password.dart';
+import 'package:cityquest/view/Auth/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:http/http.dart' as http;
 
-class VerificationButton extends StatefulWidget {
+class ResetPasswordButton extends StatefulWidget {
   final String email;
-  final TextEditingController verification;
-  const VerificationButton(
-      {super.key, required this.email, required this.verification});
+  final TextEditingController newPassword;
+  final TextEditingController confirmPassword;
+  const ResetPasswordButton(
+      {super.key,
+      required this.email,
+      required this.newPassword,
+      required this.confirmPassword});
 
   @override
-  State<VerificationButton> createState() => _VerificationButtonState();
+  State<ResetPasswordButton> createState() => _ResetPasswordButtonState();
 }
 
-class _VerificationButtonState extends State<VerificationButton> {
+class _ResetPasswordButtonState extends State<ResetPasswordButton> {
   bool is_Loading = false;
   @override
   Widget build(BuildContext context) {
-    Future<void> verification() async {
+    Future<void> resetPassword() async {
       try {
         final URL = Uri.parse(
-            "http://localhost/CityQuestWEB/Verification/verify_code");
+            "http://localhost/CityQuestWEB/User/reset_password");
         var response = await http.post(URL,
-            body: {'email': widget.email, 'code': widget.verification.text});
+            body: {'email': widget.email, 'password': widget.newPassword.text});
         if (response.statusCode == 200) {
           var jsonResponse = json.decode(response.body);
           if (jsonResponse['message'] == 'invalid email') {
@@ -64,7 +68,7 @@ class _VerificationButtonState extends State<VerificationButton> {
                     width: 5,
                   ),
                   Text(
-                    'Verification Successfull Redirecting \n to Reset password form',
+                    'Your Password has been changed \n Redirecting to Login',
                     style: TextStyle(color: Colors.white),
                   )
                 ],
@@ -76,7 +80,7 @@ class _VerificationButtonState extends State<VerificationButton> {
               is_Loading = true;
             });
             Timer(const Duration(seconds: 2), () {
-              Get.offAll(ResetPasswordView(email: widget.email));
+              Get.offAll(LoginView());
             });
           } else {
             setState(() {
@@ -158,18 +162,18 @@ class _VerificationButtonState extends State<VerificationButton> {
       setState(() {
         is_Loading = true;
       });
-      if (widget.verification.text.isEmpty) {
+      if (widget.newPassword.text.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Row(
             children: [
               Icon(
                 Ionicons.alert_circle_outline,
-                color: Colors.white,
+                color: Colors.red,
               ),
               SizedBox(
                 width: 5,
               ),
-              Text('Please Provide an email address')
+              Text("Please provide a new Password")
             ],
           ),
           duration: Duration(seconds: 2),
@@ -178,11 +182,53 @@ class _VerificationButtonState extends State<VerificationButton> {
         setState(() {
           is_Loading = false;
         });
-      } else {
-        verification();
+      } else if (widget.newPassword.text.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Row(
+            children: [
+              Icon(
+                Ionicons.alert_circle_outline,
+                color: Colors.red,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text("Please confirm the new Password")
+            ],
+          ),
+          duration: Duration(seconds: 2),
+          backgroundColor: Colors.red,
+        ));
         setState(() {
-          is_Loading = true;
+          is_Loading = false;
         });
+      }
+      if (widget.newPassword.text.isNotEmpty &&
+          widget.confirmPassword.text.isNotEmpty &&
+          widget.confirmPassword.text != widget.newPassword.text) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Row(
+              children: [
+                Icon(
+                  Ionicons.alert_circle_outline,
+                  color: Colors.red,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text("Password Doesn't matched with Confirm Password")
+              ],
+            ),
+            duration: Duration(seconds: 2),
+            backgroundColor: Colors.red,
+          ),
+        );
+        setState(() {
+          is_Loading = false;
+        });
+      } else {
+        resetPassword();
       }
     }
 
@@ -191,7 +237,10 @@ class _VerificationButtonState extends State<VerificationButton> {
       onTap: is_Loading
           ? null
           : () async {
-              checkVerification();
+              resetPassword();
+              setState(() {
+                is_Loading = true;
+              });
             },
       child: Container(
         alignment: Alignment.center,
@@ -211,7 +260,7 @@ class _VerificationButtonState extends State<VerificationButton> {
             ]),
         child: is_Loading
             ? CircularProgressIndicator(color: Colors.white)
-            : Text("Verify Code", style: TextStyle(color: Colors.white)),
+            : Text("Reset Password", style: TextStyle(color: Colors.white)),
       ),
     );
   }

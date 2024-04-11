@@ -138,7 +138,7 @@ class Authentication {
                     width: 5,
                   ),
                   Text(
-                    'Error : Failed to authenticate invalid email',
+                    'Error : Failed to authenticate \n invalid email',
                     style: TextStyle(color: Colors.white),
                   )
                 ],
@@ -158,7 +158,7 @@ class Authentication {
                     width: 5,
                   ),
                   Text(
-                    'Error : Failed to authenticate incorrect password',
+                    'Error : Failed to authenticate \n incorrect password',
                     style: TextStyle(color: Colors.white),
                   )
                 ],
@@ -179,7 +179,7 @@ class Authentication {
                     width: 5,
                   ),
                   Text(
-                    'Error : Please verify your account before login',
+                    'Error : Please verify your \n account before login',
                     style: TextStyle(color: Colors.white),
                   )
                 ],
@@ -199,7 +199,7 @@ class Authentication {
                     width: 5,
                   ),
                   Text(
-                    'Error : Un error Occured',
+                    'Error : An error Occured',
                     style: TextStyle(color: Colors.white),
                   )
                 ],

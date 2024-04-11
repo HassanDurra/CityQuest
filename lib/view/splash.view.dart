@@ -39,7 +39,6 @@ class _SplashViewState extends State<SplashView> {
         Get.offAll(() => Navbar());
       } else {
         Get.offAll(() => LoginView());
-        // Get.offAll(() => RegisterView());
       }
     });
   }
