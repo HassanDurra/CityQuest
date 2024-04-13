@@ -38,8 +38,8 @@ class _SplashViewState extends State<SplashView> {
       if (userData.isNotEmpty) {
         Get.offAll(() => Navbar());
       } else {
-        // Get.offAll(() => LoginView());
-        Get.offAll(() => ForgotPasswordView());
+        Get.offAll(() => LoginView());
+        // Get.offAll(() => RegisterView());
       }
     });
   }
