@@ -6,7 +6,9 @@ import 'package:ionicons/ionicons.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'dart:convert';
+import 'dart:core';
 
 class MapView extends StatefulWidget {
   const MapView({Key? key}) : super(key: key);
@@ -17,23 +19,27 @@ class MapView extends StatefulWidget {
 
 class _MapViewState extends State<MapView> {
   List ListofPoints = [];
-  List<LatLng> Points = [];
+  final List<LatLng> Points = [];
+
   final TextEditingController pickupController = TextEditingController();
   final TextEditingController destinationController = TextEditingController();
   bool isHovered = false;
+
   getCordinates() async {
-    var response =
-        await http.get(getRouteUrl("6.145332,1.243344","6.125231,1.216011"));
+    var response = await http
+        .get(getRouteUrl("31.281291,72.320436", "31.269927,72.317392"));
     setState(() {
       if (response.statusCode == 200) {
-        var data = jsonDecode(response.body);
-        ListofPoints = data['features'][0]['geometry']['coordinates'];
-        print(ListofPoints);
-        Points =
-            ListofPoints.map((e) => LatLng(e[1].toDouble(), e[0].toDouble()))
-                .toList();
+        var data =
+            jsonDecode(response.body)['features'][0]['geometry']['coordinates'];
+        for (int i = 0; i < data[0].length; i++) {
+          double lat = data[0][i][0];
+          double long = data[0][i][1];
+          Points.add(LatLng(lat, long));
+        }
       }
     });
+    setState(() {});
   }
 
   @override
@@ -42,60 +48,68 @@ class _MapViewState extends State<MapView> {
       body: Stack(
         children: [
           FlutterMap(
-              options: MapOptions(
-                  initialZoom: 15, initialCenter: LatLng(6.145332, 1.243344)),
-              children: [
-                TileLayer(
-                  urlTemplate: 'https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}.png?apiKey=914dea0a4e48423e8af1c0ac35cac48a',
-                  userAgentPackageName: 'dev.fleaflet.flutter_map.example',
-                  // Plenty of other options available!
-                ),
-                MarkerLayer(
-                  markers: [
-                    // User Pickup location Marker
-                    Marker(
-                        point: LatLng(31.281291, 72.320436),
-                        width: 80,
-                        height: 80,
-                        child: InkWell(
-                          onTap: () {},
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.location_on,
-                                color: Colors.green,
-                                size: 40,
-                              )
-                            ],
-                          ),
-                        )),
-                    // Destination Marker
-                    Marker(
-                        point: LatLng(31.269927, 72.317392),
-                        width: 80,
-                        height: 80,
-                        child: InkWell(
-                          onTap: () {},
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.location_on,
-                                color: Colors.red,
-                                size: 40,
-                              )
-                            ],
-                          ),
-                        )),
-                  ],
-                ),
+            options: MapOptions(
+              initialZoom: 15,
+              initialCenter: LatLng(31.281291, 72.320436),
+            ),
+            children: [
+              TileLayer(
+                urlTemplate:
+                    'https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}.png?apiKey=914dea0a4e48423e8af1c0ac35cac48a',
+                userAgentPackageName: 'dev.fleaflet.flutter_map.example',
+                // Plenty of other options available!
+              ),
+              MarkerLayer(
+                markers: [
+                  // User Pickup location Marker
+                  Marker(
+                      point: LatLng(31.281291, 72.320436),
+                      width: 80,
+                      height: 80,
+                      child: InkWell(
+                        onTap: () {},
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.location_on,
+                              color: Colors.green,
+                              size: 40,
+                            )
+                          ],
+                        ),
+                      )),
+                  // Destination Marker
+                  Marker(
+                      point: LatLng(31.269927, 72.317392),
+                      width: 80,
+                      height: 80,
+                      child: InkWell(
+                        onTap: () {},
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.location_on,
+                              color: Colors.red,
+                              size: 40,
+                            )
+                          ],
+                        ),
+                      )),
+                ],
+              ),
+              if (Points.isNotEmpty)
                 PolylineLayer(
                   polylineCulling: false,
                   polylines: [
                     Polyline(
-                        points: Points, color: Colors.blue, strokeWidth: 5),
+                      points: Points,
+                      color: Colors.blue,
+                      strokeWidth: 5,
+                    ),
                   ],
                 ),
-              ]),
+            ],
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
