@@ -39,8 +39,10 @@ class _SplashViewState extends State<SplashView> {
       if (userData.isNotEmpty) {
         Get.offAll(() => Navbar());
       } else {
-        // Get.offAll(() => LoginView());
-        Get.offAll(() => MapView());
+        Get.offAll(() => LoginView());
+          // Get.offAll(() => HomeView());
+        
+        // Get.offAll(() => MapView());
         // Get.offAll(() => Navbar());
       }
     });

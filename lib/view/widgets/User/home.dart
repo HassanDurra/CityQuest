@@ -35,41 +35,26 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Home View"),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () {
-        
-            },
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
+    return Scaffold( body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 "Welcome back, ${userData['username']}",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
 
-            
-
-
-
-            SizedBox(height: 10),
+/////search bar
+  const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.all(16),
               child: TextField(
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: const Icon(Icons.search),
                   hintText: 'Search...',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -78,43 +63,43 @@ class _HomeViewState extends State<HomeView> {
               ),
             ),
 
-
-
-            SizedBox(height: 20),
+////categories
+            const SizedBox(height: 20),
             CarouselWithIndicators(),
-            SizedBox(height: 20),
+
+            const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Categories',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
 
-
-
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: CategoryTile(
+                        child: const CategoryTile(
                           icon: Icons.directions_walk,
                           text: 'Things to Do',
                         ),
                       ),
-                      SizedBox(width: 10),
+
+                      const SizedBox(width: 10),
                       Expanded(
-                        child: CategoryTile(
+                        child: const CategoryTile(
                           icon: Icons.event,
                           text: 'Events',
                         ),
                       ),
-                      SizedBox(width: 10),
+
+                      const SizedBox(width: 10),
                       Expanded(
-                        child: CategoryTile(
+                        child: const CategoryTile(
                           icon: Icons.local_dining,
                           text: 'Food & Drinks',
                         ),
@@ -122,31 +107,33 @@ class _HomeViewState extends State<HomeView> {
                     ],
                   ),
 
-
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: CategoryTile(
+                        child: const CategoryTile(
                           icon: Icons.restaurant,
                           text: 'Restaurants',
                         ),
                       ),
-                      SizedBox(width: 10),
+
+                      const SizedBox(width: 10),
                       Expanded(
-                        child: CategoryTile(
+                        child: const CategoryTile(
                           icon: Icons.park,
                           text: 'Parks',
                         ),
                       ),
-                      SizedBox(width: 10),
+
+                      const SizedBox(width: 10),
                       Expanded(
-                        child: CategoryTile(
+                        child: const CategoryTile(
                           icon: Icons.beach_access,
                           text: 'Seas',
                         ),
                       ),
+
                     ],
                   ),
                 ],
@@ -155,13 +142,25 @@ class _HomeViewState extends State<HomeView> {
           ],
         ),
       ),
+
+      appBar: AppBar(
+        title: const Text(""),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.schedule),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.power_settings_new),
+            onPressed: () {},
+          ),
+        ],
+      ),
     );
   }
 }
 
-
-
-
+/////carousel
 class CarouselWithIndicators extends StatefulWidget {
   @override
   _CarouselWithIndicatorsState createState() => _CarouselWithIndicatorsState();
@@ -170,9 +169,9 @@ class CarouselWithIndicators extends StatefulWidget {
 class _CarouselWithIndicatorsState extends State<CarouselWithIndicators> {
   int _current = 0;
   final List<String> images = [
-     'assets/images/mainlogo.png',
-    'assets/images/mainlogo.png',
-    'assets/images/mainlogo.png',
+    'assets/images/tokyo.jpg',
+    'assets/images/newyork.jpg',
+    'assets/images/london.jpeg',
   ];
 
 
@@ -183,7 +182,7 @@ class _CarouselWithIndicatorsState extends State<CarouselWithIndicators> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          child: Text(
+          child: const Text(
             'Popular',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
@@ -194,7 +193,7 @@ class _CarouselWithIndicatorsState extends State<CarouselWithIndicators> {
               builder: (BuildContext context) {
                 return Container(
                   width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.symmetric(horizontal: 5.0),
+                  margin: const EdgeInsets.symmetric(horizontal: 5.0),
                   decoration: BoxDecoration(
                     color: Colors.grey,
                     borderRadius: BorderRadius.circular(10),
@@ -225,10 +224,10 @@ class _CarouselWithIndicatorsState extends State<CarouselWithIndicators> {
             return Container(
               width: 8.0,
               height: 8.0,
-              margin: EdgeInsets.symmetric(vertical: 10.2, horizontal: 2.0),
+              margin: const EdgeInsets.symmetric(vertical: 10.2, horizontal: 2.0),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: _current == index ? Color(0xFFFBC233) : Colors.grey,
+                color: _current == index ? const Color(0xFF00416A) : Colors.grey,
               ),
             );
           }).toList(),
@@ -258,13 +257,12 @@ class CategoryTile extends StatelessWidget {
             Icon(
               icon,
               size: 36,
-              color: Color(0xFFFBC233),
+              color: const Color(0xFF00416A),
             ),
-            
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               text,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 14,
               ),
@@ -275,3 +273,4 @@ class CategoryTile extends StatelessWidget {
     );
   }
 }
+
