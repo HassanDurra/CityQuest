@@ -1,6 +1,11 @@
 import 'dart:convert';
-
-
+import 'package:cityquest/view/widgets/User/pages/category_page.dart';
+import 'package:cityquest/view/widgets/User/pages/events_page.dart';
+import 'package:cityquest/view/widgets/User/pages/food_drinks_page.dart';
+import 'package:cityquest/view/widgets/User/pages/parks_page.dart';
+import 'package:cityquest/view/widgets/User/pages/restaurants_page.dart';
+import 'package:cityquest/view/widgets/User/pages/seas_page.dart';
+import 'package:cityquest/view/widgets/User/pages/things_to_do_page.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,7 +14,7 @@ class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  _HomeViewState createState() => _HomeViewState();
 }
 
 class _HomeViewState extends State<HomeView> {
@@ -35,7 +40,8 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( body: SingleChildScrollView(
+    return Scaffold(
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -48,8 +54,9 @@ class _HomeViewState extends State<HomeView> {
               ),
             ),
 
-/////search bar
-  const SizedBox(height: 10),
+
+
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.all(16),
               child: TextField(
@@ -63,9 +70,12 @@ class _HomeViewState extends State<HomeView> {
               ),
             ),
 
-////categories
+
+
             const SizedBox(height: 20),
             CarouselWithIndicators(),
+
+   /////categories
 
             const SizedBox(height: 20),
             Padding(
@@ -89,6 +99,7 @@ class _HomeViewState extends State<HomeView> {
                         ),
                       ),
 
+
                       const SizedBox(width: 10),
                       Expanded(
                         child: const CategoryTile(
@@ -96,6 +107,8 @@ class _HomeViewState extends State<HomeView> {
                           text: 'Events',
                         ),
                       ),
+
+
 
                       const SizedBox(width: 10),
                       Expanded(
@@ -118,6 +131,7 @@ class _HomeViewState extends State<HomeView> {
                         ),
                       ),
 
+                      
                       const SizedBox(width: 10),
                       Expanded(
                         child: const CategoryTile(
@@ -125,6 +139,8 @@ class _HomeViewState extends State<HomeView> {
                           text: 'Parks',
                         ),
                       ),
+
+
 
                       const SizedBox(width: 10),
                       Expanded(
@@ -134,6 +150,7 @@ class _HomeViewState extends State<HomeView> {
                         ),
                       ),
 
+
                     ],
                   ),
                 ],
@@ -142,6 +159,8 @@ class _HomeViewState extends State<HomeView> {
           ],
         ),
       ),
+
+/////clock power buttomn
 
       appBar: AppBar(
         title: const Text(""),
@@ -160,7 +179,7 @@ class _HomeViewState extends State<HomeView> {
   }
 }
 
-/////carousel
+
 class CarouselWithIndicators extends StatefulWidget {
   @override
   _CarouselWithIndicatorsState createState() => _CarouselWithIndicatorsState();
@@ -238,7 +257,51 @@ class _CarouselWithIndicatorsState extends State<CarouselWithIndicators> {
 }
 
 
+// class CategoryTile extends StatelessWidget {
+//   final IconData icon;
+//   final String text;
 
+//   const CategoryTile({required this.icon, required this.text});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: () {
+//         Navigator.pushNamed(context, '/park');
+//   Navigator.push(
+//     context,
+//     MaterialPageRoute(builder: (context) => CategoryPage()), 
+//   );
+  
+// },
+
+//       child: Card(
+//         elevation: 4,
+//         child: Padding(
+//           padding: const EdgeInsets.symmetric(vertical: 16.0),
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               Icon(
+//                 icon,
+//                 size: 36,
+//                 color: const Color(0xFF00416A),
+//               ),
+//               const SizedBox(height: 8),
+//               Text(
+//                 text,
+//                 style: const TextStyle(
+//                   color: Colors.black,
+//                   fontSize: 14,
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
 class CategoryTile extends StatelessWidget {
   final IconData icon;
   final String text;
@@ -247,27 +310,72 @@ class CategoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              size: 36,
-              color: const Color(0xFF00416A),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              text,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 14,
+    return GestureDetector(
+      onTap: () {
+        switch (text) {
+          case 'Things to Do':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ThingsToDoPage()),
+            );
+            break;
+          case 'Events':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => EventsPage()),
+            );
+            break;
+          case 'Food & Drinks':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => FoodAndDrinksPage()),
+            );
+            break;
+          case 'Restaurants':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => RestaurantsPage()),
+            );
+            break;
+          case 'Parks':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ParksPage()),
+            );
+            break;
+          case 'Seas':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SeasPage()),
+            );
+            break;
+          default:
+      
+            break;
+        }
+      },
+      child: Card(
+        elevation: 4,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                size: 36,
+                color: const Color(0xFF00416A),
               ),
-            ),
-          ],
+              const SizedBox(height: 8),
+              Text(
+                text,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
