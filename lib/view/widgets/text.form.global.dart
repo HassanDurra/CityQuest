@@ -35,6 +35,7 @@ class TextFormGlobal extends StatelessWidget {
             height: 1,
           )
           
+          
         ),
       ),
     );
