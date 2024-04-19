@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cityquest/view/widgets/User/pages/category_page.dart';
 import 'package:cityquest/view/widgets/User/pages/events_page.dart';
 import 'package:cityquest/view/widgets/User/pages/food_drinks_page.dart';
@@ -6,9 +9,7 @@ import 'package:cityquest/view/widgets/User/pages/parks_page.dart';
 import 'package:cityquest/view/widgets/User/pages/restaurants_page.dart';
 import 'package:cityquest/view/widgets/User/pages/seas_page.dart';
 import 'package:cityquest/view/widgets/User/pages/things_to_do_page.dart';
-import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -50,12 +51,13 @@ class _HomeViewState extends State<HomeView> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 "Welcome back, ${userData['username']}",
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
 
 
-
+/////search bar
             const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.all(16),
@@ -75,8 +77,8 @@ class _HomeViewState extends State<HomeView> {
             const SizedBox(height: 20),
             CarouselWithIndicators(),
 
-   /////categories
 
+/////categories
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(16),
@@ -93,7 +95,7 @@ class _HomeViewState extends State<HomeView> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: const CategoryTile(
+                        child: CategoryTile(
                           icon: Icons.directions_walk,
                           text: 'Things to Do',
                         ),
@@ -102,7 +104,7 @@ class _HomeViewState extends State<HomeView> {
 
                       const SizedBox(width: 10),
                       Expanded(
-                        child: const CategoryTile(
+                        child: CategoryTile(
                           icon: Icons.event,
                           text: 'Events',
                         ),
@@ -112,7 +114,7 @@ class _HomeViewState extends State<HomeView> {
 
                       const SizedBox(width: 10),
                       Expanded(
-                        child: const CategoryTile(
+                        child: CategoryTile(
                           icon: Icons.local_dining,
                           text: 'Food & Drinks',
                         ),
@@ -120,21 +122,22 @@ class _HomeViewState extends State<HomeView> {
                     ],
                   ),
 
+
                   const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: const CategoryTile(
+                        child: CategoryTile(
                           icon: Icons.restaurant,
                           text: 'Restaurants',
                         ),
                       ),
 
-                      
+
                       const SizedBox(width: 10),
                       Expanded(
-                        child: const CategoryTile(
+                        child: CategoryTile(
                           icon: Icons.park,
                           text: 'Parks',
                         ),
@@ -144,13 +147,41 @@ class _HomeViewState extends State<HomeView> {
 
                       const SizedBox(width: 10),
                       Expanded(
-                        child: const CategoryTile(
+                        child: CategoryTile(
                           icon: Icons.beach_access,
                           text: 'Seas',
                         ),
                       ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
 
-
+ //// Grid Layout Cards
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Recommmended',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 10),
+                  GridView.count(
+                    crossAxisCount: 2,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      GridCard(
+                        title: 'One of the most under-rated countries in Asia for adventurous, independent travellers is Pakistan. ',
+                        imageUrl: 'assets/images/card 1.jpg',
+                      ),
+                      GridCard(
+                        title: 'The Amazing Pakistan - Can you guess the City ?',
+                        imageUrl: 'assets/images/card 2.jpg',
+                      ),
                     ],
                   ),
                 ],
@@ -160,8 +191,8 @@ class _HomeViewState extends State<HomeView> {
         ),
       ),
 
-/////clock power buttomn
 
+////power icon
       appBar: AppBar(
         title: const Text(""),
         actions: [
@@ -178,8 +209,46 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 }
+/////last 2 cards 
 
+class GridCard extends StatelessWidget {
+  final String title;
+  final String imageUrl;
 
+  const GridCard({required this.title, required this.imageUrl});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 4,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            flex: 2,
+            child: Image.network(
+              imageUrl,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                title,
+                style:
+                    const TextStyle(fontSize: 14),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+/////carousel 
 class CarouselWithIndicators extends StatefulWidget {
   @override
   _CarouselWithIndicatorsState createState() => _CarouselWithIndicatorsState();
@@ -243,10 +312,12 @@ class _CarouselWithIndicatorsState extends State<CarouselWithIndicators> {
             return Container(
               width: 8.0,
               height: 8.0,
-              margin: const EdgeInsets.symmetric(vertical: 10.2, horizontal: 2.0),
+              margin:
+                  const EdgeInsets.symmetric(vertical: 10.2, horizontal: 2.0),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: _current == index ? const Color(0xFF00416A) : Colors.grey,
+                color:
+                    _current == index ? const Color(0xFF00416A) : Colors.grey,
               ),
             );
           }).toList(),
@@ -256,52 +327,6 @@ class _CarouselWithIndicatorsState extends State<CarouselWithIndicators> {
   }
 }
 
-
-// class CategoryTile extends StatelessWidget {
-//   final IconData icon;
-//   final String text;
-
-//   const CategoryTile({required this.icon, required this.text});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       onTap: () {
-//         Navigator.pushNamed(context, '/park');
-//   Navigator.push(
-//     context,
-//     MaterialPageRoute(builder: (context) => CategoryPage()), 
-//   );
-  
-// },
-
-//       child: Card(
-//         elevation: 4,
-//         child: Padding(
-//           padding: const EdgeInsets.symmetric(vertical: 16.0),
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               Icon(
-//                 icon,
-//                 size: 36,
-//                 color: const Color(0xFF00416A),
-//               ),
-//               const SizedBox(height: 8),
-//               Text(
-//                 text,
-//                 style: const TextStyle(
-//                   color: Colors.black,
-//                   fontSize: 14,
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
 class CategoryTile extends StatelessWidget {
   final IconData icon;
   final String text;
@@ -350,10 +375,11 @@ class CategoryTile extends StatelessWidget {
             );
             break;
           default:
-      
+
             break;
         }
       },
+
       child: Card(
         elevation: 4,
         child: Padding(
