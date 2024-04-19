@@ -1,17 +1,16 @@
-
 import 'package:flutter/material.dart';
 
 class ThingsToDoCard extends StatelessWidget {
   final String imagePath;
   final String thingName;
   final String history;
-  final String reviews;
+  final int reviewsCount;
 
   const ThingsToDoCard({
     required this.imagePath,
     required this.thingName,
     required this.history,
-    required this.reviews,
+    required this.reviewsCount,
   });
 
   @override
@@ -50,28 +49,37 @@ class ThingsToDoCard extends StatelessWidget {
             SizedBox(height: 10.0),
             Row(
               children: [
-                Icon(
-                  Icons.star,
-                  size: 18,
-                  color: Colors.amber,
+                Row(
+                  children: List.generate(
+                    5,
+                    (index) => Icon(
+                      Icons.star,
+                      size: 18,
+                      color: Colors.amber,
+                    ),
+                  ),
                 ),
                 SizedBox(width: 5),
                 Text(
-                  reviews,
-                  style: TextStyle(fontSize: 16.0),
+                  '$reviewsCount Reviews',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.blue,
+                  ),
                 ),
                 SizedBox(width: 10),
+                SizedBox(width: 10), // Add space here
                 Icon(
                   Icons.open_in_new,
                   size: 18,
-                  color: Colors.grey,
+                  color: Colors.amber, // Change color to yellow
                 ),
                 SizedBox(width: 5),
                 Text(
                   'Open',
                   style: TextStyle(
                     fontSize: 16.0,
-                    color: Colors.grey,
+                    color: Colors.blue,
                   ),
                 ),
               ],
@@ -95,21 +103,42 @@ class ThingsToDoPage extends StatelessWidget {
         child: Column(
           children: [
             ThingsToDoCard(
-              imagePath: 'assets/images/historical_site.jpg',
+              imagePath: 'assets/images/historica.jpg',
               thingName: 'Historical Sites',
               history: 'Learn about the rich history of our city.',
-              reviews: '5 Reviews',
+              reviewsCount: 5,
             ),
             SizedBox(height: 20.0),
             ThingsToDoCard(
               imagePath: 'assets/images/museum.jpg',
               thingName: 'Museums',
               history: 'Explore fascinating exhibits from around the world.',
-              reviews: '8 Reviews',
+              reviewsCount: 8,
+            ),
+            SizedBox(height: 20.0),
+            ThingsToDoCard(
+              imagePath: 'assets/images/shopping.webp',
+              thingName: 'Shopping Centers',
+              history: 'Shop till you drop at our city\'s diverse shopping centers.',
+              reviewsCount: 10,
+            ),
+            SizedBox(height: 20.0),
+            ThingsToDoCard(
+              imagePath: 'assets/images/sports.jpg',
+              thingName: 'Sports Facilities',
+              history: 'Stay active and enjoy various sports activities at our state-of-the-art facilities.',
+              reviewsCount: 6,
             ),
           ],
         ),
       ),
     );
   }
+}
+
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: ThingsToDoPage(),
+  ));
 }
