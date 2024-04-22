@@ -285,7 +285,7 @@ class _NavbarState extends State<Navbar> {
                               : Colors.black54,
                         ),
                         Text(
-                          "Profile",
+                          "Setting",
                           style: TextStyle(
                               fontSize: 11,
                               fontFamily: 'poppins',

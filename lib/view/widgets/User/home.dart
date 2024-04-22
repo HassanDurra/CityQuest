@@ -1,14 +1,10 @@
 import 'dart:convert';
+import 'package:cityquest/view/widgets/User/pages/category_page.dart';
+
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:cityquest/view/widgets/User/pages/category_page.dart';
-import 'package:cityquest/view/widgets/User/pages/events_page.dart';
-import 'package:cityquest/view/widgets/User/pages/food_drinks_page.dart';
-import 'package:cityquest/view/widgets/User/pages/parks_page.dart';
-import 'package:cityquest/view/widgets/User/pages/restaurants_page.dart';
-import 'package:cityquest/view/widgets/User/pages/seas_page.dart';
-import 'package:cityquest/view/widgets/User/pages/things_to_do_page.dart';
+
 
 
 class HomeView extends StatefulWidget {
@@ -32,7 +28,6 @@ class _HomeViewState extends State<HomeView> {
     }
   }
 
-
   @override
   void initState() {
     super.initState();
@@ -51,13 +46,11 @@ class _HomeViewState extends State<HomeView> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 "Welcome back, ${userData['username']}",
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
 
-
-/////search bar
+            ///search bar
             const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.all(16),
@@ -72,13 +65,10 @@ class _HomeViewState extends State<HomeView> {
               ),
             ),
 
-
-
             const SizedBox(height: 20),
             CarouselWithIndicators(),
 
-
-/////categories
+            ///categories
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(16),
@@ -89,7 +79,6 @@ class _HomeViewState extends State<HomeView> {
                     'Categories',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-
                   const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,8 +89,6 @@ class _HomeViewState extends State<HomeView> {
                           text: 'Things to Do',
                         ),
                       ),
-
-
                       const SizedBox(width: 10),
                       Expanded(
                         child: CategoryTile(
@@ -109,9 +96,6 @@ class _HomeViewState extends State<HomeView> {
                           text: 'Events',
                         ),
                       ),
-
-
-
                       const SizedBox(width: 10),
                       Expanded(
                         child: CategoryTile(
@@ -121,8 +105,6 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ],
                   ),
-
-
                   const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -133,8 +115,6 @@ class _HomeViewState extends State<HomeView> {
                           text: 'Restaurants',
                         ),
                       ),
-
-
                       const SizedBox(width: 10),
                       Expanded(
                         child: CategoryTile(
@@ -142,9 +122,6 @@ class _HomeViewState extends State<HomeView> {
                           text: 'Parks',
                         ),
                       ),
-
-
-
                       const SizedBox(width: 10),
                       Expanded(
                         child: CategoryTile(
@@ -158,7 +135,7 @@ class _HomeViewState extends State<HomeView> {
               ),
             ),
 
- //// Grid Layout Cards
+            /// Grid Layout Cards
             Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -169,20 +146,25 @@ class _HomeViewState extends State<HomeView> {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
-                  GridView.count(
-                    crossAxisCount: 2,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: [
-                      GridCard(
-                        title: 'One of the most under-rated countries in Asia for adventurous, independent travellers is Pakistan. ',
-                        imageUrl: 'assets/images/card 1.jpg',
-                      ),
-                      GridCard(
-                        title: 'The Amazing Pakistan - Can you guess the City ?',
-                        imageUrl: 'assets/images/card 2.jpg',
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: GridView.count(
+                      crossAxisCount: 2,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      mainAxisSpacing: 16, // Increased main axis spacing
+                      crossAxisSpacing: 16, // Increased cross axis spacing
+                      children: [
+                        GridCard(
+                          title: 'One of the most under-rated countries in Asia for adventurous, independent travellers is Pakistan. ',
+                          imageUrl: 'assets/images/card 1.jpg',
+                        ),
+                        GridCard(
+                          title: 'The Amazing Pakistan - Can you guess the City ?',
+                          imageUrl: 'assets/images/card 2.jpg',
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -191,8 +173,7 @@ class _HomeViewState extends State<HomeView> {
         ),
       ),
 
-
-////power icon
+      ///power icon
       appBar: AppBar(
         title: const Text(""),
         actions: [
@@ -209,8 +190,8 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 }
-/////last 2 cards 
 
+///last 2 cards
 class GridCard extends StatelessWidget {
   final String title;
   final String imageUrl;
@@ -219,36 +200,53 @@ class GridCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            flex: 2,
-            child: Image.network(
-              imageUrl,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                title,
-                style:
-                    const TextStyle(fontSize: 14),
-                textAlign: TextAlign.center,
-              ),
-            ),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16), // Rounded corners
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 4,
+            offset: const Offset(0, 2), // Shadow position
           ),
         ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16), // Rounded corners
+        child: Card(
+          elevation: 0, // No elevation for the card inside the container
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                flex: 2,
+                child: Image.network(
+                  imageUrl,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    title,
+                    style: const TextStyle(fontSize: 14),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 }
-/////carousel 
+
+///carousel
 class CarouselWithIndicators extends StatefulWidget {
   @override
   _CarouselWithIndicatorsState createState() => _CarouselWithIndicatorsState();
@@ -261,7 +259,6 @@ class _CarouselWithIndicatorsState extends State<CarouselWithIndicators> {
     'assets/images/newyork.jpg',
     'assets/images/london.jpeg',
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -313,11 +310,11 @@ class _CarouselWithIndicatorsState extends State<CarouselWithIndicators> {
               width: 8.0,
               height: 8.0,
               margin:
-                  const EdgeInsets.symmetric(vertical: 10.2, horizontal: 2.0),
+              const EdgeInsets.symmetric(vertical: 10.2, horizontal: 2.0),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color:
-                    _current == index ? const Color(0xFF00416A) : Colors.grey,
+                _current == index ? const Color(0xFF00416A) : Colors.grey,
               ),
             );
           }).toList(),
@@ -356,30 +353,30 @@ class CategoryTile extends StatelessWidget {
               MaterialPageRoute(builder: (context) => FoodAndDrinksPage()),
             );
             break;
-          case 'Restaurants':
+             case 'Resturants':
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => RestaurantsPage()),
             );
-            break;
-          case 'Parks':
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ParksPage()),
-            );
-            break;
-          case 'Seas':
+              break;
+             case 'Seas':
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => SeasPage()),
             );
-            break;
-          default:
+              break;
+             case 'Parks':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ParksPage()),
+            );
 
+
+          default:
+            // Add handling for other categories if needed
             break;
         }
       },
-
       child: Card(
         elevation: 4,
         child: Padding(
@@ -411,7 +408,148 @@ class CategoryTile extends StatelessWidget {
 
 
 
-////second homw page
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // import 'dart:convert';
 // import 'package:flutter/material.dart';
 // import 'package:carousel_slider/carousel_slider.dart';
@@ -423,6 +561,7 @@ class CategoryTile extends StatelessWidget {
 // import 'package:cityquest/view/widgets/User/pages/restaurants_page.dart';
 // import 'package:cityquest/view/widgets/User/pages/seas_page.dart';
 // import 'package:cityquest/view/widgets/User/pages/things_to_do_page.dart';
+
 
 // class HomeView extends StatefulWidget {
 //   const HomeView({Key? key}) : super(key: key);
@@ -445,6 +584,7 @@ class CategoryTile extends StatelessWidget {
 //     }
 //   }
 
+
 //   @override
 //   void initState() {
 //     super.initState();
@@ -463,10 +603,13 @@ class CategoryTile extends StatelessWidget {
 //               padding: const EdgeInsets.symmetric(horizontal: 16),
 //               child: Text(
 //                 "Welcome back, ${userData['username']}",
-//                 style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+//                 style:
+//                     const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
 //               ),
 //             ),
 
+
+// /////search bar
 //             const SizedBox(height: 10),
 //             Padding(
 //               padding: const EdgeInsets.all(16),
@@ -481,9 +624,13 @@ class CategoryTile extends StatelessWidget {
 //               ),
 //             ),
 
+
+
 //             const SizedBox(height: 20),
 //             CarouselWithIndicators(),
 
+
+// /////categories
 //             const SizedBox(height: 20),
 //             Padding(
 //               padding: const EdgeInsets.all(16),
@@ -494,6 +641,7 @@ class CategoryTile extends StatelessWidget {
 //                     'Categories',
 //                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
 //                   ),
+
 //                   const SizedBox(height: 10),
 //                   Row(
 //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -504,6 +652,8 @@ class CategoryTile extends StatelessWidget {
 //                           text: 'Things to Do',
 //                         ),
 //                       ),
+
+
 //                       const SizedBox(width: 10),
 //                       Expanded(
 //                         child: CategoryTile(
@@ -511,6 +661,9 @@ class CategoryTile extends StatelessWidget {
 //                           text: 'Events',
 //                         ),
 //                       ),
+
+
+
 //                       const SizedBox(width: 10),
 //                       Expanded(
 //                         child: CategoryTile(
@@ -520,6 +673,8 @@ class CategoryTile extends StatelessWidget {
 //                       ),
 //                     ],
 //                   ),
+
+
 //                   const SizedBox(height: 10),
 //                   Row(
 //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -530,6 +685,8 @@ class CategoryTile extends StatelessWidget {
 //                           text: 'Restaurants',
 //                         ),
 //                       ),
+
+
 //                       const SizedBox(width: 10),
 //                       Expanded(
 //                         child: CategoryTile(
@@ -537,6 +694,9 @@ class CategoryTile extends StatelessWidget {
 //                           text: 'Parks',
 //                         ),
 //                       ),
+
+
+
 //                       const SizedBox(width: 10),
 //                       Expanded(
 //                         child: CategoryTile(
@@ -550,6 +710,7 @@ class CategoryTile extends StatelessWidget {
 //               ),
 //             ),
 
+//  //// Grid Layout Cards
 //             Padding(
 //               padding: const EdgeInsets.all(16),
 //               child: Column(
@@ -560,20 +721,25 @@ class CategoryTile extends StatelessWidget {
 //                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
 //                   ),
 //                   const SizedBox(height: 10),
-//                   GridView.count(
-//                     crossAxisCount: 2,
-//                     shrinkWrap: true,
-//                     physics: const NeverScrollableScrollPhysics(),
-//                     children: [
-//                       GridCard(
-//                         title: 'One of the most under-rated countries in Asia for adventurous, independent travellers is Pakistan. ',
-//                         imageUrl: 'assets/images/card 1.jpg',
-//                       ),
-//                       GridCard(
-//                         title: 'The Amazing Pakistan - Can you guess the City ?',
-//                         imageUrl: 'assets/images/card 2.jpg',
-//                       ),
-//                     ],
+//                   Padding(
+//                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
+//                     child: GridView.count(
+//                       crossAxisCount: 2,
+//                       shrinkWrap: true,
+//                       physics: const NeverScrollableScrollPhysics(),
+//                       mainAxisSpacing: 16, // Increased main axis spacing
+//                       crossAxisSpacing: 16, // Increased cross axis spacing
+//                       children: [
+//                         GridCard(
+//                           title: 'One of the most under-rated countries in Asia for adventurous, independent travellers is Pakistan. ',
+//                           imageUrl: 'assets/images/card 1.jpg',
+//                         ),
+//                         GridCard(
+//                           title: 'The Amazing Pakistan - Can you guess the City ?',
+//                           imageUrl: 'assets/images/card 2.jpg',
+//                         ),
+//                       ],
+//                     ),
 //                   ),
 //                 ],
 //               ),
@@ -582,6 +748,8 @@ class CategoryTile extends StatelessWidget {
 //         ),
 //       ),
 
+
+// ////power icon
 //       appBar: AppBar(
 //         title: const Text(""),
 //         actions: [
@@ -598,6 +766,7 @@ class CategoryTile extends StatelessWidget {
 //     );
 //   }
 // }
+// /////last 2 cards 
 
 // class GridCard extends StatelessWidget {
 //   final String title;
@@ -607,35 +776,52 @@ class CategoryTile extends StatelessWidget {
 
 //   @override
 //   Widget build(BuildContext context) {
-//     return Card(
-//       elevation: 4,
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.stretch,
-//         children: [
-//           Expanded(
-//             flex: 2,
-//             child: Image.network(
-//               imageUrl,
-//               fit: BoxFit.cover,
-//             ),
-//           ),
-//           Expanded(
-//             flex: 1,
-//             child: Padding(
-//               padding: const EdgeInsets.all(8.0),
-//               child: Text(
-//                 title,
-//                 style: const TextStyle(fontSize: 14),
-//                 textAlign: TextAlign.center,
-//               ),
-//             ),
+//     return Container(
+//       decoration: BoxDecoration(
+//         color: Colors.white,
+//         borderRadius: BorderRadius.circular(16), // Rounded corners
+//         boxShadow: [
+//           BoxShadow(
+//             color: Colors.grey.withOpacity(0.5),
+//             spreadRadius: 2,
+//             blurRadius: 4,
+//             offset: const Offset(0, 2), // Shadow position
 //           ),
 //         ],
+//       ),
+//       child: ClipRRect(
+//         borderRadius: BorderRadius.circular(16), // Rounded corners
+//         child: Card(
+//           elevation: 0, // No elevation for the card inside the container
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.stretch,
+//             children: [
+//               Expanded(
+//                 flex: 2,
+//                 child: Image.network(
+//                   imageUrl,
+//                   fit: BoxFit.cover,
+//                 ),
+//               ),
+//               Expanded(
+//                 flex: 1,
+//                 child: Padding(
+//                   padding: const EdgeInsets.all(8.0),
+//                   child: Text(
+//                     title,
+//                     style: const TextStyle(fontSize: 14),
+//                     textAlign: TextAlign.center,
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
 //       ),
 //     );
 //   }
 // }
-
+// /////carousel 
 // class CarouselWithIndicators extends StatefulWidget {
 //   @override
 //   _CarouselWithIndicatorsState createState() => _CarouselWithIndicatorsState();
@@ -648,6 +834,7 @@ class CategoryTile extends StatelessWidget {
 //     'assets/images/newyork.jpg',
 //     'assets/images/london.jpeg',
 //   ];
+
 
 //   @override
 //   Widget build(BuildContext context) {
@@ -665,33 +852,17 @@ class CategoryTile extends StatelessWidget {
 //           items: images.map((image) {
 //             return Builder(
 //               builder: (BuildContext context) {
-//                 return Stack(
-//                   fit: StackFit.expand,
-//                   children: [
-//                     Container(
-//                       margin: const EdgeInsets.symmetric(horizontal: 5.0),
-//                       decoration: BoxDecoration(
-//                         color: Colors.grey,
-//                         borderRadius: BorderRadius.circular(10),
-//                         image: DecorationImage(
-//                           image: AssetImage(image),
-//                           fit: BoxFit.cover,
-//                         ),
-//                       ),
+//                 return Container(
+//                   width: MediaQuery.of(context).size.width,
+//                   margin: const EdgeInsets.symmetric(horizontal: 5.0),
+//                   decoration: BoxDecoration(
+//                     color: Colors.grey,
+//                     borderRadius: BorderRadius.circular(10),
+//                     image: DecorationImage(
+//                       image: NetworkImage(image),
+//                       fit: BoxFit.cover,
 //                     ),
-//                     Positioned(
-//                       bottom: 10.0,
-//                       left: 10.0,
-//                       child: Text(
-//                         'Your text here',
-//                         style: TextStyle(
-//                           color: Colors.white,
-//                           fontSize: 16.0,
-//                           fontWeight: FontWeight.bold,
-//                         ),
-//                       ),
-//                     ),
-//                   ],
+//                   ),
 //                 );
 //               },
 //             );
@@ -777,9 +948,11 @@ class CategoryTile extends StatelessWidget {
 //             );
 //             break;
 //           default:
+
 //             break;
 //         }
 //       },
+
 //       child: Card(
 //         elevation: 4,
 //         child: Padding(
@@ -807,3 +980,5 @@ class CategoryTile extends StatelessWidget {
 //     );
 //   }
 // }
+
+
