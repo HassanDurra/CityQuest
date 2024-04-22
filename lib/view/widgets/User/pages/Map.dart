@@ -35,7 +35,7 @@ class _MapViewState extends State<MapView> {
         for (int i = 0; i < data[0].length; i++) {
           double lat = data[0][i][0];
           double long = data[0][i][1];
-          Points.add(LatLng(lat, long));
+          Points.add(LatLng(long, lat));
         }
       }
     });
