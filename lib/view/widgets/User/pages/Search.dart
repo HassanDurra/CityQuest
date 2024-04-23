@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 class Search extends StatefulWidget {
@@ -8,40 +9,47 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
-  String _query = ''; 
+  String _query = '';
 
 
-  void _search() {
-  
-
-
-    print('Searching for: $_query');
+  void _search()
+   {
+   print('Searching for: $_query');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Search'),
-      ),
+
+
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: TextFormField(
-          onChanged: (value) {
-            setState(() {
-              _query = value; 
-
-
-            });
-          },
-          decoration: InputDecoration(
-            labelText: 'Search',
-            hintText: 'Enter your search....',
-            border: OutlineInputBorder(),
-            suffixIcon: IconButton(
-              onPressed: _search,
-              icon: Icon(Icons.search),
-            ),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25.0),
+            border: Border.all(color: Colors.grey),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: TextFormField(
+                  onChanged: (value) {
+                    setState(() {
+                      _query = value;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+                    border: InputBorder.none,
+                    hintText: 'Enter your search...',
+                  ),
+                ),
+              ),
+              IconButton(
+                onPressed: _search,
+                icon: Icon(Icons.search),
+              ),
+            ],
           ),
         ),
       ),

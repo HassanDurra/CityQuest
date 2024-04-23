@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:cityquest/view/Auth/login.dart';
 import 'package:cityquest/view/Auth/register.dart';
 import 'package:flutter/material.dart';
