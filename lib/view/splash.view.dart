@@ -4,6 +4,7 @@ import 'package:cityquest/view/Auth/login.dart';
 import 'package:cityquest/view/Auth/register.dart';
 import 'package:cityquest/view/widgets/User/home.dart';
 import 'package:cityquest/view/Auth/buttons/register.button.dart';
+import 'package:cityquest/view/widgets/User/pages/Cities.dart';
 import 'package:cityquest/view/widgets/User/pages/Map.dart';
 import 'package:cityquest/view/widgets/User/partial/navbar.dart';
 import 'package:flutter/material.dart';
@@ -39,11 +40,11 @@ class _SplashViewState extends State<SplashView> {
       if (userData.isNotEmpty) {
         Get.offAll(() => Navbar());
       } else {
-        Get.offAll(() => LoginView());
-          // Get.offAll(() => HomeView());
-        
+        // Get.offAll(() => LoginView());
+        // Get.offAll(() => HomeView());
+
         // Get.offAll(() => MapView());
-        // Get.offAll(() => Navbar());
+        Get.offAll(() => Cities());
       }
     });
   }

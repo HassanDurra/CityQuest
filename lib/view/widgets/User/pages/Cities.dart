@@ -1,22 +1,6 @@
-// import 'package:flutter/material.dart';
-
-// class Cities extends StatefulWidget {
-//   const Cities({super.key});
-
-//   @override
-//   State<Cities> createState() => _CitiesState();
-// }
-
-// class _CitiesState extends State<Cities> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Container(alignment: Alignment.center, child: Text("Cities")),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cityquest/assets/colors.dart';
 
 class Cities extends StatefulWidget {
   const Cities({Key? key}) : super(key: key);
@@ -26,107 +10,298 @@ class Cities extends StatefulWidget {
 }
 
 class _CitiesState extends State<Cities> {
-  // List of cities
   final List<Map<String, dynamic>> cities = [
     {
       'name': 'New York',
-      'description': 'New York City is the most populous city in the United States...',
-      'image': 'assets/images/newyork.jpg',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
       'rating': 4.5,
       'reviews': 1000,
+      'category': 'Food',
     },
     {
       'name': 'London',
-      'description': 'London is the capital and largest city of England and the United Kingdom...',
-      'image': 'assets/images/london.jpeg',
+      'description':
+          'London is the capital and largest city of England and the United Kingdom...',
+      'image': 'images/london.jpeg',
       'rating': 4.8,
       'reviews': 1200,
+      'category': 'Hotels',
     },
-    {
-      'name': 'Paris',
-      'description': 'Paris is the capital and most populous city of France...',
-      'image': 'assets/images/paris.jpg',
-      'rating': 4.7,
-      'reviews': 1500,
-    },
-    {
-      'name': 'Tokyo',
-      'description': 'Tokyo is the capital city of Japan and one of its 47 prefectures...',
-      'image': 'assets/images/tokyo.jpg',
-      'rating': 4.6,
-      'reviews': 1100,
-    },
-    {
-      'name': 'Los Angeles',
-      'description': 'Los Angeles is the largest city in California and the second-largest city in the United States...',
-      'image': 'assets/images/los_angeles.jpg',
-      'rating': 4.4,
-      'reviews': 900,
-    },
-    {
-      'name': 'Sydney',
-      'description': 'Sydney is the capital city of the state of New South Wales, and the most populous city in Australia...',
-      'image': 'assets/images/sydney.jpg',
-      'rating': 4.9,
-      'reviews': 1300,
-    },
-    {
-      'name': 'Dubai',
-      'description': 'Dubai is the largest and most populous city in the United Arab Emirates...',
-      'image': 'assets/images/dubai.jpg',
-      'rating': 4.7,
-      'reviews': 1600,
-    },
-    {
-      'name': 'Rome',
-      'description': 'Rome is the capital city and a special comune of Italy...',
-      'image': 'assets/images/rome.webp',
-      'rating': 4.5,
-      'reviews': 950,
-    },
+    // Add other cities
+  ];
+
+  TextEditingController searchController = TextEditingController();
+  String filter = '';
+  String selectedCategory = 'All'; // Initially set to 'All'
+
+  final List<CategoryItem> categories = [
+    CategoryItem(icon: Icons.list, label: "All", isActive: true),
+    CategoryItem(icon: Icons.restaurant, label: 'Food', isActive: false),
+    CategoryItem(icon: Icons.hotel, label: 'Hotels', isActive: false),
+    CategoryItem(icon: Icons.shopping_cart, label: 'Shopping', isActive: false),
+    CategoryItem(icon: Icons.shopping_cart, label: 'Shopping', isActive: false),
+    CategoryItem(icon: Icons.shopping_cart, label: 'Shopping', isActive: false),
+    CategoryItem(icon: Icons.shopping_cart, label: 'Shopping', isActive: false),
+    // Add more categories as needed
   ];
 
   @override
   Widget build(BuildContext context) {
+    List<Map<String, dynamic>> filteredCities = cities.where((city) {
+      return city['category'] == selectedCategory || selectedCategory == 'All';
+    }).where((city) {
+      return city['name'].toLowerCase().contains(filter) ||
+          city['description'].toLowerCase().contains(filter);
+    }).toList();
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Cities'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                selectedCategory = 'All'; // Set back to 'All'
+                filter = ''; // Clear the filter
+              });
+            },
+            icon: Icon(Icons.clear), // Clear filter button
+          ),
+        ],
       ),
-      body: ListView.builder(
-        itemCount: cities.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0), // Add vertical padding
-            child: Card(
-              child: ListTile(
-                leading: Image.asset(
-                  cities[index]['image'],
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.cover,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: searchController,
+              decoration: InputDecoration(
+                labelText: 'Search by Cities',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
-                title: Text(cities[index]['name']),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      cities[index]['description'],
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    Row(
-                      children: [
-                        Icon(Icons.star, color: Colors.yellow),
-                        Text('${cities[index]['rating']} (${cities[index]['reviews']} reviews)'),
-                      ],
-                    ),
-                  ],
+                suffixIcon: IconButton(
+                  onPressed: () => searchController.clear(),
+                  icon: Icon(Icons.clear),
                 ),
-                onTap: () {},
+              ),
+              onChanged: (value) {
+                setState(() {
+                  filter = value.toLowerCase();
+                });
+              },
+            ),
+          ),
+          SizedBox(height: 20),
+          Container(
+            alignment: Alignment.topLeft,
+            padding: EdgeInsets.all(10),
+            child: Text(
+              'Categories',
+            ),
+          ),
+          CarouselSlider(
+            options: CarouselOptions(
+              height: 60.0,
+              aspectRatio: 20 / 10,
+              viewportFraction: 0.4,
+              enableInfiniteScroll: true,
+              reverse: false,
+              autoPlay: true,
+              autoPlayInterval: Duration(seconds: 3),
+              autoPlayAnimationDuration: Duration(milliseconds: 800),
+              autoPlayCurve: Curves.fastOutSlowIn,
+              enlargeCenterPage: true,
+              scrollDirection: Axis.horizontal,
+            ),
+            items: categories.map((item) {
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 4.0),
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      selectedCategory = item.label; // Update selected category
+                    });
+                  },
+                  child: CategoryItem(
+                    icon: item.icon,
+                    label: item.label,
+                    isActive: item.label == selectedCategory,
+                    onTap: () {
+                      setState(() {
+                        selectedCategory =
+                            item.label; // Update selected category
+                      });
+                    },
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Expanded(
+            child: GridView.builder(
+              
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 8.0,
+                crossAxisSpacing: 8.0,
+              ),
+              itemCount: filteredCities.length,
+              itemBuilder: (context, index) {
+                final city = filteredCities[index];
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    height: 500,
+                    
+                    child: Card(
+                    
+                      color: city['category'] == 'Food'
+                          ? GlobalColors.mainColor
+                          : Colors.white,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          
+                          ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(4),
+                              topRight: Radius.circular(4),
+                            ),
+                            child: Image.asset(
+                              city['image'],
+                              fit: BoxFit.cover,
+                              height:100,
+                              width: double.infinity,
+                              
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              city['name'],
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: city['category'] == 'Food'
+                                    ? Colors.white
+                                    : GlobalColors.mainColor,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0,
+                              vertical: 4.0,
+                            ),
+                            child: Text(
+                              city['description'],
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: city['category'] == 'Food'
+                                    ? Colors.white
+                                    : GlobalColors.mainColor,
+                                    fontSize: 10,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Icon(Icons.star, color: Colors.yellow),
+                                SizedBox(width: 5),
+                                Text(
+                                  '${city['rating']} (${city['reviews']} reviews)',
+                                  style: TextStyle(
+                                    fontStyle: FontStyle.italic,
+                                    color: city['category'] == 'Food'
+                                        ? Colors.white
+                                        : GlobalColors.mainColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CategoryItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final bool isActive;
+  final VoidCallback? onTap;
+
+  const CategoryItem({
+    Key? key,
+    required this.icon,
+    required this.label,
+    required this.isActive,
+    this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: MediaQuery.of(context).size.width / 4,
+        padding: EdgeInsets.all(8),
+        margin: EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          color: isActive ? GlobalColors.mainColor : Colors.transparent,
+          borderRadius: BorderRadius.circular(8),
+          border: isActive
+              ? null
+              : Border.all(
+                  color: GlobalColors.mainColor,
+                ),
+          boxShadow: [
+            if (isActive)
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: Offset(0, 3),
+              ),
+          ],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              color: isActive ? Colors.white : GlobalColors.mainColor,
+            ),
+            SizedBox(width: 5),
+            Text(
+              label,
+              style: TextStyle(
+                color: isActive ? Colors.white : GlobalColors.mainColor,
               ),
             ),
-          );
-        },
+          ],
+        ),
       ),
     );
   }
