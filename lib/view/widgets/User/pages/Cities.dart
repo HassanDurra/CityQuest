@@ -42,7 +42,7 @@ class _CitiesState extends State<Cities> {
       'category': 'Food',
     },
     {
-      'name': 'New York',
+      'name': 'New York city',
       'description':
           'New York City is the most populous city in the United States...',
       'image': 'images/newyork.jpg',
