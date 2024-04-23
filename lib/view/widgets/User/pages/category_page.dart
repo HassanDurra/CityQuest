@@ -71,6 +71,9 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 }
+
+
+
 //////thing to do 
 class ThingsToDoCard extends StatelessWidget {
   final String imagePath;

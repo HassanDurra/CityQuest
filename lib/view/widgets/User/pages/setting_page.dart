@@ -10,76 +10,101 @@ class SettingsPage extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.all(16.0),
         children: [
-          ListTile(
-            title: Text('Theme'),
-            trailing: Icon(Icons.color_lens, color: Color(0xFF00416A)),
-            onTap: () {
-              // Navigate to theme selection page
-            },
-          ),
-          Divider(),
-          ListTile(
-            title: Text('Font'),
-            trailing: Icon(Icons.font_download, color: Color(0xFF00416A)),
-            onTap: () {
-              // Navigate to font selection page
-            },
-          ),
-          Divider(),
-          ListTile(
-            title: Text('Data Management'),
-            trailing: Icon(Icons.storage, color: Color(0xFF00416A)),
-            onTap: () {
-              // Navigate to data management page
-            },
-          ),
-          Divider(),
-          ListTile(
-            title: Text('Social Media'),
-            trailing: Icon(Icons.people, color: Color(0xFF00416A)),
-            onTap: () {
-              // Navigate to social media integration page
-            },
-          ),
-          Divider(),
-          ListTile(
-            title: Text('Accessibility'),
-            trailing: Icon(Icons.accessibility, color: Color(0xFF00416A)),
-            onTap: () {
-              // Navigate to accessibility options page
-            },
-          ),
-          Divider(),
-          ListTile(
-            title: Text('Backup & Restore'),
-            trailing: Icon(Icons.backup, color: Color(0xFF00416A)),
-            onTap: () {
-              // Navigate to backup & restore page
-            },
-          ),
-          Divider(),
-          ListTile(
-            title: Text('Feedback & Suggestions'),
-            trailing: Icon(Icons.feedback, color: Color(0xFF00416A)),
-            onTap: () {
-              // Navigate to feedback & suggestions page
-            },
-          ),
-          Divider(),
-          ListTile(
-            title: Text('Terms & Conditions / Privacy Policy'),
-            trailing: Icon(Icons.library_books, color: Color(0xFF00416A)),
-            onTap: () {
-              // Navigate to terms & conditions / privacy policy page
-            },
-          ),
-          Divider(),
-          ListTile(
-            title: Text('Logout'),
-            trailing: Icon(Icons.exit_to_app, color: Color(0xFF00416A)),
-            onTap: () {
-              // Implement logout functionality
-            },
+
+          Card(
+            elevation: 4,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    'General',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                ListTile(
+                  leading: Icon(Icons.account_circle, color: Color(0xFF00416A)),
+                  title: Text('Account'),
+                  onTap: () {
+     
+
+
+                  },
+                ),
+                Divider(),
+                ListTile(
+                  leading: Icon(Icons.notifications, color: Color(0xFF00416A)),
+                  title: Text('Notifications'),
+                  onTap: () {
+
+
+                  },
+                ),
+                Divider(),
+                ListTile(
+                  leading: Icon(Icons.local_offer, color: Color(0xFF00416A)),
+                  title: Text('Coupons'),
+                  onTap: () {
+         
+
+
+                  },
+                ),
+                Divider(),
+                ListTile(
+                  leading: Icon(Icons.exit_to_app, color: Color(0xFF00416A)),
+                  title: Text('Logout'),
+                  onTap: () {
+         
+                  },
+                ),
+                Divider(),
+                ListTile(
+                  leading: Icon(Icons.delete, color: Color(0xFF00416A)),
+                  title: Text('Delete Account'),
+                  onTap: () {
+            
+            
+                  },
+                ),
+                Divider(),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
+                  child: ListTile(
+                    title: Text(
+                      'Feedback',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+       
+                ListTile(
+                  leading: Icon(Icons.bug_report, color: Color(0xFF00416A)),
+                  title: Text('Report a Bug'),
+                  onTap: () {
+              
+
+
+                  },
+                ),
+                Divider(),
+                ListTile(
+                  leading: Icon(Icons.feedback, color: Color(0xFF00416A)),
+                  title: Text('Send Feedback'),
+                  onTap: () {
+              
+
+                  },
+                ),
+              ],
+            ),
           ),
         ],
       ),
