@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cityquest/assets/colors.dart';
+import 'package:ionicons/ionicons.dart';
 
 class Cities extends StatefulWidget {
   const Cities({Key? key}) : super(key: key);
@@ -11,6 +14,114 @@ class Cities extends StatefulWidget {
 
 class _CitiesState extends State<Cities> {
   final List<Map<String, dynamic>> cities = [
+    {
+      'name': 'New York',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
+    {
+      'name': 'New York',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
+    {
+      'name': 'New York',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
+    {
+      'name': 'New York',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
+    {
+      'name': 'New York',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
+    {
+      'name': 'New York',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
+    {
+      'name': 'New York',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
+    {
+      'name': 'New York',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
+    {
+      'name': 'New York',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
+    {
+      'name': 'New York',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
+    {
+      'name': 'New York',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
+    {
+      'name': 'New York',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
     {
       'name': 'New York',
       'description':
@@ -56,186 +167,212 @@ class _CitiesState extends State<Cities> {
           city['description'].toLowerCase().contains(filter);
     }).toList();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Cities'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              setState(() {
-                selectedCategory = 'All'; // Set back to 'All'
-                filter = ''; // Clear the filter
-              });
-            },
-            icon: Icon(Icons.clear), // Clear filter button
+    return Container(
+      child: Scaffold(
+        
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          shadowColor: Colors.black,
+          title: Text(
+            'Categories',
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
           ),
-        ],
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: searchController,
-              decoration: InputDecoration(
-                labelText: 'Search by Cities',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                suffixIcon: IconButton(
-                  onPressed: () => searchController.clear(),
-                  icon: Icon(Icons.clear),
-                ),
-              ),
-              onChanged: (value) {
+          actions: [
+            Text('Filter'),
+            SizedBox(
+              width: 10,
+            ),
+            IconButton(
+              onPressed: () {
                 setState(() {
-                  filter = value.toLowerCase();
+                  selectedCategory = 'All'; // Set back to 'All'
+                  filter = ''; // Clear the filter
                 });
               },
+              icon: Icon(Ionicons.filter_outline,
+                  color: Colors.black), // Clear filter button
             ),
-          ),
-          SizedBox(height: 20),
-          Container(
-            alignment: Alignment.topLeft,
-            padding: EdgeInsets.all(10),
-            child: Text(
-              'Categories',
-            ),
-          ),
-          CarouselSlider(
-            options: CarouselOptions(
-              height: 60.0,
-              aspectRatio: 20 / 10,
-              viewportFraction: 0.4,
-              enableInfiniteScroll: true,
-              reverse: false,
-              autoPlay: true,
-              autoPlayInterval: Duration(seconds: 3),
-              autoPlayAnimationDuration: Duration(milliseconds: 800),
-              autoPlayCurve: Curves.fastOutSlowIn,
-              enlargeCenterPage: true,
-              scrollDirection: Axis.horizontal,
-            ),
-            items: categories.map((item) {
-              return Padding(
-                padding: EdgeInsets.symmetric(horizontal: 4.0),
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      selectedCategory = item.label; // Update selected category
-                    });
-                  },
-                  child: CategoryItem(
-                    icon: item.icon,
-                    label: item.label,
-                    isActive: item.label == selectedCategory,
-                    onTap: () {
-                      setState(() {
-                        selectedCategory =
-                            item.label; // Update selected category
-                      });
-                    },
-                  ),
-                ),
-              );
-            }).toList(),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Expanded(
-            child: GridView.builder(
+          ],
+        ),
+        
+        body: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
               
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 8.0,
-                crossAxisSpacing: 8.0,
-              ),
-              itemCount: filteredCities.length,
-              itemBuilder: (context, index) {
-                final city = filteredCities[index];
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    height: 500,
-                    
-                    child: Card(
-                    
-                      color: city['category'] == 'Food'
-                          ? GlobalColors.mainColor
-                          : Colors.white,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          
-                          ClipRRect(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(4),
-                              topRight: Radius.circular(4),
-                            ),
-                            child: Image.asset(
-                              city['image'],
-                              fit: BoxFit.cover,
-                              height:100,
-                              width: double.infinity,
-                              
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              city['name'],
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: city['category'] == 'Food'
-                                    ? Colors.white
-                                    : GlobalColors.mainColor,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0,
-                              vertical: 4.0,
-                            ),
-                            child: Text(
-                              city['description'],
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: city['category'] == 'Food'
-                                    ? Colors.white
-                                    : GlobalColors.mainColor,
-                                    fontSize: 10,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Icon(Icons.star, color: Colors.yellow),
-                                SizedBox(width: 5),
-                                Text(
-                                  '${city['rating']} (${city['reviews']} reviews)',
-                                  style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    color: city['category'] == 'Food'
-                                        ? Colors.white
-                                        : GlobalColors.mainColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                
+                child: TextField(
+                  controller: searchController,
+                  decoration: InputDecoration(
+                    labelText: 'Search By Name',
+                    suffixIcon: IconButton(
+                      onPressed: () => searchController.clear(),
+                      icon: Icon(Icons.clear),
                     ),
                   ),
-                );
-              },
+                  onChanged: (value) {
+                    setState(() {
+                      filter = value.toLowerCase();
+                    });
+                  },
+                ),
+              ),
+              SizedBox(height: 20),
+              Container(
+                alignment: Alignment.topLeft,
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  'Popular Categories',
+                ),
+              ),
+              CarouselSlider(
+                options: CarouselOptions(
+                  height: 60.0,
+                  aspectRatio: 20 / 10,
+                  viewportFraction: 0.4,
+                  enableInfiniteScroll: true,
+                  reverse: false,
+                  autoPlay: true,
+                  autoPlayInterval: Duration(seconds: 3),
+                  autoPlayAnimationDuration: Duration(milliseconds: 800),
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  enlargeCenterPage: true,
+                  scrollDirection: Axis.horizontal,
+                ),
+                items: categories.map((item) {
+                  return Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 4.0),
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          selectedCategory =
+                              item.label; // Update selected category
+                        });
+                      },
+                      child: CategoryItem(
+                        icon: item.icon,
+                        label: item.label,
+                        isActive: item.label == selectedCategory,
+                        onTap: () {
+                          setState(() {
+                            selectedCategory =
+                                item.label; // Update selected category
+                          });
+                        },
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Expanded(
+                child: filteredCities.isNotEmpty
+                    ? ListView.builder(
+                        itemCount: (filteredCities.length / 2).ceil(),
+                        itemBuilder: (context, index) {
+                          int firstIndex = index * 2;
+                          int secondIndex = index * 2 + 1;
+                          return Row(
+                            children: [
+                              if (firstIndex < filteredCities.length)
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: buildCard(filteredCities[firstIndex]),
+                                  ),
+                                ),
+                              if (secondIndex < filteredCities.length)
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: buildCard(filteredCities[secondIndex]),
+                                  ),
+                                ),
+                            ],
+                          );
+                        },
+                      )
+                    : Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'images/noresult.jpg',
+                              height: 150,
+                            ),
+                            SizedBox(height: 20),
+                            Text(
+                              'No result found',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildCard(Map<String, dynamic> city) {
+    return Card(
+      elevation: 3,
+      color: GlobalColors.mainColor,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.asset(
+            city['image'],
+            fit: BoxFit.cover,
+            height: 150,
+            width: double.infinity,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              city['name'],
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+            child: Text(
+              city['description'],
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Icon(Icons.star, color: Colors.yellow),
+                SizedBox(width: 5),
+                Text(
+                  '${city['rating']} (${city['reviews']} reviews)',
+                  style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -269,11 +406,7 @@ class CategoryItem extends StatelessWidget {
         decoration: BoxDecoration(
           color: isActive ? GlobalColors.mainColor : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
-          border: isActive
-              ? null
-              : Border.all(
-                  color: GlobalColors.mainColor,
-                ),
+          border: isActive ? null : Border.all(color: GlobalColors.mainColor),
           boxShadow: [
             if (isActive)
               BoxShadow(

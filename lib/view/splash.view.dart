@@ -44,7 +44,7 @@ class _SplashViewState extends State<SplashView> {
         // Get.offAll(() => HomeView());
 
         // Get.offAll(() => MapView());
-        Get.offAll(() => Cities());
+        Get.offAll(() => Navbar());
       }
     });
   }
