@@ -33,8 +33,8 @@ class _MapViewState extends State<MapView> {
         var data =
             jsonDecode(response.body)['features'][0]['geometry']['coordinates'];
         for (int i = 0; i < data[0].length; i++) {
-          double lat = data[0][i][0];
           double long = data[0][i][1];
+          double lat = data[0][i][0];
           Points.add(LatLng(long, lat));
         }
       }
