@@ -22,7 +22,7 @@ class Navbar extends StatefulWidget {
 class _NavbarState extends State<Navbar> {
   int CurrentTab = 0;
   final List<Widget> screens = [
-    Profile(),
+    ProfileScreen(),
     Cities(),
     MapView(),
     Listing(),
@@ -270,7 +270,7 @@ class _NavbarState extends State<Navbar> {
                   MaterialButton(
                     onPressed: () {
                       setState(() {
-                        currentScreen = Profile();
+                        currentScreen = ProfileScreen();
                         CurrentTab = 5;
                       });
                     },

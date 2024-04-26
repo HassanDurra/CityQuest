@@ -43,8 +43,8 @@ class _SplashViewState extends State<SplashView> {
         // Get.offAll(() => LoginView());
         // Get.offAll(() => HomeView());
 
-        Get.offAll(() => MapView());
-        // Get.offAll(() => Navbar());
+        // Get.offAll(() => MapView());
+        Get.offAll(() => Navbar());
       }
     });
   }
@@ -53,12 +53,16 @@ class _SplashViewState extends State<SplashView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white10,
-      body: Center(
-        child: Image.asset(
-          'assets/images/mainlogo.png',
-          width: 180,
-          height: 180,
-        ),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              "images/loader.png",
+              fit: BoxFit.contain,
+            ),
+          ),
+         
+        ],
       ),
     );
   }
