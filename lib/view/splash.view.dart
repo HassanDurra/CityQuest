@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:cityquest/view/Auth/forgot_password.dart';
 import 'package:cityquest/view/Auth/login.dart';
+import 'package:cityquest/view/Auth/profile_edit.dart';
 import 'package:cityquest/view/Auth/register.dart';
 import 'package:cityquest/view/widgets/User/home.dart';
 import 'package:cityquest/view/Auth/buttons/register.button.dart';
@@ -41,10 +42,8 @@ class _SplashViewState extends State<SplashView> {
         Get.offAll(() => Navbar());
       } else {
         // Get.offAll(() => LoginView());
-        // Get.offAll(() => HomeView());
 
-        // Get.offAll(() => MapView());
-        Get.offAll(() => Navbar());
+        Get.offAll(() => ProfileEdit());
       }
     });
   }
@@ -58,7 +57,7 @@ class _SplashViewState extends State<SplashView> {
           Positioned.fill(
             child: Image.asset(
               "images/loader.png",
-              fit: BoxFit.contain,
+              fit: BoxFit.cover,
             ),
           ),
          
