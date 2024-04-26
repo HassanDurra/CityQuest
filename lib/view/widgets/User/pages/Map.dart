@@ -1,14 +1,15 @@
 import 'package:cityquest/assets/colors.dart';
 import 'package:cityquest/view/widgets/User/pages/map_inputs/map_api_credientals.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:ionicons/ionicons.dart';
-import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'dart:convert';
-import 'dart:core';
+import 'dart:async';
 
 class MapView extends StatefulWidget {
   const MapView({Key? key}) : super(key: key);
@@ -20,10 +21,39 @@ class MapView extends StatefulWidget {
 class _MapViewState extends State<MapView> {
   List ListofPoints = [];
   final List<LatLng> Points = [];
+  late LatLng currentLocation = LatLng(0.0, 0.0);
+  late LatLng destinationLocation = LatLng(31.269927, 72.317392);
+  bool showCurrentLocation = false;
+  double zoomLevel = 15.0;
 
   final TextEditingController pickupController = TextEditingController();
   final TextEditingController destinationController = TextEditingController();
   bool isHovered = false;
+
+  // Get User Current Location
+  void getCurrentLocation() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      print("Location Denied");
+      LocationPermission ask = await Geolocator.requestPermission();
+    } else {
+      Position currentPostion = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      final currentLongitude = currentPostion.longitude.toDouble();
+      final currentLatitude = currentPostion.latitude.toDouble();
+      setState(() {
+        currentLocation = LatLng(currentLatitude, currentLongitude);
+        showCurrentLocation = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentLocation();
+  }
 
   getCordinates() async {
     var response = await http
@@ -33,13 +63,12 @@ class _MapViewState extends State<MapView> {
         var data =
             jsonDecode(response.body)['features'][0]['geometry']['coordinates'];
         for (int i = 0; i < data[0].length; i++) {
-          double lat = data[0][i][0];
           double long = data[0][i][1];
+          double lat = data[0][i][0];
           Points.add(LatLng(long, lat));
         }
       }
     });
-    setState(() {});
   }
 
   @override
@@ -47,69 +76,63 @@ class _MapViewState extends State<MapView> {
     return Scaffold(
       body: Stack(
         children: [
-          FlutterMap(
-            options: MapOptions(
-              initialZoom: 15,
-              initialCenter: LatLng(31.281291, 72.320436),
-            ),
-            children: [
-              TileLayer(
-                urlTemplate:
-                    'https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}.png?apiKey=914dea0a4e48423e8af1c0ac35cac48a',
-                userAgentPackageName: 'dev.fleaflet.flutter_map.example',
-                // Plenty of other options available!
+          if (showCurrentLocation)
+            FlutterMap(
+              options: MapOptions(
+                minZoom: 5,
+                maxZoom: 20,
+                zoom: zoomLevel,
+                center: currentLocation,
               ),
-              MarkerLayer(
-                markers: [
-                  // User Pickup location Marker
-                  Marker(
-                      point: LatLng(31.281291, 72.320436),
+              children: [
+                TileLayer(
+                  urlTemplate:
+                      'https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}.png?apiKey=914dea0a4e48423e8af1c0ac35cac48a',
+                  userAgentPackageName: 'dev.fleaflet.flutter_map.example',
+                ),
+                MarkerLayer(
+                  markers: [
+                    Marker(
+                      point: currentLocation,
                       width: 80,
                       height: 80,
-                      child: InkWell(
+                      child:InkWell(
                         onTap: () {},
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.location_on,
-                              color: Colors.green,
-                              size: 40,
-                            )
-                          ],
+                        child: Icon(
+                          Icons.location_on,
+                          color: Colors.green,
+                          size: 40,
                         ),
-                      )),
-                  // Destination Marker
-                  Marker(
-                      point: LatLng(31.269927, 72.317392),
+                      ),
+                    ),
+                    Marker(
+                      point: destinationLocation,
                       width: 80,
                       height: 80,
-                      child: InkWell(
+                      child:InkWell(
                         onTap: () {},
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.location_on,
-                              color: Colors.red,
-                              size: 40,
-                            )
-                          ],
+                        child: Icon(
+                          Icons.location_on,
+                          color: Colors.red,
+                          size: 40,
                         ),
-                      )),
-                ],
-              ),
-              if (Points.isNotEmpty)
-                PolylineLayer(
-                  polylineCulling: false,
-                  polylines: [
-                    Polyline(
-                      points: Points,
-                      color: Colors.blue,
-                      strokeWidth: 5,
+                      ),
                     ),
                   ],
                 ),
-            ],
-          ),
+                if (Points.isNotEmpty)
+                  PolylineLayer(
+                    polylineCulling: false,
+                    polylines: [
+                      Polyline(
+                        points: Points,
+                        color: Colors.blue,
+                        strokeWidth: 5,
+                      ),
+                    ],
+                  ),
+              ],
+            ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -117,67 +140,42 @@ class _MapViewState extends State<MapView> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Expanded(
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          zoomLevel = zoomLevel + 1.0;
+                        });
+                      },
                       child: Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.3),
-                              spreadRadius: 1,
-                              blurRadius: 3,
-                              offset: Offset(0, 2),
-                            ),
-                          ],
+                          shape: BoxShape.circle,
                         ),
-                        child: TextFormField(
-                          controller: destinationController,
-                          keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
-                            hintText: 'Destination',
-                            contentPadding: EdgeInsets.all(10),
-                            border: InputBorder.none,
-                          ),
+                        padding: EdgeInsets.all(8),
+                        child: Icon(
+                          Icons.add,
+                          color: Colors.black,
                         ),
                       ),
                     ),
                     SizedBox(width: 10),
-                    MouseRegion(
-                      cursor: SystemMouseCursors.click,
-                      onEnter: (_) {
+                    InkWell(
+                      onTap: () {
                         setState(() {
-                          isHovered = true;
+                          zoomLevel = zoomLevel - 1.0;
                         });
                       },
-                      onExit: (_) {
-                        setState(() {
-                          isHovered = false;
-                        });
-                      },
-                      child: InkWell(
-                        onTap: () async {},
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: isHovered
-                                ? GlobalColors.secondaryColor
-                                : GlobalColors.mainColor,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.3),
-                                spreadRadius: 1,
-                                blurRadius: 3,
-                                offset: Offset(0, 2),
-                              )
-                            ],
-                            shape: BoxShape.circle,
-                          ),
-                          padding: EdgeInsets.all(12),
-                          child: Icon(
-                            Ionicons.search,
-                            color: Colors.white,
-                          ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        padding: EdgeInsets.all(8),
+                        child: Icon(
+                          Icons.remove,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -188,17 +186,13 @@ class _MapViewState extends State<MapView> {
             ],
           ),
           Positioned(
-            left: 0,
-            right: 0,
-            bottom: 50,
+            right: 16,
+            bottom: 120,
             child: InkWell(
               onTap: () {
-                getCordinates();
+                getCurrentLocation();
               },
               child: Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(horizontal: 30),
-                padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: GlobalColors.mainColor,
                   borderRadius: BorderRadius.circular(5),
@@ -211,8 +205,8 @@ class _MapViewState extends State<MapView> {
                     )
                   ],
                 ),
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
                       Ionicons.location_outline,
@@ -220,7 +214,7 @@ class _MapViewState extends State<MapView> {
                     ),
                     SizedBox(width: 5),
                     Text(
-                      "Set Current Location",
+                      "Get Route",
                       style: TextStyle(color: Colors.white),
                       textAlign: TextAlign.center,
                     ),

@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -71,11 +72,7 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 }
-
-
-
-//////thing to do 
-class ThingsToDoCard extends StatelessWidget {
+ class ThingsToDoCard extends StatelessWidget {
   final String imagePath;
   final String thingName;
   final String history;
@@ -173,44 +170,42 @@ class ThingsToDoPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Things To Do'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            ThingsToDoCard(
-              imagePath: 'images/historica.jpg',
-              thingName: 'Historical Sites',
-              history: 'Learn about the rich history of our city.',
-              reviewsCount: 5,
-            ),
-            SizedBox(height: 20.0),
-            ThingsToDoCard(
-              imagePath: 'images/museum.jpg',
-              thingName: 'Museums',
-              history: 'Explore fascinating exhibits from around the world.',
-              reviewsCount: 8,
-            ),
-            SizedBox(height: 20.0),
-            ThingsToDoCard(
-              imagePath: 'images/shopping.webp',
-              thingName: 'Shopping Centers',
-              history: 'Shop till you drop at our city\'s diverse shopping centers.',
-              reviewsCount: 10,
-            ),
-            SizedBox(height: 20.0),
-            ThingsToDoCard(
-              imagePath: 'images/sports.jpg',
-              thingName: 'Sports Facilities',
-              history: 'Stay active and enjoy various sports activities at our state-of-the-art facilities.',
-              reviewsCount: 6,
-            ),
-          ],
-        ),
+      body: ListView(
+        children: [
+          ThingsToDoCard(
+            imagePath: 'images/historica.jpg',
+            thingName: 'Historical Sites',
+            history: 'Learn about the rich history of our city.',
+            reviewsCount: 5,
+          ),
+          SizedBox(height: 20.0),
+          ThingsToDoCard(
+            imagePath: 'images/meseum.jpg',
+            thingName: 'Museums',
+            history: 'Explore fascinating exhibits from around the world.',
+            reviewsCount: 8,
+          ),
+          SizedBox(height: 20.0),
+          ThingsToDoCard(
+            imagePath: 'images/shopping.webp',
+            thingName: 'Shopping Centers',
+            history: 'Shop till you drop at our city\'s diverse shopping centers.',
+            reviewsCount: 10,
+          ),
+          SizedBox(height: 20.0),
+          ThingsToDoCard(
+            imagePath: 'images/sports.jpg',
+            thingName: 'Sports Facilities',
+            history: 'Stay active and enjoy various sports activities at our state-of-the-art facilities.',
+            reviewsCount: 6,
+          ),
+        ],
       ),
     );
   }
 }
-/////evvent 
+
+/////event
 class EventCard extends StatelessWidget {
   final String imagePath;
   final String eventName;
@@ -280,33 +275,28 @@ class EventsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Events'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            EventCard(
-              imagePath: 'images/artexhibition.jpg',
-              eventName: 'Art Exhibition Event',
-              eventTime: '10:00 AM',
-              eventDate: 'April 17, 2024', 
-              eventDescription: 'Description of Event 1', 
-            ),
-            SizedBox(height: 20.0),
-            EventCard(
-              imagePath: 'images/cultrual.jpg',
-              eventName: 'Cultural Event',
-              eventTime: '2:00 PM',
-              eventDate: 'April 18, 2024',
-              eventDescription: 'Description of Event 2',
-            ),
-          ],
-        ),
+      body: ListView(
+        children: [
+          EventCard(
+            imagePath: 'images/artexhibition.jpg',
+            eventName: 'Art Exhibition Event',
+            eventTime: '10:00 AM',
+            eventDate: 'April 17, 2024', 
+            eventDescription: 'Description of Event 1', 
+          ),
+          SizedBox(height: 20.0),
+          EventCard(
+            imagePath: 'images/cultrual.jpg',
+            eventName: 'Cultural Event',
+            eventTime: '2:00 PM',
+            eventDate: 'April 18, 2024',
+            eventDescription: 'Description of Event 2',
+          ),
+        ],
       ),
     );
   }
 }
-
-
 
 ////food and drink
 class FoodAndDrinksCard extends StatelessWidget {
@@ -407,66 +397,54 @@ class FoodAndDrinksPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Food & Drinks'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            FoodAndDrinksCard(
-              imagePath: 'images/indian_restaurant.jpg',
-              itemName: 'Indian Restaurant',
-              description: 'Explore the flavors of India with our authentic dishes.',
-              reviewsCount: 1200,
-            ),
-            SizedBox(height: 20.0),
-            FoodAndDrinksCard(
-              imagePath: 'images/italian_restaurant.jpg',
-              itemName: 'Italian Restaurant',
-              description: 'Experience the taste of Italy with our delicious pizzas and pastas.',
-              reviewsCount: 1500,
-            ),
-            SizedBox(height: 20.0),
-            FoodAndDrinksCard(
-              imagePath: 'images/chinese_restaurant.jpg',
-              itemName: 'Chinese Restaurant',
-              description: 'Savor the flavors of China with our wide variety of dishes.',
-              reviewsCount: 1800,
-            ),
-            SizedBox(height: 20.0),
-            FoodAndDrinksCard(
-              imagePath: 'images/thai_restaurant.jpg',
-              itemName: 'Thai Restaurant',
-              description: 'Indulge in the spicy and aromatic dishes of Thailand.',
-              reviewsCount: 1300,
-            ),
-            SizedBox(height: 20.0),
-            FoodAndDrinksCard(
-              imagePath: 'images/sports_bar.jpg',
-              itemName: 'Sports Bar',
-              description: 'Enjoy live sports matches and a wide selection of drinks in a vibrant atmosphere.',
-              reviewsCount: 900,
-            ),
-           
-            SizedBox(height: 20.0),
-            FoodAndDrinksCard(
-              imagePath: 'images/cocktail_bar.jpg',
-              itemName: 'Cocktail Bar',
-              description: 'Experience the art of mixology with our expertly crafted cocktails.',
-              reviewsCount: 850,
-            ),
-          
-          ],
-        ),
+      body: ListView(
+        children: [
+          FoodAndDrinksCard(
+            imagePath: 'images/indian_restaurant.jpg',
+            itemName: 'Indian Restaurant',
+            description: 'Explore the flavors of India with our authentic dishes.',
+            reviewsCount: 1200,
+          ),
+          SizedBox(height: 20.0),
+          FoodAndDrinksCard(
+            imagePath: 'images/italian_restaurant.jpg',
+            itemName: 'Italian Restaurant',
+            description: 'Experience the taste of Italy with our delicious pizzas and pastas.',
+            reviewsCount: 1500,
+          ),
+          SizedBox(height: 20.0),
+          FoodAndDrinksCard(
+            imagePath: 'images/chinese_restaurant.jpg',
+            itemName: 'Chinese Restaurant',
+            description: 'Savor the flavors of China with our wide variety of dishes.',
+            reviewsCount: 1800,
+          ),
+          SizedBox(height: 20.0),
+          FoodAndDrinksCard(
+            imagePath: 'images/thai_restaurant.jpg',
+            itemName: 'Thai Restaurant',
+            description: 'Indulge in the spicy and aromatic dishes of Thailand.',
+            reviewsCount: 1300,
+          ),
+          SizedBox(height: 20.0),
+          FoodAndDrinksCard(
+            imagePath: 'images/sports_bar.jpg',
+            itemName: 'Sports Bar',
+            description: 'Enjoy live sports matches and a wide selection of drinks in a vibrant atmosphere.',
+            reviewsCount: 900,
+          ),
+          SizedBox(height: 20.0),
+          FoodAndDrinksCard(
+            imagePath: 'images/cocktail_bar.jpg',
+            itemName: 'Cocktail Bar',
+            description: 'Experience the art of mixology with our expertly crafted cocktails.',
+            reviewsCount: 850,
+          ),
+        ],
       ),
     );
   }
 }
-
-
-
-
-
-
-
 
 ////restaruent
 class RestaurantCard extends StatelessWidget {
@@ -567,36 +545,34 @@ class RestaurantsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Restaurants'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            RestaurantCard(
-              imagePath: 'images/clocktower.jpg',
-              restaurantName: 'Clock Tower',
-              description: 'Description of Restaurant 1.',
-              reviewsCount: 3000,
-            ),
-            SizedBox(height: 20.0),
-            RestaurantCard(
-              imagePath: 'images/kolachi.jpg',
-              restaurantName: 'Kolachi',
-              description: 'Description of Restaurant 2.',
-              reviewsCount: 90000,
-            ),
-            SizedBox(height: 20.0),
-            RestaurantCard(
-              imagePath: 'images/coconutgrove.jpeg',
-              restaurantName: 'Coconut Grove',
-              description: 'Description of Restaurant 3.',
-              reviewsCount: 1097,
-            ),
-          ],
-        ),
+      body: ListView(
+        children: [
+          RestaurantCard(
+            imagePath: 'images/clocktower.jpg',
+            restaurantName: 'Clock Tower',
+            description: 'Description of Restaurant 1.',
+            reviewsCount: 3000,
+          ),
+          SizedBox(height: 20.0),
+          RestaurantCard(
+            imagePath: 'images/kolachi.jpg',
+            restaurantName: 'Kolachi',
+            description: 'Description of Restaurant 2.',
+            reviewsCount: 90000,
+          ),
+          SizedBox(height: 20.0),
+          RestaurantCard(
+            imagePath: 'images/coconutgrove.jpeg',
+            restaurantName: 'Coconut Grove',
+            description: 'Description of Restaurant 3.',
+            reviewsCount: 1097,
+          ),
+        ],
       ),
     );
   }
 }
+
 ////////seas 
 class SeasPage extends StatelessWidget {
   @override
@@ -605,32 +581,29 @@ class SeasPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Seas'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            ThingsToDoCard(
-              imagePath: 'images/atlanticocean.jpg',
-              thingName: 'Atlantic Ocean',
-              history: 'Atlantic Ocean, body of salt water covering approximately one-fifth of Earths surface and separating the continents of Europe and Africa to the east from those of North and South America to the west.',
-              reviewsCount: 14345,
-            ),
-            SizedBox(height: 20.0),
-            ThingsToDoCard(
-              imagePath: 'images/IndianOcean.webp',
-              thingName: 'Indian Ocean',
-              history: 'Indian Ocean, body of salt water covering approximately one-fifth of the total ocean area of the world. ',
-              reviewsCount: 257890,
-            ),
-            SizedBox(height: 20.0),
-            ThingsToDoCard(
-              imagePath: 'images/pacificocean.jpg',
-              thingName: 'Pacific Ocean',
-              history: 'The Pacific Ocean is the largest and deepest ocean basin on Earth, covering more than 155 million square kilometers (60 million square miles) and averaging a depth of 4,000 meters (13,000 feet).',
-              reviewsCount: 132547,
-            ),
-          ],
-        ),
+      body: ListView(
+        children: [
+          ThingsToDoCard(
+            imagePath: 'images/atlanticocean.jpg',
+            thingName: 'Atlantic Ocean',
+            history: 'Atlantic Ocean, body of salt water covering approximately one-fifth of Earths surface and separating the continents of Europe and Africa to the east from those of North and South America to the west.',
+            reviewsCount: 14345,
+          ),
+          SizedBox(height: 20.0),
+          ThingsToDoCard(
+            imagePath: 'images/IndianOcean.webp',
+            thingName: 'Indian Ocean',
+            history: 'Indian Ocean, body of salt water covering approximately one-fifth of the total ocean area of the world. ',
+            reviewsCount: 257890,
+          ),
+          SizedBox(height: 20.0),
+          ThingsToDoCard(
+            imagePath: 'images/pacificocean.jpg',
+            thingName: 'Pacific Ocean',
+            history: 'The Pacific Ocean is the largest and deepest ocean basin on Earth, covering more than 155 million square kilometers (60 million square miles) and averaging a depth of 4,000 meters (13,000 feet).',
+            reviewsCount: 132547,
+          ),
+        ],
       ),
     );
   }
@@ -643,32 +616,29 @@ class ParksPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Parks'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            ThingsToDoCard(
-              imagePath: 'images/hillpark.jpg',
-              thingName: 'Hill Park',
-              history: 'Hill Park is situated on a hilltop surrounded by a residential area known as PECHS neighborhood of Jamshed Town in Karachi, Sindh, Pakistan',
-              reviewsCount: 157698,
-            ),
-            SizedBox(height: 20.0),
-            ThingsToDoCard(
-              imagePath: 'images/iqbalpark.jpg',
-              thingName: 'Iqbal Park',
-              history: 'Iqbal Park formerly Minto Park, is an urban park. After renovation and expansion, it was named as Greater Iqbal Park. The 125-acre park includes an artificial lake which spreads over four acres which includes an 800 ft. long musical fountain..',
-              reviewsCount: 21497,
-            ),
-            SizedBox(height: 20.0),
-            ThingsToDoCard(
-              imagePath: 'images/safaripark.jpg',
-              thingName: 'Safari Park',
-              history: 'A safari park, sometimes known as a wildlife park, is a zoo-like commercial drive-in tourist attraction where visitors can drive their own vehicles or ride in vehicles provided by the facility to observe freely roaming animals.',
-              reviewsCount: 107534,
-            ),
-          ],
-        ),
+      body: ListView(
+        children: [
+          ThingsToDoCard(
+            imagePath: 'images/hillpark.jpg',
+            thingName: 'Hill Park',
+            history: 'Hill Park is situated on a hilltop surrounded by a residential area known as PECHS neighborhood of Jamshed Town in Karachi, Sindh, Pakistan',
+            reviewsCount: 157698,
+          ),
+          SizedBox(height: 20.0),
+          ThingsToDoCard(
+            imagePath: 'images/iqbalpark.jpg',
+            thingName: 'Iqbal Park',
+            history: 'Iqbal Park formerly Minto Park, is an urban park. After renovation and expansion, it was named as Greater Iqbal Park. The 125-acre park includes an artificial lake which spreads over four acres which includes an 800 ft. long musical fountain..',
+            reviewsCount: 21497,
+          ),
+          SizedBox(height: 20.0),
+          ThingsToDoCard(
+            imagePath: 'images/safaripark.jpg',
+            thingName: 'Safari Park',
+            history: 'A safari park, sometimes known as a wildlife park, is a zoo-like commercial drive-in tourist attraction where visitors can drive their own vehicles or ride in vehicles provided by the facility to observe freely roaming animals.',
+            reviewsCount: 107534,
+          ),
+        ],
       ),
     );
   }
