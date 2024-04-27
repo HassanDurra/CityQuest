@@ -1,15 +1,11 @@
 import 'package:cityquest/assets/colors.dart';
 import 'package:cityquest/view/widgets/User/pages/map_inputs/map_api_credientals.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:http/http.dart' as http;
-import 'package:ionicons/ionicons.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:async';
 
 class MapView extends StatefulWidget {
   const MapView({Key? key}) : super(key: key);
@@ -19,18 +15,22 @@ class MapView extends StatefulWidget {
 }
 
 class _MapViewState extends State<MapView> {
-  List ListofPoints = [];
-  final List<LatLng> Points = [];
+  List<LatLng> Points = [];
   late LatLng currentLocation = LatLng(0.0, 0.0);
+  late String? currentLongitudeRoute;
+  late String? currentlatitudeRoute;
   late LatLng destinationLocation = LatLng(31.269927, 72.317392);
   bool showCurrentLocation = false;
-  double zoomLevel = 15.0;
-
-  final TextEditingController pickupController = TextEditingController();
+  late double zoomLevel = 15.0;
   final TextEditingController destinationController = TextEditingController();
-  bool isHovered = false;
 
-  // Get User Current Location
+  @override
+  void initState() {
+    super.initState();
+    getCurrentLocation();
+    getCordinates();
+  }
+
   void getCurrentLocation() async {
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied ||
@@ -38,26 +38,23 @@ class _MapViewState extends State<MapView> {
       print("Location Denied");
       LocationPermission ask = await Geolocator.requestPermission();
     } else {
-      Position currentPostion = await Geolocator.getCurrentPosition(
+      Position currentPosition = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
-      final currentLongitude = currentPostion.longitude.toDouble();
-      final currentLatitude = currentPostion.latitude.toDouble();
+      final currentLongitude = currentPosition.longitude.toDouble();
+      final currentLatitude = currentPosition.latitude.toDouble();
       setState(() {
         currentLocation = LatLng(currentLatitude, currentLongitude);
+        currentLongitudeRoute = currentPosition.longitude.toString();
+        currentlatitudeRoute = currentPosition.latitude.toString();
         showCurrentLocation = true;
       });
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    getCurrentLocation();
-  }
-
   getCordinates() async {
-    var response = await http
-        .get(getRouteUrl("31.281291,72.320436", "31.269927,72.317392"));
+    var response = await http.get(getRouteUrl(
+        "${currentlatitudeRoute},${currentLongitudeRoute}",
+        "31.269927,72.317392"));
     setState(() {
       if (response.statusCode == 200) {
         var data =
@@ -79,10 +76,10 @@ class _MapViewState extends State<MapView> {
           if (showCurrentLocation)
             FlutterMap(
               options: MapOptions(
-                minZoom: 5,
-                maxZoom: 20,
-                zoom: zoomLevel,
-                center: currentLocation,
+                minZoom: zoomLevel,
+                maxZoom: zoomLevel,
+                initialZoom: zoomLevel,
+                initialCenter: currentLocation,
               ),
               children: [
                 TileLayer(
@@ -96,7 +93,7 @@ class _MapViewState extends State<MapView> {
                       point: currentLocation,
                       width: 80,
                       height: 80,
-                      child:InkWell(
+                      child: GestureDetector(
                         onTap: () {},
                         child: Icon(
                           Icons.location_on,
@@ -109,7 +106,7 @@ class _MapViewState extends State<MapView> {
                       point: destinationLocation,
                       width: 80,
                       height: 80,
-                      child:InkWell(
+                      child: GestureDetector(
                         onTap: () {},
                         child: Icon(
                           Icons.location_on,
@@ -122,7 +119,6 @@ class _MapViewState extends State<MapView> {
                 ),
                 if (Points.isNotEmpty)
                   PolylineLayer(
-                    polylineCulling: false,
                     polylines: [
                       Polyline(
                         points: Points,
@@ -133,94 +129,116 @@ class _MapViewState extends State<MapView> {
                   ),
               ],
             ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 30),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          zoomLevel = zoomLevel + 1.0;
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                        ),
-                        padding: EdgeInsets.all(8),
-                        child: Icon(
-                          Icons.add,
-                          color: Colors.black,
-                        ),
+          Positioned(
+            top: 16,
+            left: 16,
+            right: 16,
+            child: Container(
+              
+              child: Row(
+                children: [
+                  
+                  Expanded(
+                    
+                    child: TextField(
+                      controller: destinationController,
+                     
+                      decoration: InputDecoration(
+                        
+                        hintText: 'Enter destination',
+                        border: OutlineInputBorder(),
                       ),
                     ),
-                    SizedBox(width: 10),
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          zoomLevel = zoomLevel - 1.0;
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                        ),
-                        padding: EdgeInsets.all(8),
-                        child: Icon(
-                          Icons.remove,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                  SizedBox(width: 20,),
+                  IconButton(
+                    onPressed: () {
+                      // Perform search
+                    },
+                    icon: Icon(Icons.search),
+                  ),
+                ],
               ),
-              SizedBox(height: 20),
-            ],
+            ),
           ),
           Positioned(
             right: 16,
-            bottom: 120,
-            child: InkWell(
-              onTap: () {
-                getCurrentLocation();
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: GlobalColors.mainColor,
-                  borderRadius: BorderRadius.circular(5),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.3),
-                      spreadRadius: 1,
-                      blurRadius: 3,
-                      offset: Offset(0, 2),
-                    )
-                  ],
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Row(
-                  children: [
-                    Icon(
-                      Ionicons.location_outline,
-                      color: Colors.white,
+            bottom: 16,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    getCurrentLocation();
+                  },
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                     ),
-                    SizedBox(width: 5),
-                    Text(
-                      "Get Route",
-                      style: TextStyle(color: Colors.white),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.white),
+                    elevation: MaterialStateProperty.all<double>(8.0),
+                  ),
+                  child: Icon(Icons.location_on , color:GlobalColors.mainColor),
                 ),
-              ),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    getCordinates();
+                  },
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.white),
+                    elevation: MaterialStateProperty.all<double>(8.0),
+                  ),
+                  child: Icon(Icons.directions  , color:GlobalColors.mainColor),
+                ),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      zoomLevel += 1.0;
+                    });
+                  },
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.white),
+                    elevation: MaterialStateProperty.all<double>(8.0),
+                  ),
+                  child: Icon(Icons.add ,  color: GlobalColors.mainColor),
+                ),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      zoomLevel -= 1.0;
+                    });
+                  },
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.white),
+                    elevation: MaterialStateProperty.all<double>(8.0),
+                  ),
+                  child: Icon(Icons.remove , color:GlobalColors.mainColor),
+                ),
+              ],
             ),
           ),
         ],

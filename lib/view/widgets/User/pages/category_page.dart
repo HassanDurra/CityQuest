@@ -598,7 +598,7 @@ class SeasPage extends StatelessWidget {
           ),
           SizedBox(height: 20.0),
           ThingsToDoCard(
-            imagePath: 'images/pacificocean.jpg',
+            imagePath: 'images/pacificocean.jpeg',
             thingName: 'Pacific Ocean',
             history: 'The Pacific Ocean is the largest and deepest ocean basin on Earth, covering more than 155 million square kilometers (60 million square miles) and averaging a depth of 4,000 meters (13,000 feet).',
             reviewsCount: 132547,
