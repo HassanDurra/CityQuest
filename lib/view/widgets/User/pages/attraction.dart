@@ -1,149 +1,32 @@
 import 'dart:ui';
 
+import 'package:cityquest/view/widgets/User/pages/details.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cityquest/view/widgets/User/pages/attraction.dart';
-
 import 'package:cityquest/assets/colors.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 
-class Cities extends StatefulWidget {
-  const Cities({Key? key}) : super(key: key);
+class Attraction extends StatefulWidget {
+  const Attraction({Key? key}) : super(key: key);
 
   @override
-  State<Cities> createState() => _CitiesState();
+  State<Attraction> createState() => _AttractionState();
 }
 
-class _CitiesState extends State<Cities> {
-  final List<Map<String, dynamic>> cities = [
+class _AttractionState extends State<Attraction> {
+  final List<Map<String, dynamic>> Attraction = [
     {
-      'name': 'Karachi',
+      'name': 'Mazar e Quaid',
       'description':
-          'Karachi (/ k ə ˈ r ɑː tʃ i /; Urdu: کراچی; Sindhi: ڪراچي ‎; IPA: [kəˈraːtʃi] ⓘ) is the capital city of the Pakistani province of Sindh. It is the largest city in Pakistan and the 12th largest in the world, with ',
-      'image': 'images/karachi.jpg',
+          'Mazar-e-Quaid (Urdu: مزارِ قائد), also known as Jinnah Mausoleum or the National Mausoleum, is the final resting place of Muhammad Ali Jinnah, the founder of Pakistan. Designed in a 1960s',
+      'image': 'images/quaid.jpg',
       'rating': 4.5,
       'reviews': 1000,
-      'category': 'Food',
+      'category': 'All',
     },
-    {
-      'name': 'New York',
-      'description':
-          'New York City is the most populous city in the United States...',
-      'image': 'images/newyork.jpg',
-      'rating': 4.5,
-      'reviews': 1000,
-      'category': 'Food',
-    },
-    {
-      'name': 'New York',
-      'description':
-          'New York City is the most populous city in the United States...',
-      'image': 'images/newyork.jpg',
-      'rating': 4.5,
-      'reviews': 1000,
-      'category': 'Food',
-    },
-    {
-      'name': 'New York city',
-      'description':
-          'New York City is the most populous city in the United States...',
-      'image': 'images/newyork.jpg',
-      'rating': 4.5,
-      'reviews': 1000,
-      'category': 'Food',
-    },
-    {
-      'name': 'New York',
-      'description':
-          'New York City is the most populous city in the United States...',
-      'image': 'images/newyork.jpg',
-      'rating': 4.5,
-      'reviews': 1000,
-      'category': 'Food',
-    },
-    {
-      'name': 'New York',
-      'description':
-          'New York City is the most populous city in the United States...',
-      'image': 'images/newyork.jpg',
-      'rating': 4.5,
-      'reviews': 1000,
-      'category': 'Food',
-    },
-    {
-      'name': 'New York',
-      'description':
-          'New York City is the most populous city in the United States...',
-      'image': 'images/newyork.jpg',
-      'rating': 4.5,
-      'reviews': 1000,
-      'category': 'Food',
-    },
-    {
-      'name': 'New York',
-      'description':
-          'New York City is the most populous city in the United States...',
-      'image': 'images/newyork.jpg',
-      'rating': 4.5,
-      'reviews': 1000,
-      'category': 'Food',
-    },
-    {
-      'name': 'New York',
-      'description':
-          'New York City is the most populous city in the United States...',
-      'image': 'images/newyork.jpg',
-      'rating': 4.5,
-      'reviews': 1000,
-      'category': 'Food',
-    },
-    {
-      'name': 'New York',
-      'description':
-          'New York City is the most populous city in the United States...',
-      'image': 'images/newyork.jpg',
-      'rating': 4.5,
-      'reviews': 1000,
-      'category': 'Food',
-    },
-    {
-      'name': 'New York',
-      'description':
-          'New York City is the most populous city in the United States...',
-      'image': 'images/newyork.jpg',
-      'rating': 4.5,
-      'reviews': 1000,
-      'category': 'Food',
-    },
-    {
-      'name': 'New York',
-      'description':
-          'New York City is the most populous city in the United States...',
-      'image': 'images/newyork.jpg',
-      'rating': 4.5,
-      'reviews': 1000,
-      'category': 'Food',
-    },
-    {
-      'name': 'New York',
-      'description':
-          'New York City is the most populous city in the United States...',
-      'image': 'images/newyork.jpg',
-      'rating': 4.5,
-      'reviews': 1000,
-      'category': 'Food',
-    },
-    {
-      'name': 'London',
-      'description':
-          'London is the capital and largest city of England and the United Kingdom...',
-      'image': 'images/london.jpeg',
-      'rating': 4.8,
-      'reviews': 1200,
-      'category': 'Hotels',
-    },
-    // Add other cities
+
+    // Add other Attraction
   ];
 
   TextEditingController searchController = TextEditingController();
@@ -163,7 +46,7 @@ class _CitiesState extends State<Cities> {
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> filteredCities = cities.where((city) {
+    List<Map<String, dynamic>> filteredAttraction = Attraction.where((city) {
       return city['category'] == selectedCategory || selectedCategory == 'All';
     }).where((city) {
       return city['name'].toLowerCase().contains(filter) ||
@@ -270,28 +153,28 @@ class _CitiesState extends State<Cities> {
                 height: 30,
               ),
               Expanded(
-                child: filteredCities.isNotEmpty
+                child: filteredAttraction.isNotEmpty
                     ? ListView.builder(
-                        itemCount: (filteredCities.length / 2).ceil(),
+                        itemCount: (filteredAttraction.length / 2).ceil(),
                         itemBuilder: (context, index) {
                           int firstIndex = index * 2;
                           int secondIndex = index * 2 + 1;
                           return Row(
                             children: [
-                              if (firstIndex < filteredCities.length)
+                              if (firstIndex < filteredAttraction.length)
                                 Expanded(
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child:
-                                        buildCard(filteredCities[firstIndex]),
+                                    child: buildCard(
+                                        filteredAttraction[firstIndex]),
                                   ),
                                 ),
-                              if (secondIndex < filteredCities.length)
+                              if (secondIndex < filteredAttraction.length)
                                 Expanded(
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child:
-                                        buildCard(filteredCities[secondIndex]),
+                                    child: buildCard(
+                                        filteredAttraction[secondIndex]),
                                   ),
                                 ),
                             ],
@@ -329,7 +212,7 @@ class _CitiesState extends State<Cities> {
     return Container(
         child: InkWell(
       onTap: () {
-        Get.off(() => Attraction());
+        Get.offAll(() => Details());
       },
       child: Card(
         elevation: 3,

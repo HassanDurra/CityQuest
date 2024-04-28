@@ -5,6 +5,7 @@ import 'package:cityquest/view/Auth/profile_edit.dart';
 import 'package:cityquest/view/Auth/register.dart';
 import 'package:cityquest/view/widgets/User/home.dart';
 import 'package:cityquest/view/Auth/buttons/register.button.dart';
+import 'package:cityquest/view/widgets/User/pages/details.dart';
 import 'package:cityquest/view/widgets/User/pages/Cities.dart';
 import 'package:cityquest/view/widgets/User/pages/Map.dart';
 import 'package:cityquest/view/widgets/User/partial/navbar.dart';
@@ -42,7 +43,6 @@ class _SplashViewState extends State<SplashView> {
         Get.offAll(() => Navbar());
       } else {
         Get.offAll(() => LoginView());
-
       }
     });
   }
@@ -59,7 +59,6 @@ class _SplashViewState extends State<SplashView> {
               fit: BoxFit.cover,
             ),
           ),
-         
         ],
       ),
     );
