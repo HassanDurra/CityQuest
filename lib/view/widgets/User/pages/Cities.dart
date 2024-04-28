@@ -1,3 +1,4 @@
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -26,6 +27,114 @@ class _CitiesState extends State<Cities> {
       'category': 'Food',
     },
     {
+      'name': 'New York',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
+    {
+      'name': 'New York',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
+    {
+      'name': 'New York city',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
+    {
+      'name': 'New York',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
+    {
+      'name': 'New York',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
+    {
+      'name': 'New York',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
+    {
+      'name': 'New York',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
+    {
+      'name': 'New York',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
+    {
+      'name': 'New York',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
+    {
+      'name': 'New York',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
+    {
+      'name': 'New York',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
+    {
+      'name': 'New York',
+      'description':
+          'New York City is the most populous city in the United States...',
+      'image': 'images/newyork.jpg',
+      'rating': 4.5,
+      'reviews': 1000,
+      'category': 'Food',
+    },
+    {
       'name': 'London',
       'description':
           'London is the capital and largest city of England and the United Kingdom...',
@@ -35,57 +144,22 @@ class _CitiesState extends State<Cities> {
       'category': 'Hotels',
     },
     // Add other cities
-    {
-      'name': 'Paris',
-      'description':
-          'Paris is the capital and most populous city of France...',
-      'image': 'images/paris.jpg',
-      'rating': 4.7,
-      'reviews': 1100,
-      'category': 'Food',
-    },
-    {
-      'name': 'Tokyo',
-      'description':
-          'Tokyo is the capital and most populous prefecture of Japan...',
-      'image': 'images/tokyo.jpg',
-      'rating': 4.9,
-      'reviews': 1500,
-      'category': 'Hotels',
-    },
-    {
-      'name': 'Dubai',
-      'description':
-          'Dubai is the largest and most populous city in the United Arab Emirates...',
-      'image': 'images/dubai.jpg',
-      'rating': 4.6,
-      'reviews': 900,
-      'category': 'Shopping',
-    },
-    {
-      'name': 'Sydney',
-      'description':
-          'Sydney is the capital city of the state of New South Wales...',
-      'image': 'images/sydney.jpg',
-      'rating': 4.7,
-      'reviews': 1000,
-      'category': 'Shopping',
-    },
   ];
 
   TextEditingController searchController = TextEditingController();
   String filter = '';
-  String selectedCategory = 'All'; 
+  String selectedCategory = 'All'; // Initially set to 'All'
 
   final List<CategoryItem> categories = [
     CategoryItem(icon: Icons.list, label: "All", isActive: true),
     CategoryItem(icon: Icons.restaurant, label: 'Food', isActive: false),
     CategoryItem(icon: Icons.hotel, label: 'Hotels', isActive: false),
     CategoryItem(icon: Icons.shopping_cart, label: 'Shopping', isActive: false),
-  
+    CategoryItem(icon: Icons.shopping_cart, label: 'Shopping', isActive: false),
+    CategoryItem(icon: Icons.shopping_cart, label: 'Shopping', isActive: false),
+    CategoryItem(icon: Icons.shopping_cart, label: 'Shopping', isActive: false),
+    // Add more categories as needed
   ];
-
-  int visibleCitiesCount = 6; 
 
   @override
   Widget build(BuildContext context) {
@@ -106,30 +180,20 @@ class _CitiesState extends State<Cities> {
             style: TextStyle(
                 fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
           ),
-        ],
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: searchController,
-              decoration: InputDecoration(
-                labelText: 'Search by Cities',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                suffixIcon: IconButton(
-                  onPressed: () => searchController.clear(),
-                  icon: Icon(Icons.clear),
-                ),
-              ),
-              onChanged: (value) {
+          actions: [
+            Text('Filter'),
+            SizedBox(
+              width: 10,
+            ),
+            IconButton(
+              onPressed: () {
                 setState(() {
-                  filter = value.toLowerCase();
+                  selectedCategory = 'All'; // Set back to 'All'
+                  filter = ''; // Clear the filter
                 });
               },
+              icon: Icon(Ionicons.filter_outline,
+                  color: Colors.black), // Clear filter button
             ),
           ],
         ),
@@ -150,7 +214,7 @@ class _CitiesState extends State<Cities> {
                   ),
                   onChanged: (value) {
                     setState(() {
-                      selectedCategory = item.label; 
+                      filter = value.toLowerCase();
                     });
                   },
                 ),
@@ -350,11 +414,7 @@ class CategoryItem extends StatelessWidget {
         decoration: BoxDecoration(
           color: isActive ? GlobalColors.mainColor : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
-          border: isActive
-              ? null
-              : Border.all(
-                  color: GlobalColors.mainColor,
-                ),
+          border: isActive ? null : Border.all(color: GlobalColors.mainColor),
           boxShadow: [
             if (isActive)
               BoxShadow(
