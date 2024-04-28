@@ -129,35 +129,76 @@ class _MapViewState extends State<MapView> {
                   ),
               ],
             ),
-          Positioned(
-            top: 16,
-            left: 16,
-            right: 16,
-            child: Container(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: destinationController,
-                      decoration: InputDecoration(
-                        hintText: 'Enter destination',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      // Perform search
-                    },
-                    icon: Icon(Icons.search),
-                  ),
-                ],
-              ),
+
+            Positioned(
+  top: 16,
+  left: 16,
+  right: 16,
+  child: Container(
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(10),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.5),
+          spreadRadius: 5,
+          blurRadius: 7,
+          offset: Offset(0, 3),
+        ),
+      ],
+    ),
+    child: Row(
+      children: [
+        Expanded(
+          child: TextField(
+            controller: destinationController,
+            decoration: InputDecoration(
+              hintText: 'Enter Destination',
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.symmetric(horizontal: 16),
             ),
           ),
+        ),
+        IconButton(
+          onPressed: () {
+            // Perform search
+          },
+          icon: Icon(Icons.search),
+        ),
+      ],
+    ),
+  ),
+),
+
+          // Positioned(
+          //   top: 16,
+          //   left: 16,
+          //   right: 16,
+          //   child: Container(
+          //     child: Row(
+          //       children: [
+          //         Expanded(
+          //           child: TextField(
+          //             controller: destinationController,
+          //             decoration: InputDecoration(
+          //               hintText: 'Enter destination',
+          //               border: OutlineInputBorder(),
+          //             ),
+          //           ),
+          //         ),
+          //         SizedBox(
+          //           width: 20,
+          //         ),
+          //         IconButton(
+          //           onPressed: () {
+          //             // Perform search
+          //           },
+          //           icon: Icon(Icons.search),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
           Positioned(
             right: 16,
             bottom: 16,

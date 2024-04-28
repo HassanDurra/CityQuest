@@ -4,7 +4,6 @@ import 'package:cityquest/view/widgets/User/pages/attraction.dart';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cityquest/view/widgets/User/pages/category_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
