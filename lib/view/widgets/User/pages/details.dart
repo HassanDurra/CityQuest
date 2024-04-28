@@ -1,4 +1,10 @@
+import 'dart:collection';
+
+import 'package:cityquest/assets/colors.dart';
+import 'package:cityquest/view/widgets/User/partial/navbar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:cityquest/view/widgets/User/pages/Map.dart';
 
 class Details extends StatefulWidget {
   const Details({super.key});
@@ -22,7 +28,6 @@ class _DetailsState extends State<Details> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            
               SizedBox(height: 16),
               Stack(
                 children: [
@@ -33,7 +38,7 @@ class _DetailsState extends State<Details> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(25),
                       child: Image.asset(
-                        'assets/cityimg.jpg',
+                        'images/quaid.jpg',
                         height: portraitHeight,
                         width: portraitWidth,
                         fit: BoxFit.cover,
@@ -58,7 +63,7 @@ class _DetailsState extends State<Details> {
                       child: IconButton(
                         icon: Icon(
                           Icons.favorite_border,
-                          color: Colors.orange[500],
+                          color: GlobalColors.mainColor,
                         ),
                         onPressed: () {},
                       ),
@@ -74,8 +79,21 @@ class _DetailsState extends State<Details> {
                 children: [
                   buildCategory(Icons.contact_phone_rounded),
                   buildCategory(Icons.comment_rounded),
-                  buildCategory(Icons.map_rounded),
+                  InkWell(
+                    onTap: () {
+                      Get.off(() => MapView());
+                    },
+                    child: buildCategory(Icons.map_rounded),
+                  )
                 ],
+              ),
+              SizedBox(height: 16),
+              Text(
+                'Mazar e Quaid',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               SizedBox(height: 16),
               Text(
@@ -85,10 +103,9 @@ class _DetailsState extends State<Details> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-
               SizedBox(height: 8),
               Text(
-                'Beautiful Bellagio is an Italian town on the shores of Lake Como, framed by tree-covered slopes and distant peaks of the Central Alps. It is a popular tourist destination, known for its picturesque views, historic buildings, and charming streets.',
+                'Mazar-e-Quaid (Urdu: مزارِ قائد), also known as Jinnah Mausoleum or the National Mausoleum, is the final resting place of Muhammad Ali Jinnah, the founder of Pakistan. Designed in a 1960s',
                 style: TextStyle(
                   fontSize: 15,
                   color: Colors.grey[700],
@@ -104,7 +121,7 @@ class _DetailsState extends State<Details> {
               ),
               SizedBox(height: 8),
               Text(
-                'Bellagio, Italy',
+                'M.A Jinnah Rd, Central Jacob Lines Ghm، Karachi, Karachi City, Sindh, Pakistan',
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.grey[700],
@@ -140,7 +157,7 @@ class _DetailsState extends State<Details> {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.orange[500],
+                  color: GlobalColors.mainColor,
                 ),
               ),
               SizedBox(height: 8),
@@ -183,7 +200,7 @@ class _DetailsState extends State<Details> {
       child: Icon(
         icon,
         size: 25,
-        color: Colors.orange[500],
+        color: GlobalColors.mainColor,
       ),
     );
   }
@@ -192,7 +209,7 @@ class _DetailsState extends State<Details> {
     return Row(
       children: [
         CircleAvatar(
-          backgroundImage: AssetImage('assets/avatar.jpg'),
+          backgroundImage: AssetImage('images/avatar.jpg'),
           radius: 24,
         ),
         SizedBox(width: 16),

@@ -1,5 +1,8 @@
 
 import 'dart:convert';
+import 'package:cityquest/view/widgets/User/pages/attraction.dart';
+
+import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cityquest/view/widgets/User/pages/category_page.dart';
 import 'package:flutter/material.dart';
@@ -401,37 +404,37 @@ class CategoryTile extends StatelessWidget {
           case 'Things to Do':
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ThingsToDoPage()),
+              MaterialPageRoute(builder: (context) => Attraction()),
             );
             break;
           case 'Events':
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => EventsPage()),
+              MaterialPageRoute(builder: (context) => Attraction()),
             );
             break;
           case 'Food & Drinks':
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => FoodAndDrinksPage()),
+              MaterialPageRoute(builder: (context) => Attraction()),
             );
             break;
           case 'Restaurants':
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => RestaurantsPage()),
+              MaterialPageRoute(builder: (context) => Attraction()),
             );
             break;
           case 'Seas':
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => SeasPage()),
+              MaterialPageRoute(builder: (context) => Attraction()),
             );
             break;
           case 'Parks':
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ParksPage()),
+              MaterialPageRoute(builder: (context) => Attraction()),
             );
             break;
 

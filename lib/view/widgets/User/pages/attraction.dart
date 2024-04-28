@@ -1,95 +1,52 @@
+import 'dart:ui';
 
+import 'package:cityquest/view/widgets/User/pages/details.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cityquest/view/widgets/User/pages/attraction.dart';
-
 import 'package:cityquest/assets/colors.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 
-class Cities extends StatefulWidget {
-  const Cities({Key? key}) : super(key: key);
+class Attraction extends StatefulWidget {
+  const Attraction({Key? key}) : super(key: key);
 
   @override
-  State<Cities> createState() => _CitiesState();
+  State<Attraction> createState() => _AttractionState();
 }
 
-class _CitiesState extends State<Cities> {
-  final List<Map<String, dynamic>> cities = [
+class _AttractionState extends State<Attraction> {
+  final List<Map<String, dynamic>> Attraction = [
     {
-      'name': 'Karachi',
+      'name': 'Mazar e Quaid',
       'description':
-          'Karachi (/ k ə ˈ r ɑː tʃ i /; Urdu: کراچی; Sindhi: ڪراچي ‎; IPA: [kəˈraːtʃi] ⓘ) is the capital city of the Pakistani province of Sindh. It is the largest city in Pakistan and the 12th largest in the world, with ',
-      'image': 'images/karachi.jpg',
+          'Mazar-e-Quaid (Urdu: مزارِ قائد), also known as Jinnah Mausoleum or the National Mausoleum, is the final resting place of Muhammad Ali Jinnah, the founder of Pakistan. Designed in a 1960s',
+      'image': 'images/quaid.jpg',
       'rating': 4.5,
       'reviews': 1000,
-      'category': 'Food',
+      'category': 'All',
     },
-    {
-      'name': 'London',
-      'description':
-          'London is the capital and largest city of England and the United Kingdom...',
-      'image': 'images/london.jpeg',
-      'rating': 4.8,
-      'reviews': 1200,
-      'category': 'Hotels',
-    },
-    // Add other cities
-    {
-      'name': 'Paris',
-      'description':
-          'Paris is the capital and most populous city of France...',
-      'image': 'images/paris.jpg',
-      'rating': 4.7,
-      'reviews': 1100,
-      'category': 'Food',
-    },
-    {
-      'name': 'Tokyo',
-      'description':
-          'Tokyo is the capital and most populous prefecture of Japan...',
-      'image': 'images/tokyo.jpg',
-      'rating': 4.9,
-      'reviews': 1500,
-      'category': 'Hotels',
-    },
-    {
-      'name': 'Dubai',
-      'description':
-          'Dubai is the largest and most populous city in the United Arab Emirates...',
-      'image': 'images/dubai.jpg',
-      'rating': 4.6,
-      'reviews': 900,
-      'category': 'Shopping',
-    },
-    {
-      'name': 'Sydney',
-      'description':
-          'Sydney is the capital city of the state of New South Wales...',
-      'image': 'images/sydney.jpg',
-      'rating': 4.7,
-      'reviews': 1000,
-      'category': 'Shopping',
-    },
+
+    // Add other Attraction
   ];
 
   TextEditingController searchController = TextEditingController();
   String filter = '';
-  String selectedCategory = 'All'; 
+  String selectedCategory = 'All'; // Initially set to 'All'
 
   final List<CategoryItem> categories = [
     CategoryItem(icon: Icons.list, label: "All", isActive: true),
     CategoryItem(icon: Icons.restaurant, label: 'Food', isActive: false),
     CategoryItem(icon: Icons.hotel, label: 'Hotels', isActive: false),
     CategoryItem(icon: Icons.shopping_cart, label: 'Shopping', isActive: false),
-  
+    CategoryItem(icon: Icons.shopping_cart, label: 'Shopping', isActive: false),
+    CategoryItem(icon: Icons.shopping_cart, label: 'Shopping', isActive: false),
+    CategoryItem(icon: Icons.shopping_cart, label: 'Shopping', isActive: false),
+    // Add more categories as needed
   ];
-
-  int visibleCitiesCount = 6; 
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> filteredCities = cities.where((city) {
+    List<Map<String, dynamic>> filteredAttraction = Attraction.where((city) {
       return city['category'] == selectedCategory || selectedCategory == 'All';
     }).where((city) {
       return city['name'].toLowerCase().contains(filter) ||
@@ -106,30 +63,20 @@ class _CitiesState extends State<Cities> {
             style: TextStyle(
                 fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
           ),
-        ],
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: searchController,
-              decoration: InputDecoration(
-                labelText: 'Search by Cities',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                suffixIcon: IconButton(
-                  onPressed: () => searchController.clear(),
-                  icon: Icon(Icons.clear),
-                ),
-              ),
-              onChanged: (value) {
+          actions: [
+            Text('Filter'),
+            SizedBox(
+              width: 10,
+            ),
+            IconButton(
+              onPressed: () {
                 setState(() {
-                  filter = value.toLowerCase();
+                  selectedCategory = 'All'; // Set back to 'All'
+                  filter = ''; // Clear the filter
                 });
               },
+              icon: Icon(Ionicons.filter_outline,
+                  color: Colors.black), // Clear filter button
             ),
           ],
         ),
@@ -150,7 +97,7 @@ class _CitiesState extends State<Cities> {
                   ),
                   onChanged: (value) {
                     setState(() {
-                      selectedCategory = item.label; 
+                      filter = value.toLowerCase();
                     });
                   },
                 ),
@@ -206,28 +153,28 @@ class _CitiesState extends State<Cities> {
                 height: 30,
               ),
               Expanded(
-                child: filteredCities.isNotEmpty
+                child: filteredAttraction.isNotEmpty
                     ? ListView.builder(
-                        itemCount: (filteredCities.length / 2).ceil(),
+                        itemCount: (filteredAttraction.length / 2).ceil(),
                         itemBuilder: (context, index) {
                           int firstIndex = index * 2;
                           int secondIndex = index * 2 + 1;
                           return Row(
                             children: [
-                              if (firstIndex < filteredCities.length)
+                              if (firstIndex < filteredAttraction.length)
                                 Expanded(
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child:
-                                        buildCard(filteredCities[firstIndex]),
+                                    child: buildCard(
+                                        filteredAttraction[firstIndex]),
                                   ),
                                 ),
-                              if (secondIndex < filteredCities.length)
+                              if (secondIndex < filteredAttraction.length)
                                 Expanded(
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child:
-                                        buildCard(filteredCities[secondIndex]),
+                                    child: buildCard(
+                                        filteredAttraction[secondIndex]),
                                   ),
                                 ),
                             ],
@@ -265,7 +212,7 @@ class _CitiesState extends State<Cities> {
     return Container(
         child: InkWell(
       onTap: () {
-        Get.off(() => Attraction());
+        Get.offAll(() => Details());
       },
       child: Card(
         elevation: 3,
@@ -350,11 +297,7 @@ class CategoryItem extends StatelessWidget {
         decoration: BoxDecoration(
           color: isActive ? GlobalColors.mainColor : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
-          border: isActive
-              ? null
-              : Border.all(
-                  color: GlobalColors.mainColor,
-                ),
+          border: isActive ? null : Border.all(color: GlobalColors.mainColor),
           boxShadow: [
             if (isActive)
               BoxShadow(

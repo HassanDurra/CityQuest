@@ -19,7 +19,7 @@ class _MapViewState extends State<MapView> {
   late LatLng currentLocation = LatLng(0.0, 0.0);
   late String? currentLongitudeRoute;
   late String? currentlatitudeRoute;
-  late LatLng destinationLocation = LatLng(31.269927, 72.317392);
+  late LatLng destinationLocation = LatLng(24.8755064,67.0410023);
   bool showCurrentLocation = false;
   late double zoomLevel = 15.0;
   final TextEditingController destinationController = TextEditingController();
@@ -54,7 +54,7 @@ class _MapViewState extends State<MapView> {
   getCordinates() async {
     var response = await http.get(getRouteUrl(
         "${currentlatitudeRoute},${currentLongitudeRoute}",
-        "31.269927,72.317392"));
+        "24.8755064,67.0410023"));
     setState(() {
       if (response.statusCode == 200) {
         var data =
@@ -134,23 +134,20 @@ class _MapViewState extends State<MapView> {
             left: 16,
             right: 16,
             child: Container(
-              
               child: Row(
                 children: [
-                  
                   Expanded(
-                    
                     child: TextField(
                       controller: destinationController,
-                     
                       decoration: InputDecoration(
-                        
                         hintText: 'Enter destination',
                         border: OutlineInputBorder(),
                       ),
                     ),
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(
+                    width: 20,
+                  ),
                   IconButton(
                     onPressed: () {
                       // Perform search
@@ -177,11 +174,10 @@ class _MapViewState extends State<MapView> {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.white),
+                    backgroundColor: MaterialStateProperty.all(Colors.white),
                     elevation: MaterialStateProperty.all<double>(8.0),
                   ),
-                  child: Icon(Icons.location_on , color:GlobalColors.mainColor),
+                  child: Icon(Icons.location_on, color: GlobalColors.mainColor),
                 ),
                 SizedBox(height: 10),
                 ElevatedButton(
@@ -194,11 +190,10 @@ class _MapViewState extends State<MapView> {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.white),
+                    backgroundColor: MaterialStateProperty.all(Colors.white),
                     elevation: MaterialStateProperty.all<double>(8.0),
                   ),
-                  child: Icon(Icons.directions  , color:GlobalColors.mainColor),
+                  child: Icon(Icons.directions, color: GlobalColors.mainColor),
                 ),
                 SizedBox(height: 10),
                 ElevatedButton(
@@ -213,11 +208,10 @@ class _MapViewState extends State<MapView> {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.white),
+                    backgroundColor: MaterialStateProperty.all(Colors.white),
                     elevation: MaterialStateProperty.all<double>(8.0),
                   ),
-                  child: Icon(Icons.add ,  color: GlobalColors.mainColor),
+                  child: Icon(Icons.add, color: GlobalColors.mainColor),
                 ),
                 SizedBox(height: 10),
                 ElevatedButton(
@@ -232,11 +226,10 @@ class _MapViewState extends State<MapView> {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.white),
+                    backgroundColor: MaterialStateProperty.all(Colors.white),
                     elevation: MaterialStateProperty.all<double>(8.0),
                   ),
-                  child: Icon(Icons.remove , color:GlobalColors.mainColor),
+                  child: Icon(Icons.remove, color: GlobalColors.mainColor),
                 ),
               ],
             ),
