@@ -1,11 +1,22 @@
+
+import 'dart:convert';
+
 import 'package:cityquest/assets/colors.dart';
+import 'package:cityquest/view/widgets/User/home.dart';
+import 'package:cityquest/view/widgets/User/pages/Cities.dart';
+import 'package:cityquest/view/widgets/User/pages/Food.dart';
+import 'package:cityquest/view/widgets/User/pages/Profile.dart';
+import 'package:cityquest/view/widgets/User/pages/Map.dart';
+import 'package:cityquest/view/widgets/User/pages/Listing.dart';
+import 'package:cityquest/view/widgets/User/pages/Search.dart';
 import 'package:cityquest/view/widgets/User/pages/map_inputs/map_api_credientals.dart';
+import 'package:cityquest/view/widgets/User/partial/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MapView extends StatefulWidget {
   const MapView({Key? key}) : super(key: key);
@@ -19,10 +30,12 @@ class _MapViewState extends State<MapView> {
   late LatLng currentLocation = LatLng(0.0, 0.0);
   late String? currentLongitudeRoute;
   late String? currentlatitudeRoute;
-  late LatLng destinationLocation = LatLng(24.8755064,67.0410023);
+  late LatLng destinationLocation = LatLng(24.8755064, 67.0410023);
   bool showCurrentLocation = false;
   late double zoomLevel = 15.0;
   final TextEditingController destinationController = TextEditingController();
+  
+  get http => null;
 
   @override
   void initState() {
@@ -129,76 +142,46 @@ class _MapViewState extends State<MapView> {
                   ),
               ],
             ),
-
-            Positioned(
-  top: 16,
-  left: 16,
-  right: 16,
-  child: Container(
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(10),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.grey.withOpacity(0.5),
-          spreadRadius: 5,
-          blurRadius: 7,
-          offset: Offset(0, 3),
-        ),
-      ],
-    ),
-    child: Row(
-      children: [
-        Expanded(
-          child: TextField(
-            controller: destinationController,
-            decoration: InputDecoration(
-              hintText: 'Enter Destination',
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(horizontal: 16),
+          Positioned(
+            top: 16,
+            left: 16,
+            right: 16,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: destinationController,
+                      decoration: InputDecoration(
+                        hintText: 'Enter Destination',
+                        border: InputBorder.none,
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: 16),
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      // Perform search
+                    },
+                    icon: Icon(Icons.search),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        IconButton(
-          onPressed: () {
-            // Perform search
-          },
-          icon: Icon(Icons.search),
-        ),
-      ],
-    ),
-  ),
-),
-
-          // Positioned(
-          //   top: 16,
-          //   left: 16,
-          //   right: 16,
-          //   child: Container(
-          //     child: Row(
-          //       children: [
-          //         Expanded(
-          //           child: TextField(
-          //             controller: destinationController,
-          //             decoration: InputDecoration(
-          //               hintText: 'Enter destination',
-          //               border: OutlineInputBorder(),
-          //             ),
-          //           ),
-          //         ),
-          //         SizedBox(
-          //           width: 20,
-          //         ),
-          //         IconButton(
-          //           onPressed: () {
-          //             // Perform search
-          //           },
-          //           icon: Icon(Icons.search),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
           Positioned(
             right: 16,
             bottom: 16,
@@ -215,10 +198,12 @@ class _MapViewState extends State<MapView> {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
-                    backgroundColor: MaterialStateProperty.all(Colors.white),
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.white),
                     elevation: MaterialStateProperty.all<double>(8.0),
                   ),
-                  child: Icon(Icons.location_on, color: GlobalColors.mainColor),
+                  child: Icon(Icons.location_on,
+                      color: GlobalColors.mainColor),
                 ),
                 SizedBox(height: 10),
                 ElevatedButton(
@@ -231,10 +216,12 @@ class _MapViewState extends State<MapView> {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
-                    backgroundColor: MaterialStateProperty.all(Colors.white),
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.white),
                     elevation: MaterialStateProperty.all<double>(8.0),
                   ),
-                  child: Icon(Icons.directions, color: GlobalColors.mainColor),
+                  child: Icon(Icons.directions,
+                      color: GlobalColors.mainColor),
                 ),
                 SizedBox(height: 10),
                 ElevatedButton(
@@ -249,7 +236,8 @@ class _MapViewState extends State<MapView> {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
-                    backgroundColor: MaterialStateProperty.all(Colors.white),
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.white),
                     elevation: MaterialStateProperty.all<double>(8.0),
                   ),
                   child: Icon(Icons.add, color: GlobalColors.mainColor),
@@ -267,13 +255,20 @@ class _MapViewState extends State<MapView> {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
-                    backgroundColor: MaterialStateProperty.all(Colors.white),
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.white),
                     elevation: MaterialStateProperty.all<double>(8.0),
                   ),
                   child: Icon(Icons.remove, color: GlobalColors.mainColor),
                 ),
               ],
             ),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Navbar(),
           ),
         ],
       ),

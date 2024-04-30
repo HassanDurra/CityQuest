@@ -1,18 +1,26 @@
-// import 'dart:collection';
-// import 'package:cityquest/assets/colors.dart';
-// import 'package:cityquest/view/widgets/User/partial/navbar.dart';
+
+///wrong navbar
 // import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-// import 'package:cityquest/view/widgets/User/pages/Map.dart';
+// import 'package:carousel_slider/carousel_slider.dart';
+// import 'custom_carousel_indicator.dart'; // Import the custom carousel indicator 
 
 // class Details extends StatefulWidget {
-//   const Details({super.key});
+//   const Details({Key? key});
 
 //   @override
 //   State<Details> createState() => _DetailsState();
 // }
 
 // class _DetailsState extends State<Details> {
+//   int _currentIndex = 0;
+
+//   final List<String> _images = [
+//     'images/quaid.jpg',
+//     'images/tomb.jpg',
+//     'images/mazar.jpg',
+//     'images/mazarequaid.jpg',
+//   ];
+
 //   @override
 //   Widget build(BuildContext context) {
 //     double screenWidth = MediaQuery.of(context).size.width;
@@ -20,6 +28,7 @@
 
 //     double portraitWidth = screenWidth;
 //     double portraitHeight = screenHeight * 0.5;
+
 //     return Scaffold(
 //       body: SingleChildScrollView(
 //         child: Container(
@@ -30,18 +39,32 @@
 //               SizedBox(height: 16),
 //               Stack(
 //                 children: [
-//                   Container(
-//                     decoration: BoxDecoration(
-//                       borderRadius: BorderRadius.circular(25),
-//                     ),
-//                     child: ClipRRect(
-//                       borderRadius: BorderRadius.circular(25),
-//                       child: Image.asset(
-//                         'images/quaid.jpg',
-//                         height: portraitHeight,
-//                         width: portraitWidth,
-//                         fit: BoxFit.cover,
-//                       ),
+//                   CarouselSlider(
+//                     items: _images.map((image) {
+//                       return Container(
+//                         decoration: BoxDecoration(
+//                           borderRadius: BorderRadius.circular(25),
+//                         ),
+//                         child: ClipRRect(
+//                           borderRadius: BorderRadius.circular(25),
+//                           child: Image.asset(
+//                             image,
+//                             height: portraitHeight,
+//                             width: portraitWidth,
+//                             fit: BoxFit.cover,
+//                           ),
+//                         ),
+//                       );
+//                     }).toList(),
+//                     options: CarouselOptions(
+//                       autoPlay: true,
+//                       aspectRatio: 16 / 9,
+//                       enlargeCenterPage: true,
+//                       onPageChanged: (index, reason) {
+//                         setState(() {
+//                           _currentIndex = index;
+//                         });
+//                       },
 //                     ),
 //                   ),
 //                   Positioned(
@@ -62,27 +85,25 @@
 //                       child: IconButton(
 //                         icon: Icon(
 //                           Icons.favorite_border,
-//                           color: GlobalColors.mainColor,
+//                           color: Colors.red, // Change color as needed
 //                         ),
 //                         onPressed: () {},
 //                       ),
 //                     ),
 //                   ),
 //                 ],
-
-              
 //               ),
 //               SizedBox(height: 16),
 //               Row(
 //                 mainAxisAlignment: MainAxisAlignment.spaceAround,
 //                 children: [
-//                   buildCategory(Icons.contact_phone_rounded),
-//                   buildCategory(Icons.comment_rounded),
+//                   buildCategory(Icons.contact_phone_rounded, 'Contact'),
+//                   buildCategory(Icons.comment_rounded, 'Review'),
 //                   InkWell(
 //                     onTap: () {
-//                       Get.off(() => MapView());
+//                       // Add your logic here
 //                     },
-//                     child: buildCategory(Icons.map_rounded),
+//                     child: buildCategory(Icons.map_rounded, 'Map'),
 //                   )
 //                 ],
 //               ),
@@ -156,7 +177,7 @@
 //                 style: TextStyle(
 //                   fontSize: 18,
 //                   fontWeight: FontWeight.bold,
-//                   color: GlobalColors.mainColor,
+//                   color: Colors.red, // Change color as needed
 //                 ),
 //               ),
 //               SizedBox(height: 8),
@@ -182,6 +203,48 @@
 //                   ],
 //                 ),
 //               ),
+//               SizedBox(height: 16),
+//               // Place the custom carousel indicator below the carousel
+//               SizedBox(height: 16),
+//               CustomCarouselIndicator(
+//                 count: _images.length,
+//                 currentIndex: _currentIndex,
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//       bottomNavigationBar: BottomAppBar(
+//         color: Colors.white,
+//         child: Container(
+//           height: 60,
+//           child: Row(
+//             mainAxisAlignment: MainAxisAlignment.spaceAround,
+//             children: [
+//               IconButton(
+//                 onPressed: () {
+//                   // Add your logic here
+//                 },
+//                 icon: Icon(Icons.home),
+//               ),
+//               IconButton(
+//                 onPressed: () {
+//                   // Add your logic here
+//                 },
+//                 icon: Icon(Icons.search),
+//               ),
+//               IconButton(
+//                 onPressed: () {
+//                   // Add your logic here
+//                 },
+//                 icon: Icon(Icons.notifications),
+//               ),
+//               IconButton(
+//                 onPressed: () {
+//                   // Add your logic here
+//                 },
+//                 icon: Icon(Icons.account_circle),
+//               ),
 //             ],
 //           ),
 //         ),
@@ -189,18 +252,27 @@
 //     );
 //   }
 
-//   Widget buildCategory(IconData icon) {
-//     return Container(
-//       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-//       decoration: BoxDecoration(
-//         color: Colors.grey[200],
-//         borderRadius: BorderRadius.circular(20),
-//       ),
-//       child: Icon(
-//         icon,
-//         size: 25,
-//         color: GlobalColors.mainColor,
-//       ),
+//   Widget buildCategory(IconData icon, String label) {
+//     return Column(
+//       children: [
+//         Container(
+//           padding: EdgeInsets.all(8),
+//           decoration: BoxDecoration(
+//             color: Colors.grey[200],
+//             borderRadius: BorderRadius.circular(20),
+//           ),
+//           child: Icon(
+//             icon,
+//             size: 25,
+//             color: Colors.blue, // Change color as needed
+//           ),
+//         ),
+//         SizedBox(height: 4),
+//         Text(
+//           label,
+//           style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+//         ),
+//       ],
 //     );
 //   }
 
@@ -239,11 +311,52 @@
 //   }
 // }
 
+// class CustomCarouselIndicator extends StatelessWidget {
+//   final int count;
+//   final int currentIndex;
+
+//   CustomCarouselIndicator({required this.count, required this.currentIndex});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       mainAxisAlignment: MainAxisAlignment.center,
+//       children: List.generate(count, (index) {
+//         return Container(
+//           width: 8.0,
+//           height: 8.0,
+//           margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+//           decoration: BoxDecoration(
+//             shape: BoxShape.circle,
+//             color: currentIndex == index ? Colors.blue : Colors.grey,
+//           ),
+//         );
+//       }),
+//     );
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'custom_carousel_indicator.dart'; // Import the custom carousel indicator 
 
 class Details extends StatefulWidget {
   const Details({Key? key});
@@ -254,6 +367,8 @@ class Details extends StatefulWidget {
 
 class _DetailsState extends State<Details> {
   int _currentIndex = 0;
+  final TextEditingController _userReviewController = TextEditingController();
+  final List<Map<String, String>> _userReviews = [];
 
   final List<String> _images = [
     'images/quaid.jpg',
@@ -269,7 +384,7 @@ class _DetailsState extends State<Details> {
 
     double portraitWidth = screenWidth;
     double portraitHeight = screenHeight * 0.5;
-    
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -437,12 +552,91 @@ class _DetailsState extends State<Details> {
                 ),
                 child: Column(
                   children: [
-                    buildReview('John Doe', 'Great place to visit!'),
+                    for (var review in _userReviews) buildReview(review['name']!, review['comment']!),
                     SizedBox(height: 16),
-                    buildReview(
-                        'Jane Doe', 'Beautiful town with amazing views!'),
+                    // User review input box and submit button
+                    Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: Container(
+                        width: screenWidth * 0.8,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10), // Square shape
+                          border: Border.all(color: Colors.grey), // Border color
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                controller: _userReviewController,
+                                decoration: InputDecoration(
+                                  hintText: 'Write your review...',
+                                  border: InputBorder.none, // Remove TextField border
+                                  contentPadding: EdgeInsets.all(12),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  _userReviews.add({
+                                    'name': 'Your Name', // You can replace 'Your Name' with the actual name of the user
+                                    'comment': _userReviewController.text,
+                                  });
+                                  _userReviewController.clear();
+                                });
+                              },
+                              child: Text('Submit'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
+              ),
+              SizedBox(height: 16),
+              // Place the custom carousel indicator below the carousel
+              SizedBox(height: 16),
+              CustomCarouselIndicator(
+                count: _images.length,
+                currentIndex: _currentIndex,
+              ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.white,
+        child: Container(
+          height: 60,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(
+                onPressed: () {
+                  // Add your logic here
+                },
+                icon: Icon(Icons.home),
+              ),
+              IconButton(
+                onPressed: () {
+                  // Add your logic here
+                },
+                icon: Icon(Icons.search),
+              ),
+              IconButton(
+                onPressed: () {
+                  // Add your logic here
+                },
+                icon: Icon(Icons.notifications),
+              ),
+              IconButton(
+                onPressed: () {
+                  // Add your logic here
+                },
+                icon: Icon(Icons.account_circle),
               ),
             ],
           ),
@@ -509,3 +703,30 @@ class _DetailsState extends State<Details> {
     );
   }
 }
+
+class CustomCarouselIndicator extends StatelessWidget {
+  final int count;
+  final int currentIndex;
+
+  CustomCarouselIndicator({required this.count, required this.currentIndex});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(count, (index) {
+        return Container(
+          width: 8.0,
+          height: 8.0,
+          margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: currentIndex == index ? Colors.blue : Colors.grey,
+          ),
+        );
+      }),
+    );
+  }
+}
+
+
