@@ -1,108 +1,302 @@
+
+// import 'package:flutter/material.dart';
+
+// class FoodCard extends StatelessWidget {
+//   final String imagePath;
+//   final String foodName;
+//   final String description;
+//   final double rating;
+//   final int reviewsCount;
+
+//   const FoodCard({
+//     required this.imagePath,
+//     required this.foodName,
+//     required this.description,
+//     required this.rating,
+//     required this.reviewsCount,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Card(
+//       elevation: 4,
+//       child: Padding(
+//         padding: const EdgeInsets.all(4.0),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             Container(
+//               height: 150.0,
+//               decoration: BoxDecoration(
+//                 borderRadius: BorderRadius.circular(10.0),
+//                 color: Colors.grey[300],
+//                 image: DecorationImage(
+//                   image: AssetImage(imagePath),
+//                   fit: BoxFit.cover,
+//                 ),
+//               ),
+//             ),
+//             SizedBox(height: 2.0),
+//             Text(
+//               foodName,
+//               style: TextStyle(
+//                 fontSize: 16.0,
+//                 fontWeight: FontWeight.bold,
+//               ),
+//               maxLines: 1,
+//               overflow: TextOverflow.ellipsis,
+//             ),
+//             SizedBox(height: 2.0),
+//             Padding(
+//               padding: const EdgeInsets.symmetric(horizontal: 2.0),
+//               child: Text(
+//                 description,
+//                 style: TextStyle(fontSize: 12.0),
+//                 maxLines: 3,
+//                 overflow: TextOverflow.ellipsis,
+//               ),
+//             ),
+//             SizedBox(height: 2.0),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: [
+//                 Row(
+//                   children: [
+//                     Icon(
+//                       Icons.star,
+//                       size: 16,
+//                       color: Colors.amber,
+//                     ),
+//                     SizedBox(width: 2),
+//                     Text(
+//                       '5.0', // Star always set to 5
+//                       style: TextStyle(
+//                         fontSize: 12.0,
+//                         color: Colors.blue, // Set text color to blue
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//                 Text(
+//                   '$reviewsCount reviews',
+//                   style: TextStyle(
+//                     fontSize: 12.0,
+//                     color: Colors.amber, // Set text color to amber
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class Food extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Food'),
+//       ),
+//       body: Padding(
+//         padding: const EdgeInsets.all(4.0),
+//         child: GridView.builder(
+//           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//             crossAxisCount: 2,
+//             crossAxisSpacing: 4.0,
+//             mainAxisSpacing: 4.0,
+//           ),
+//           itemCount: 8, // Change this to the desired number of cards
+//           itemBuilder: (BuildContext context, int index) {
+//             return FoodCard(
+//               imagePath: 'images/pizza.jpeg',
+//               foodName: 'Pizza',
+//               description: 'Pizza is a savory dish of Italian origin...',
+//               rating: 5.0, // Always set to 5
+//               reviewsCount: 800,
+//             );
+//           },
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// void main() {
+//   runApp(MaterialApp(
+//     debugShowCheckedModeBanner: false,
+//     home: Food(),
+//   ));
+// }
+
+
 import 'package:flutter/material.dart';
 
-class Food extends StatelessWidget {
-  // List of food items
-  final List<Map<String, dynamic>> foods = [
-    {
-      'name': 'Pizza',
-      'description': 'Pizza is a savory dish of Italian origin...',
-      'image': 'images/pizza.jpeg',
-      'rating': 4.5,
-      'reviews': 800,
-    },
-    {
-      'name': 'Burger',
-      'description': 'A burger is a sandwich consisting of one or more cooked patties of ground meat...',
-      'image': 'images/burger.jpg',
-      'rating': 4.2,
-      'reviews': 700,
-    },
-    {
-      'name': 'Sushi',
-      'description': 'Sushi is a Japanese dish of prepared vinegared rice, usually with some sugar and salt, accompanying a variety of ingredients such as seafood, often raw, and vegetables...',
-      'image': 'images/sushi.jpg',
-      'rating': 4.7,
-      'reviews': 900,
-    },
-    {
-       'name': 'Biryani',
-      'description': 'Biryani is a mixed rice dish originating from the Indian subcontinent...',
-      'image': 'images/biryani.jpg',
-      'rating': 4.7,
-      'reviews': 900,
-    },
-    {
-      'name': 'Pasta',
-      'description': 'Pasta is a type of food typically made from an unleavened dough of wheat flour mixed with water or eggs, and formed into sheets or other shapes, then cooked by boiling or baking...',
-      'image': 'images/pasta.jpg',
-      'rating': 4.8,
-      'reviews': 850,
-    },
-    {
-      'name': 'Tacos',
-      'description': 'Tacos are a traditional Mexican dish consisting of a small hand-sized corn or wheat tortilla topped with a filling...',
-      'image': 'images/tacos.jpg',
-      'rating': 4.6,
-      'reviews': 750,
-    },
- 
-  ];
+class FoodCard extends StatelessWidget {
+  final String imagePath;
+  final String foodName;
+  final String description;
+  final double rating;
+  final int reviewsCount;
+  final Color starColor;
+  final Color ratingTextColor;
+  final Color reviewsCountColor;
 
+  const FoodCard({
+    required this.imagePath,
+    required this.foodName,
+    required this.description,
+    required this.rating,
+    required this.reviewsCount,
+    this.starColor = Colors.amber,
+    this.ratingTextColor = Colors.blue,
+    this.reviewsCountColor = Colors.amber,
+  });
 
-@override
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 4,
+      child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 150.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: Colors.grey[300],
+                image: DecorationImage(
+                  image: AssetImage(imagePath),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            SizedBox(height: 2.0),
+            Text(
+              foodName,
+              style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            SizedBox(height: 2.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 2.0),
+              child: Text(
+                description,
+                style: TextStyle(fontSize: 12.0),
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            SizedBox(height: 2.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      Icons.star,
+                      size: 16,
+                      color: starColor,
+                    ),
+                    SizedBox(width: 2),
+                    Text(
+                      '$rating',
+                      style: TextStyle(
+                        fontSize: 12.0,
+                        color: ratingTextColor,
+                      ),
+                    ),
+                  ],
+                ),
+                Text(
+                  '$reviewsCount reviews',
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: reviewsCountColor,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Food extends StatefulWidget {
+  @override
+  _FoodState createState() => _FoodState();
+}
+
+class _FoodState extends State<Food> {
+  TextEditingController _controller = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Food'),
       ),
-      body: ListView.builder(
-        itemCount: foods.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
+      backgroundColor: Colors.white, // Setting background color to white
+      body: Column(
+        children: [
+          Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Card(
-              child: ListTile(
-                contentPadding: EdgeInsets.all(8),
-                leading: Image.asset(
-                  foods[index]['image'], 
-                  width: 80,
-                  height: 80,
-                  fit: BoxFit.cover,
+            child: TextField(
+              controller: _controller,
+              decoration: InputDecoration(
+                hintText: 'Search',
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
-                title: Text(foods[index]['name']),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 4),
-                    Text(
-                      foods[index]['description'],
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    SizedBox(height: 4),
-                    Row(
-                      children: [
-                        Icon(Icons.star, color: Colors.yellow),
-                        SizedBox(width: 4),
-                        Text(
-                          '${foods[index]['rating']} (${foods[index]['reviews']} reviews)',
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      ],
-                    ),
-                  ],
+              ),
+              onChanged: (value) {
+                // Implement your search functionality here
+              },
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 4.0,
+                  mainAxisSpacing: 4.0,
                 ),
-                onTap: () {
-                
-
-
-
+                itemCount: 8, // Change this to the desired number of cards
+                itemBuilder: (BuildContext context, int index) {
+                  return FoodCard(
+                    imagePath: 'images/pizza.jpeg',
+                    foodName: 'Pizza',
+                    description: 'Pizza is a savory dish of Italian origin...',
+                    rating: 5.0, // Always set to 5
+                    reviewsCount: 800,
+                  );
                 },
               ),
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }
 }
+
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: Food(),
+  ));
+}
+
