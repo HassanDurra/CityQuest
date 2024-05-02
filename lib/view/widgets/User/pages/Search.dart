@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class Search extends StatefulWidget {
@@ -11,23 +10,27 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   String _query = '';
 
-
-  void _search()
-   {
-   print('Searching for: $_query');
+  void _search() {
+    print('Searching for: $_query');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25.0),
-            border: Border.all(color: Colors.grey),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 4,
+                offset: Offset(0, 2), 
+              ),
+            ],
           ),
           child: Row(
             children: [
