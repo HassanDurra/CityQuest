@@ -7,6 +7,7 @@ import 'package:cityquest/view/widgets/User/home.dart';
 import 'package:cityquest/view/Auth/buttons/register.button.dart';
 import 'package:cityquest/view/widgets/User/pages/Cities.dart';
 import 'package:cityquest/view/widgets/User/pages/Map.dart';
+import 'package:cityquest/view/widgets/User/pages/details.dart';
 import 'package:cityquest/view/widgets/User/partial/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -45,11 +46,8 @@ class _SplashViewState extends State<SplashView> {
 
         // Get.offAll(() => HomeView());
 
-        Get.offAll(() => MapView());
+        Get.offAll(() => Details());
         // Get.offAll(() => Navbar());
-
-
-
       }
     });
   }
@@ -66,7 +64,6 @@ class _SplashViewState extends State<SplashView> {
               fit: BoxFit.cover,
             ),
           ),
-         
         ],
       ),
     );

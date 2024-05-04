@@ -8,7 +8,8 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 
 class Attraction extends StatefulWidget {
-  const Attraction({Key? key}) : super(key: key);
+  final String? id;
+  const Attraction({Key? key, this.id}) : super(key: key);
 
   @override
   State<Attraction> createState() => _AttractionState();
@@ -52,6 +53,7 @@ class _AttractionState extends State<Attraction> {
       return city['name'].toLowerCase().contains(filter) ||
           city['description'].toLowerCase().contains(filter);
     }).toList();
+
 
     return Container(
       child: Scaffold(
@@ -330,4 +332,3 @@ class CategoryItem extends StatelessWidget {
     );
   }
 }
-
