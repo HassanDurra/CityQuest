@@ -1,10 +1,9 @@
-import 'dart:ui';
+import 'dart:convert';
+import 'dart:typed_data';
 
+import 'package:cityquest/config/webapi.dart';
 import 'package:cityquest/view/widgets/User/pages/details.dart';
-import 'package:cityquest/webapi/cityquestweb.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cityquest/assets/colors.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:ionicons/ionicons.dart';
@@ -18,88 +17,99 @@ class Attraction extends StatefulWidget {
 }
 
 class _AttractionState extends State<Attraction> {
-  final List<Map<String, dynamic>> Attraction = [
-    {
-      'name': 'Mazar e Quaid',
-      'description':
-          'Mazar-e-Quaid (Urdu: مزارِ قائد), also known as Jinnah Mausoleum or the National Mausoleum, is the final resting place of Muhammad Ali Jinnah, the founder of Pakistan. Designed in a 1960s',
-      'image': 'images/quaid.jpg',
-      'rating': 4.5,
-      'reviews': 1000,
-      'category': 'All',
-    },
-
-    // Add other Attraction
-  ];
-  getAttractions() async {
-    var URL = Uri.parse(
-        apiCredientals.base_url + "CityQuestWeb/Attraction/getActivity?id=${widget.id}");
-    var response  = await http.get(URL);
-    
-  }
-
-  TextEditingController searchController = TextEditingController();
+  final List<Map<String, dynamic>> attractions = [];
   String filter = '';
   String selectedCategory = 'All'; // Initially set to 'All'
 
-  final List<CategoryItem> categories = [
-    CategoryItem(icon: Icons.list, label: "All", isActive: true),
-    CategoryItem(icon: Icons.restaurant, label: 'Food', isActive: false),
-    CategoryItem(icon: Icons.hotel, label: 'Hotels', isActive: false),
-    CategoryItem(icon: Icons.shopping_cart, label: 'Shopping', isActive: false),
-    CategoryItem(icon: Icons.shopping_cart, label: 'Shopping', isActive: false),
-    CategoryItem(icon: Icons.shopping_cart, label: 'Shopping', isActive: false),
-    CategoryItem(icon: Icons.shopping_cart, label: 'Shopping', isActive: false),
-    // Add more categories as needed
-  ];
+  Future<void> getAttractions() async {
+    try {
+      var response = await http.get(Uri.parse(ApiCredientals.base_path +
+          'CityQuestWEB/Attraction/getActivity?id=${widget.id}'));
+      var data = json.decode(response.body);
+      if (data.length > 0) {
+        setState(() {
+          attractions.addAll(List<Map<String, dynamic>>.from(data));
+        });
+      } else {
+        // Handle error message
+      }
+    } catch (e) {
+      // Handle network or parsing errors
+      print('Error: $e');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getAttractions();
+  }
+
+  TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> filteredAttraction = Attraction.where((city) {
-      return city['category'] == selectedCategory || selectedCategory == 'All';
-    }).where((city) {
-      return city['name'].toLowerCase().contains(filter) ||
-          city['description'].toLowerCase().contains(filter);
+    List<Map<String, dynamic>> filteredAttractions =
+        attractions.where((attraction) {
+      return attraction['title'].toLowerCase().contains(filter) ||
+          attraction['description'].toLowerCase().contains(filter);
     }).toList();
 
-
-    return Container(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          shadowColor: Colors.black,
-          title: Text(
-            'Categories',
-            style: TextStyle(
-                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        shadowColor: Colors.black,
+        title: Text(
+          'Attractions',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
-          actions: [
-            Text('Filter'),
-            SizedBox(
-              width: 10,
-            ),
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  selectedCategory = 'All'; // Set back to 'All'
-                  filter = ''; // Clear the filter
-                });
-              },
-              icon: Icon(Ionicons.filter_outline,
-                  color: Colors.black), // Clear filter button
-            ),
-          ],
         ),
-        body: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10),
+        actions: [
+          Text('Filter'),
+          SizedBox(width: 10),
+          IconButton(
+            onPressed: () {
+              setState(() {
+                selectedCategory = 'All'; // Set back to 'All'
+                filter = ''; // Clear the filter
+              });
+            },
+            icon: Icon(
+              Ionicons.filter_outline,
+              color: Colors.black,
+            ), // Clear filter button
+          ),
+        ],
+      ),
+      body: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
                 child: TextField(
                   controller: searchController,
                   decoration: InputDecoration(
+                    border: InputBorder.none,
                     labelText: 'Search By Name',
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                     suffixIcon: IconButton(
                       onPressed: () => searchController.clear(),
                       icon: Icon(Icons.clear),
@@ -112,230 +122,167 @@ class _AttractionState extends State<Attraction> {
                   },
                 ),
               ),
-              SizedBox(height: 20),
-              Container(
-                alignment: Alignment.topLeft,
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  'Popular Categories',
-                ),
-              ),
-              CarouselSlider(
-                options: CarouselOptions(
-                  height: 60.0,
-                  aspectRatio: 20 / 10,
-                  viewportFraction: 0.4,
-                  enableInfiniteScroll: true,
-                  reverse: false,
-                  autoPlay: true,
-                  autoPlayInterval: Duration(seconds: 3),
-                  autoPlayAnimationDuration: Duration(milliseconds: 800),
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                  enlargeCenterPage: true,
-                  scrollDirection: Axis.horizontal,
-                ),
-                items: categories.map((item) {
-                  return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 4.0),
-                    child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          selectedCategory =
-                              item.label; // Update selected category
-                        });
+            ),
+            SizedBox(height: 20),
+            Expanded(
+              child: filteredAttractions.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: (filteredAttractions.length / 2).ceil(),
+                      itemBuilder: (context, index) {
+                        int firstIndex = index * 2;
+                        int secondIndex = index * 2 + 1;
+                        return Row(
+                          children: [
+                            if (firstIndex < filteredAttractions.length)
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: buildCard(
+                                      filteredAttractions[firstIndex]),
+                                ),
+                              ),
+                            if (secondIndex < filteredAttractions.length)
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: buildCard(
+                                      filteredAttractions[secondIndex]),
+                                ),
+                              ),
+                          ],
+                        );
                       },
-                      child: CategoryItem(
-                        icon: item.icon,
-                        label: item.label,
-                        isActive: item.label == selectedCategory,
-                        onTap: () {
-                          setState(() {
-                            selectedCategory =
-                                item.label; // Update selected category
-                          });
-                        },
+                    )
+                  : Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'No result found',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  );
-                }).toList(),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Expanded(
-                child: filteredAttraction.isNotEmpty
-                    ? ListView.builder(
-                        itemCount: (filteredAttraction.length / 2).ceil(),
-                        itemBuilder: (context, index) {
-                          int firstIndex = index * 2;
-                          int secondIndex = index * 2 + 1;
-                          return Row(
-                            children: [
-                              if (firstIndex < filteredAttraction.length)
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: buildCard(
-                                        filteredAttraction[firstIndex]),
-                                  ),
-                                ),
-                              if (secondIndex < filteredAttraction.length)
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: buildCard(
-                                        filteredAttraction[secondIndex]),
-                                  ),
-                                ),
-                            ],
-                          );
-                        },
-                      )
-                    : Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'images/noresult.jpg',
-                              height: 150,
-                            ),
-                            SizedBox(height: 20),
-                            Text(
-                              'No result found',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget buildCard(Map<String, dynamic> city) {
+  Widget buildCard(Map<String, dynamic> attraction) {
     return Container(
-        child: InkWell(
-      onTap: () {
-        Get.offAll(() => Details());
-      },
-      child: Card(
-        elevation: 3,
-        color: GlobalColors.mainColor,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.asset(
-              city['image'],
-              fit: BoxFit.cover,
-              height: 150,
-              width: double.infinity,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                city['name'],
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-              child: Text(
-                city['description'],
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Icon(Icons.star, color: Colors.yellow),
-                  SizedBox(width: 5),
-                  Text(
-                    '${city['rating']} (${city['reviews']} reviews)',
-                    style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+      child: InkWell(
+        onTap: () {
+          // Navigate to attraction details page
+          Get.to(() => Details());
+        },
+        child: AttractionCard(
+          imagePath: attraction['image'],
+          attractionName: attraction['title'],
+          description: attraction['description'],
+          rating: attraction['no_views']
+              , // Assuming 'no_views' is the rating
+          reviewsCount:  "8" , // Assuming 'location' is the reviews count
         ),
       ),
-    ));
+    );
   }
 }
 
-class CategoryItem extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final bool isActive;
-  final VoidCallback? onTap;
+class AttractionCard extends StatelessWidget {
+  final String? imagePath;
+  final String? attractionName;
+  final String? description;
+  final String? rating;
+  final String? reviewsCount;
 
-  const CategoryItem({
-    Key? key,
-    required this.icon,
-    required this.label,
-    required this.isActive,
-    this.onTap,
-  }) : super(key: key);
+  const AttractionCard({
+    this.imagePath,
+    this.attractionName,
+    this.description,
+    this.rating,
+    this.reviewsCount,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: MediaQuery.of(context).size.width / 4,
-        padding: EdgeInsets.all(8),
-        margin: EdgeInsets.all(5),
-        decoration: BoxDecoration(
-          color: isActive ? GlobalColors.mainColor : Colors.transparent,
-          borderRadius: BorderRadius.circular(8),
-          border: isActive ? null : Border.all(color: GlobalColors.mainColor),
-          boxShadow: [
-            if (isActive)
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 2,
-                blurRadius: 5,
-                offset: Offset(0, 3),
+    return Card(
+      elevation: 4,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AspectRatio(
+            aspectRatio: 4 / 3,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: Colors.grey[300],
+                image: DecorationImage(
+                  image: NetworkImage(imagePath!),
+                  fit: BoxFit.cover,
+                ),
               ),
-          ],
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              color: isActive ? Colors.white : GlobalColors.mainColor,
             ),
-            SizedBox(width: 5),
-            Text(
-              label,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              attractionName!,
               style: TextStyle(
-                color: isActive ? Colors.white : GlobalColors.mainColor,
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
               ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
-          ],
-        ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Text(
+              description!,
+              style: TextStyle(fontSize: 12.0),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      Icons.star,
+                      size: 16,
+                      color: Colors.amber,
+                    ),
+                    SizedBox(width: 2),
+                    Text(
+                      '$rating',
+                      style: TextStyle(
+                        fontSize: 12.0,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ],
+                ),
+                Text(
+                  '$reviewsCount reviews',
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.amber,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

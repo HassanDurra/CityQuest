@@ -182,7 +182,7 @@ class _CitiesState extends State<Cities> {
     return Container(
       child: InkWell(
         onTap: () {
-          Get.off(() => Attraction(id: city['id']));
+          Get.to(() => Attraction(id: city['id']));
         },
         child: FoodCard(
           imagePath: city['image'],
