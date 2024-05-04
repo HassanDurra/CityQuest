@@ -25,7 +25,6 @@ class _MapViewState extends State<MapView> {
   double zoomLevel = 15.0;
   final TextEditingController destinationController = TextEditingController();
   
-  get http => null;
 
   @override
   void initState() {
