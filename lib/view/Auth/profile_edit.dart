@@ -8,6 +8,7 @@ import 'package:cityquest/view/Auth/buttons/editprofilebutton.dart';
 import 'package:cityquest/view/Auth/buttons/register.button.dart';
 import 'package:cityquest/view/Auth/login.dart';
 import 'package:cityquest/view/widgets/User/partial/navbar.dart';
+import 'package:cityquest/webapi/cityquestweb.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -133,7 +134,7 @@ class _ProfileEditState extends State<ProfileEdit> {
     } else {
       try {
         final URL =
-            Uri.parse('http://localhost/CityQuestWEB/User/update?id=${userID}');
+            Uri.parse(apiCredientals.base_url+'CityQuestWEB/User/update?id=${userID}');
         var response = await http.post(URL, body: {
           'name': nameController.text,
           'username': userNameController.text,

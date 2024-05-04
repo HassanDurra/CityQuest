@@ -85,7 +85,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           CircleAvatar(
                             backgroundImage: userData['image'] != null
-                                ? NetworkImage(userData['image'])
+                                ? NetworkImage(
+                                    "https://cors-anywhere.herokuapp.com/" +
+                                        userData['image'])
                                 : NetworkImage(unknowImagePath),
                             radius: 30,
                           ),
@@ -121,14 +123,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     SizedBox(height: 10),
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => ProfileEdit(),
                           ),
                         );
-                      },child: buildListItem('Profile Setting', Icons.arrow_forward_ios),
+                      },
+                      child: buildListItem(
+                          'Profile Setting', Icons.arrow_forward_ios),
                     ),
                     buildListItem('Preferences', Icons.arrow_forward_ios),
                     buildListItem('Notifications', Icons.arrow_forward_ios),

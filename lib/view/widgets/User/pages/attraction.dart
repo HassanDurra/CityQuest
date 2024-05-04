@@ -1,14 +1,17 @@
 import 'dart:ui';
 
 import 'package:cityquest/view/widgets/User/pages/details.dart';
+import 'package:cityquest/webapi/cityquestweb.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cityquest/assets/colors.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:ionicons/ionicons.dart';
 
 class Attraction extends StatefulWidget {
-  const Attraction({Key? key}) : super(key: key);
+  final String? id;
+  const Attraction({Key? key, this.id}) : super(key: key);
 
   @override
   State<Attraction> createState() => _AttractionState();
@@ -28,6 +31,12 @@ class _AttractionState extends State<Attraction> {
 
     // Add other Attraction
   ];
+  getAttractions() async {
+    var URL = Uri.parse(
+        apiCredientals.base_url + "CityQuestWeb/Attraction/getActivity?id=${widget.id}");
+    var response  = await http.get(URL);
+    
+  }
 
   TextEditingController searchController = TextEditingController();
   String filter = '';
@@ -330,4 +339,3 @@ class CategoryItem extends StatelessWidget {
     );
   }
 }
-
