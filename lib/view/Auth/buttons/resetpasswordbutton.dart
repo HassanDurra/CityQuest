@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:cityquest/config/webapi.dart';
 import 'package:cityquest/view/Auth/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,7 +29,7 @@ class _ResetPasswordButtonState extends State<ResetPasswordButton> {
     Future<void> resetPassword() async {
       try {
         final URL = Uri.parse(
-            "http://localhost/CityQuestWEB/User/reset_password");
+             ApiCredientals.base_path+"CityQuestWEB/User/reset_password");
         var response = await http.post(URL,
             body: {'email': widget.email, 'password': widget.newPassword.text});
         if (response.statusCode == 200) {

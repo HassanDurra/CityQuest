@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:cityquest/config/webapi.dart';
 import 'package:cityquest/view/Auth/login.dart';
 import 'package:cityquest/view/Auth/verification.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class _ForgetButtonState extends State<ForgetButton> {
     Future<void> sendVerification(email) async {
       try {
         final URL = Uri.parse(
-            'http://localhost/CityQuestWEB/Verification/verification_code');
+            ApiCredientals.base_path+'CityQuestWEB/Verification/verification_code');
         var response = await http.post(URL, body: {'email': email});
         // Validation
         if (response.statusCode == 200) {
