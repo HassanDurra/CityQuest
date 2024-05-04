@@ -375,7 +375,7 @@ class CustomCarouselIndicator extends StatelessWidget {
         );
       }),
     );
-  }
+  }  
 }
 
 
