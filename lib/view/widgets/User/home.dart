@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:cityquest/config/webapi.dart';
 import 'package:cityquest/view/widgets/User/pages/attraction.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,29 +14,25 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  List<Map<String, dynamic>> places = [
-    {
-      'name': 'Tokyo',
-      'image': 'images/tokyo.jpg',
-      'description': 'Capital of Japan',
-      'rating': 4.54,
-      'reviews': 120,
-    },
-    {
-      'name': 'New York',
-      'image': 'images/newyork.jpg',
-      'description': 'City in New York State',
-      'rating': 4.22,
-      'reviews': 90,
-    },
-    {
-      'name': 'London',
-      'image': 'images/london.jpeg',
-      'description': 'Capital of England',
-      'rating': 4.33,
-      'reviews': 80,
-    },
-  ];
+  final List<Map<String, dynamic>> places = [];
+  getCities() async {
+    try {
+      var response = await http.get(
+          Uri.parse(ApiCredientals.base_path + "CityQuestWeb/City/get_cities"));
+      var data = json.decode(response.body);
+      if (data['message'] == 'success') {
+        setState(() {
+          places.addAll(List<Map<String, dynamic>>.from(data['data']));
+        });
+      } else {
+        // Handle error message
+        print('Error: ${data['message']}');
+      }
+    } catch (e) {
+      // Handle network or parsing errors
+      print('Error: $e');
+    }
+  }
 
   Map<String, dynamic> userData = {};
 
@@ -53,6 +51,7 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     super.initState();
     getData();
+    getCities();
   }
 
   @override
@@ -62,15 +61,11 @@ class _HomeViewState extends State<HomeView> {
         actions: [
           IconButton(
             icon: Icon(Icons.alarm),
-            onPressed: () {
-           
-            },
+            onPressed: () {},
           ),
           IconButton(
             icon: Icon(Icons.power_settings_new),
-            onPressed: () {
-         
-            },
+            onPressed: () {},
           ),
         ],
       ),
@@ -100,7 +95,7 @@ class _HomeViewState extends State<HomeView> {
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 2,
                       blurRadius: 4,
-                      offset: Offset(0, 2), 
+                      offset: Offset(0, 2),
                     ),
                   ],
                 ),
@@ -109,7 +104,8 @@ class _HomeViewState extends State<HomeView> {
                     prefixIcon: Icon(Icons.search),
                     hintText: 'Search...',
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                   ),
                 ),
               ),
@@ -287,7 +283,7 @@ class _CarouselWithCardsState extends State<CarouselWithCards> {
                           ),
                           SizedBox(height: 10.0),
                           Text(
-                            place['description'],
+                            place['short_description'],
                             style: TextStyle(fontSize: 16.0),
                           ),
                           SizedBox(height: 10.0),
@@ -300,7 +296,7 @@ class _CarouselWithCardsState extends State<CarouselWithCards> {
                               ),
                               SizedBox(width: 5),
                               Text(
-                                '${place['rating']} (${place['reviews']} reviews)',
+                                '${place['id']} (${place['id']} reviews)',
                                 style: TextStyle(
                                   fontSize: 16.0,
                                   color: Colors.blue,
@@ -393,7 +389,8 @@ class GridCard extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),

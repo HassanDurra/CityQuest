@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:cityquest/config/webapi.dart';
 import 'package:cityquest/view/Auth/login.dart';
 import 'package:cityquest/view/widgets/User/home.dart';
 import 'package:cityquest/view/widgets/User/partial/navbar.dart';
@@ -20,7 +21,7 @@ class Authentication {
 
   Future<void> Register(BuildContext context, email, password, username) async {
     try {
-      final url = Uri.parse(apiCredientals.base_url+"CityQuestWEB/User/register");
+      final url = Uri.parse(ApiCredientals.base_path+"CityQuestWEB/User/register");
       var response = await http.post(url, body: {
         'email': email,
         'password': password,
@@ -94,7 +95,7 @@ class Authentication {
 
   Future<void> login(BuildContext context, email, password) async {
     try {
-      final URL = Uri.parse(apiCredientals.base_url+"CityQuestWEB/User/login");
+      final URL = Uri.parse( ApiCredientals.base_path+"CityQuestWEB/User/login");
       var response = await http.post(URL, body: {
         'email': email,
         'password': password,

@@ -62,6 +62,7 @@ class _AttractionState extends State<Attraction> {
           city['description'].toLowerCase().contains(filter);
     }).toList();
 
+
     return Container(
       child: Scaffold(
         appBar: AppBar(

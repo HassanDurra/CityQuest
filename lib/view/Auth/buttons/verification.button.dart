@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:cityquest/config/webapi.dart';
 import 'package:cityquest/view/Auth/reset_password.dart';
 import 'package:cityquest/webapi/cityquestweb.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class _VerificationButtonState extends State<VerificationButton> {
     Future<void> verification() async {
       try {
         final URL = Uri.parse(
-            apiCredientals.base_url+"CityQuestWEB/Verification/verify_code");
+             ApiCredientals.base_path+"CityQuestWEB/Verification/verify_code");
         var response = await http.post(URL,
             body: {'email': widget.email, 'code': widget.verification.text});
         if (response.statusCode == 200) {
