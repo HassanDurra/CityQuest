@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:insta_image_viewer/insta_image_viewer.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AttractionDetails extends StatefulWidget {
   final String? id;
@@ -19,15 +20,24 @@ class AttractionDetails extends StatefulWidget {
 
 class _AttractionDetailsState extends State<AttractionDetails> {
   final TextEditingController messageController = TextEditingController();
-  int _currentIndex = 0;
-  double _userRating = 0.0; // Track user's selected rating
-
   @override
   void initState() {
     super.initState();
     get_attraction();
     getReviews();
+    getData();
   }
+
+  int _currentIndex = 0;
+  Map<String, dynamic> userData = {};
+  Future<void> getData() async {
+    var pref = await SharedPreferences.getInstance();
+    String? user = pref.getString('user');
+    userData = jsonDecode(user.toString());
+  }
+
+
+  double _userRating = 0.0; // Track user's selected rating
 
   Map<String, dynamic> attraction_info = {};
   List<Map<String, dynamic>> user_reviews = [];
@@ -66,7 +76,7 @@ class _AttractionDetailsState extends State<AttractionDetails> {
     var URL =
         Uri.parse(ApiCredientals.base_path + "CityQuestWEB/Review/favorite");
     var response = await http.post(URL, body: {
-      'user_id': '82',
+      'user_id': "${userData['id']}",
       'content_id': attraction_info['id'].toString() ?? "",
       'content_type': 'attraction'
     });
@@ -184,7 +194,7 @@ class _AttractionDetailsState extends State<AttractionDetails> {
       var URL =
           Uri.parse(ApiCredientals.base_path + "CityQuestWEB/Review/store");
       var response = await http.post(URL, body: {
-        'user_id': '82',
+        'user_id': "${userData['id']}",
         'content_id': attraction_info['id'].toString() ?? "",
         'message': messageController.text,
         'ratings': _userRating.toString(),
@@ -295,6 +305,62 @@ class _AttractionDetailsState extends State<AttractionDetails> {
                     child: Column(
                       children: [
                         SizedBox(height: 16),
+                        Row(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    blurRadius: 2,
+                                    spreadRadius: 1,
+                                    offset: Offset(0, 2),
+                                  )
+                                ],
+                              ),
+                              padding: EdgeInsets.all(10),
+                              child: Tooltip(
+                                message: "Get Direction",
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: Icon(
+                                    Icons.location_on,
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 20),
+                            Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      blurRadius: 2,
+                                      spreadRadius: 1,
+                                      offset: Offset(0, 2),
+                                    )
+                                  ],
+                                ),
+                                padding: EdgeInsets.all(10),
+                                child: Tooltip(
+                                  message: 'Add to Favorites',
+                                  child: InkWell(
+                                    onTap: () {
+                                      addFavorite();
+                                    },
+                                    child: Icon(
+                                      Ionicons.heart_circle_outline,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                )),
+                          ],
+                        )
                       ],
                     ),
                   ),
@@ -316,62 +382,6 @@ class _AttractionDetailsState extends State<AttractionDetails> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Row(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                blurRadius: 2,
-                                spreadRadius: 1,
-                                offset: Offset(0, 2),
-                              )
-                            ],
-                          ),
-                          padding: EdgeInsets.all(10),
-                          child: Tooltip(
-                            message: "Get Direction",
-                            child: InkWell(
-                              onTap: () {},
-                              child: Icon(
-                                Icons.location_on,
-                                color: Colors.blue,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 20),
-                        Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  blurRadius: 2,
-                                  spreadRadius: 1,
-                                  offset: Offset(0, 2),
-                                )
-                              ],
-                            ),
-                            padding: EdgeInsets.all(10),
-                            child: Tooltip(
-                              message: 'Add to Favorites',
-                              child: InkWell(
-                                onTap: () {
-                                  addFavorite();
-                                },
-                                child: Icon(
-                                  Ionicons.heart_circle_outline,
-                                  color: Colors.red,
-                                ),
-                              ),
-                            )),
-                      ],
-                    )
                   ],
                 ),
               ),
@@ -537,8 +547,8 @@ class _AttractionDetailsState extends State<AttractionDetails> {
                         autoPlay: true,
                         height: 200,
                         enlargeCenterPage: true,
-                        aspectRatio: 0.4,
-                        viewportFraction: 0.4,
+                        aspectRatio: 2,
+                        viewportFraction: 2,
                       ),
                     )
                   : Center(

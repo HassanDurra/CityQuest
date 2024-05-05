@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'package:cityquest/config/webapi.dart';
+import 'package:cityquest/view/Class/Authentication.dart';
+import 'package:cityquest/view/widgets/User/pages/Places.dart';
 import 'package:cityquest/view/widgets/User/pages/attraction.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -59,13 +62,13 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-            icon: Icon(Icons.alarm),
-            onPressed: () {},
-          ),
+         
           IconButton(
             icon: Icon(Icons.power_settings_new),
-            onPressed: () {},
+            onPressed: () {
+              var auth = new Authentication();
+              auth.Logout();
+            },
           ),
         ],
       ),
@@ -82,36 +85,6 @@ class _HomeViewState extends State<HomeView> {
               ),
             ),
 
-            ///search bar
-            SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 4,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    hintText: 'Search...',
-                    border: InputBorder.none,
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                  ),
-                ),
-              ),
-            ),
-
-            SizedBox(height: 20),
             CarouselWithCards(places: places),
 
             ///categories
@@ -130,23 +103,35 @@ class _HomeViewState extends State<HomeView> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: CategoryTile(
-                          icon: Icons.directions_walk,
-                          text: 'Things to Do',
+                        child: InkWell(
+                          onTap: () => Get.to(
+                              (context) => Place(category: 'Things to Do')),
+                          child: CategoryTile(
+                            icon: Icons.directions_walk,
+                            text: 'Things to Do',
+                          ),
                         ),
                       ),
                       SizedBox(width: 10),
                       Expanded(
-                        child: CategoryTile(
-                          icon: Icons.event,
-                          text: 'Events',
+                        child: InkWell(
+                          onTap: () =>
+                              Get.to((context) => Place(category: 'Events')),
+                          child: CategoryTile(
+                            icon: Icons.event,
+                            text: 'Events',
+                          ),
                         ),
                       ),
                       SizedBox(width: 10),
                       Expanded(
-                        child: CategoryTile(
-                          icon: Icons.local_dining,
-                          text: 'Food & Drinks',
+                        child: InkWell(
+                          onTap: () => Get.to(
+                              (context) => Place(category: 'Food & Drinks')),
+                          child: CategoryTile(
+                            icon: Icons.local_dining,
+                            text: 'Food & Drinks',
+                          ),
                         ),
                       ),
                     ],
@@ -156,23 +141,35 @@ class _HomeViewState extends State<HomeView> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: CategoryTile(
-                          icon: Icons.restaurant,
-                          text: 'Restaurants',
+                        child: InkWell(
+                          onTap: () => Get.to(
+                              (context) => Place(category: 'Restaurants')),
+                          child: CategoryTile(
+                            icon: Icons.restaurant,
+                            text: 'Restaurants',
+                          ),
                         ),
                       ),
                       SizedBox(width: 10),
                       Expanded(
-                        child: CategoryTile(
-                          icon: Icons.park,
-                          text: 'Parks',
+                        child: InkWell(
+                          onTap: () =>
+                              Get.to((context) => Place(category: 'Parks')),
+                          child: CategoryTile(
+                            icon: Icons.park,
+                            text: 'Parks',
+                          ),
                         ),
                       ),
                       SizedBox(width: 10),
                       Expanded(
-                        child: CategoryTile(
-                          icon: Icons.beach_access,
-                          text: 'Seas',
+                        child: InkWell(
+                          onTap: () =>
+                              Get.to((context) => Place(category: 'Seas')),
+                          child: CategoryTile(
+                            icon: Icons.beach_access,
+                            text: 'Seas',
+                          ),
                         ),
                       ),
                     ],
@@ -182,42 +179,6 @@ class _HomeViewState extends State<HomeView> {
             ),
 
             /// Grid Layout Cards
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Recommended',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: GridView.count(
-                      crossAxisCount: 2,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      mainAxisSpacing: 16,
-                      crossAxisSpacing: 16,
-                      childAspectRatio: MediaQuery.of(context).size.width /
-                          (MediaQuery.of(context).size.height / 1.5),
-                      // Adjust the childAspectRatio based on your design to fit two items in a row without horizontal scrolling
-                      children: [
-                        GridCard(
-                          title: 'Can you guess the City ?',
-                          imageUrl: 'images/card1.jpg',
-                        ),
-                        GridCard(
-                          title: 'The Amazing Pakistan',
-                          imageUrl: 'images/card2.jpg',
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ],
         ),
       ),
@@ -480,7 +441,8 @@ class CategoryTile extends StatelessWidget {
           elevation: 4,
           child: Container(
             decoration: BoxDecoration(
-                color: Color.fromARGB(216, 255, 255, 255), borderRadius: BorderRadius.circular(5)),
+                color: Color.fromARGB(216, 255, 255, 255),
+                borderRadius: BorderRadius.circular(5)),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: Column(

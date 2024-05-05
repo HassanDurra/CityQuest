@@ -6,8 +6,7 @@ import 'package:cityquest/view/widgets/User/pages/Cities.dart';
 import 'package:cityquest/view/widgets/User/pages/Favorites.dart';
 import 'package:cityquest/view/widgets/User/pages/Profile.dart';
 import 'package:cityquest/view/widgets/User/pages/Map.dart';
-import 'package:cityquest/view/widgets/User/pages/Listing.dart';
-import 'package:cityquest/view/widgets/User/pages/Search.dart';
+import 'package:cityquest/view/widgets/User/pages/Places.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,8 +24,7 @@ class _NavbarState extends State<Navbar> {
     ProfileScreen(),
     Cities(),
     MapView(),
-    Listing(),
-    Search(),
+    Place(),
     Favorite(),
     HomeView()
   ];
@@ -145,7 +143,7 @@ class _NavbarState extends State<Navbar> {
                   MaterialButton(
                     onPressed: () {
                       setState(() {
-                        currentScreen = Listing();
+                        currentScreen = Place();
                         CurrentTab = 1;
                       });
                     },
@@ -160,7 +158,7 @@ class _NavbarState extends State<Navbar> {
                               : Colors.black54,
                         ),
                         Text(
-                          "Attractions",
+                          "Activity",
                           style: TextStyle(
                               fontSize: 11,
                               fontFamily: 'poppins',
@@ -212,35 +210,6 @@ class _NavbarState extends State<Navbar> {
                   MaterialButton(
                     onPressed: () {
                       setState(() {
-                        currentScreen = Search();
-                        CurrentTab = 3;
-                      });
-                    },
-                    minWidth: 50,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Ionicons.search_outline,
-                          color: CurrentTab == 3
-                              ? GlobalColors.mainColor
-                              : Colors.black54,
-                        ),
-                        Text(
-                          "Search",
-                          style: TextStyle(
-                              fontSize: 11,
-                              fontFamily: 'poppins',
-                              color: CurrentTab == 3
-                                  ? GlobalColors.mainColor
-                                  : Colors.black54),
-                        )
-                      ],
-                    ),
-                  ),
-                  MaterialButton(
-                    onPressed: () {
-                      setState(() {
                         currentScreen = Favorite();
                         CurrentTab = 4;
                       });
@@ -256,7 +225,7 @@ class _NavbarState extends State<Navbar> {
                               : Colors.black54,
                         ),
                         Text(
-                          "Favorites",
+                          "Starred",
                           style: TextStyle(
                               fontSize: 11,
                               fontFamily: 'poppins',

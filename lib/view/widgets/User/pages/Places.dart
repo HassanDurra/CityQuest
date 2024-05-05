@@ -4,52 +4,38 @@ import 'dart:typed_data';
 import 'package:cityquest/assets/colors.dart';
 import 'package:cityquest/config/webapi.dart';
 import 'package:cityquest/view/widgets/User/pages/Cities.dart';
-import 'package:cityquest/view/widgets/User/pages/Cities_details.dart';
 import 'package:cityquest/view/widgets/User/pages/attraction_details.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:ionicons/ionicons.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class Favorite extends StatefulWidget {
+class Place extends StatefulWidget {
   final String? id;
-  const Favorite({Key? key, this.id}) : super(key: key);
+
+  final String? category;
+  const Place({Key? key, this.id, this.category}) : super(key: key);
 
   @override
-  State<Favorite> createState() => _FavoriteState();
+  State<Place> createState() => _PlaceState();
 }
 
-class _FavoriteState extends State<Favorite> {
-  final List<Map<String, dynamic>> Favorites = [];
+class _PlaceState extends State<Place> {
+  int? cityLength;
+  final List<Map<String, dynamic>> attractions = [];
   String filter = '';
   String selectedCategory = 'All'; // Initially set to 'All'
-  int? cityLength;
 
-  @override
-  void initState() {
-    super.initState();
-    getData();
-    getFavoritesAttr();
-  }
-
-  Map<String, dynamic> userData = {};
-  Future<void> getData() async {
-    var pref = await SharedPreferences.getInstance();
-    String? user = pref.getString('user');
-    userData = jsonDecode(user.toString());
-  }
-
-  Future<void> getFavoritesAttr() async {
+  Future<void> getAttractions() async {
     try {
-      var id = userData['id'];
       var response = await http.get(Uri.parse(ApiCredientals.base_path +
-          'CityQuestWEB/Attraction/favorite_attraction?user_id="${userData['id']}"'));
+          'CityQuestWEB/Attraction/allActivity?id=${widget.id}'));
       var data = json.decode(response.body);
       if (data.length > 0) {
         setState(() {
-          Favorites.addAll(List<Map<String, dynamic>>.from(data));
-          cityLength = Favorites.length;
+          attractions.addAll(List<Map<String, dynamic>>.from(data));
+          cityLength = attractions.length;
         });
       } else {
         // Handle error message
@@ -60,21 +46,32 @@ class _FavoriteState extends State<Favorite> {
     }
   }
 
+  @override
+  void initState() {
+    super.initState();
+    getAttractions();
+  }
+
   TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> filteredCities = Favorites.where((Favorite) {
-      return Favorite['title'].toLowerCase().contains(filter) ||
-          Favorite['description'].toLowerCase().contains(filter);
+  
+    List<Map<String, dynamic>> filteredAttractions =
+        attractions.where((attraction) {
+      return (attraction['title'].toLowerCase().contains(filter) ||
+              attraction['description'].toLowerCase().contains(filter)) &&
+          (widget.category == null ||
+              attraction['category'] == widget.category);
     }).toList();
-    cityLength = filteredCities.length;
+
+    cityLength = filteredAttractions.length;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         shadowColor: Colors.black,
         title: Text(
-          'Cities',
+          'Attractions',
           style: TextStyle(
               fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
         ),
@@ -119,37 +116,29 @@ class _FavoriteState extends State<Favorite> {
               ),
             ),
             SizedBox(height: 20),
-            Container(
-                child: Text(
-              'Attractions and Activities',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            )),
-            SizedBox(height: 20),
             Expanded(
-              child: filteredCities.isNotEmpty
+              child: filteredAttractions.isNotEmpty
                   ? ListView.builder(
-                      itemCount: (filteredCities.length / 2).ceil(),
+                      itemCount: (filteredAttractions.length / 2).ceil(),
                       itemBuilder: (context, index) {
                         int firstIndex = index * 2;
                         int secondIndex = index * 2 + 1;
                         return Row(
                           children: [
-                            if (firstIndex < filteredCities.length)
+                            if (firstIndex < filteredAttractions.length)
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: buildCard(
-                                      filteredCities[firstIndex], index),
+                                      filteredAttractions[firstIndex], index),
                                 ),
                               ),
-                            if (secondIndex < filteredCities.length)
+                            if (secondIndex < filteredAttractions.length)
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: buildCard(
-                                      filteredCities[secondIndex], index),
+                                      filteredAttractions[secondIndex], index),
                                 ),
                               ),
                           ],
@@ -171,31 +160,28 @@ class _FavoriteState extends State<Favorite> {
                       ),
                     ),
             ),
-            //Cities
           ],
         ),
       ),
     );
   }
 
-  Widget buildCard(Map<String, dynamic> city, filtered) {
+  Widget buildCard(Map<String, dynamic> attraction, filtered) {
     return Container(
       child: InkWell(
         onTap: () {
-          city['content_type'] == "city"
-              ? Get.to(() => CityDetails(id: city['content_id']))
-              : Get.to(() => AttractionDetails(id: city['content_id']));
+          Get.to(() => AttractionDetails(id: attraction['id']));
         },
         child: CityCard(
-          imagePath: city['image'],
-          id: city['id'],
+          imagePath: attraction['image'],
+          id: attraction['id'],
           cityLength: cityLength,
-          cityname: city['title'],
-          description: city['description'],
-          rating: city['total_ratings'] ??
-              "0", // Assuming 'rating' is a key in your city map
-          reviewsCount: city['total_reviews'] ??
-              "0", // Assuming 'reviews_count' is a key in your city map
+          cityname: attraction['title'],
+          description: attraction['description'],
+          rating: attraction['total_ratings'] ??
+              "0", // Assuming 'rating' is a key in your attraction map
+          reviewsCount: attraction['total_reviews'] ??
+              "0", // Assuming 'reviews_count' is a key in your attraction map
         ),
       ),
     );
@@ -247,6 +233,7 @@ class CityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // Calculate star rating based on total ratings
     double starRating = double.parse(rating!) / 5.0;
+    print(cityLength);
     return Card(
       elevation: 4,
       child: Container(

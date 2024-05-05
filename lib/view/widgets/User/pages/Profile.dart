@@ -85,9 +85,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           CircleAvatar(
                             backgroundImage: userData['image'] != null
-                                ? NetworkImage(
-                                    "https://cors-anywhere.herokuapp.com/" +
-                                        userData['image'])
+                                ? NetworkImage(userData['image'])
                                 : NetworkImage(unknowImagePath),
                             radius: 30,
                           ),

@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:insta_image_viewer/insta_image_viewer.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CityDetails extends StatefulWidget {
   final String? id;
@@ -27,6 +28,14 @@ class _CityDetailsState extends State<CityDetails> {
     super.initState();
     get_city();
     getReviews();
+    getData();
+  }
+
+  Map<String, dynamic> userData = {};
+  Future<void> getData() async {
+    var pref = await SharedPreferences.getInstance();
+    String? user = pref.getString('user');
+    userData = jsonDecode(user.toString());
   }
 
   Map<String, dynamic> city_info = {};
@@ -66,7 +75,7 @@ class _CityDetailsState extends State<CityDetails> {
     var URL =
         Uri.parse(ApiCredientals.base_path + "CityQuestWEB/Review/favorite");
     var response = await http.post(URL, body: {
-      'user_id': '82',
+      'user_id': '${userData['id']}',
       'content_id': city_info['id'].toString() ?? "",
       'content_type': 'city'
     });
@@ -183,7 +192,7 @@ class _CityDetailsState extends State<CityDetails> {
       var URL =
           Uri.parse(ApiCredientals.base_path + "CityQuestWEB/Review/store");
       var response = await http.post(URL, body: {
-        'user_id': '82',
+        'user_id': '${userData['id']}',
         'content_id': city_info['id'].toString() ?? "",
         'message': messageController.text,
         'ratings': _userRating.toString(),

@@ -18,7 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class ProfileEdit extends StatefulWidget {
-  const ProfileEdit({super.key});
+  const ProfileEdit({Key? key}) : super(key: key);
 
   @override
   State<ProfileEdit> createState() => _ProfileEditState();
@@ -58,7 +58,8 @@ class _ProfileEditState extends State<ProfileEdit> {
   ImagePicker _imagePicker = new ImagePicker();
   Future<void> storeData(data) async {
     var pref = await SharedPreferences.getInstance();
-    await pref.setString('user', data);
+    String jsonData = jsonEncode(data[0]);
+    await pref.setString('user', jsonData);
   }
 
   Future<void> chooseImage() async {
@@ -134,8 +135,8 @@ class _ProfileEditState extends State<ProfileEdit> {
       ));
     } else {
       try {
-        final URL =
-            Uri.parse( ApiCredientals.base_path+'CityQuestWEB/User/update?id=${userID}');
+        final URL = Uri.parse(
+            ApiCredientals.base_path + 'CityQuestWEB/User/update?id=${userID}');
         var response = await http.post(URL, body: {
           'name': nameController.text,
           'username': userNameController.text,
@@ -228,6 +229,7 @@ class _ProfileEditState extends State<ProfileEdit> {
   @override
   void initState() {
     getData();
+    super.initState();
   }
 
   @override

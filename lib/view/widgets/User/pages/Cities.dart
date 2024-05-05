@@ -20,7 +20,8 @@ class Cities extends StatefulWidget {
 }
 
 class _CitiesState extends State<Cities> {
-  final List<Map<String, dynamic>> cities = [];
+  List<Map<String, dynamic>> cities = [];
+  int? cityLength;
 
   Future<void> getCities() async {
     try {
@@ -30,6 +31,7 @@ class _CitiesState extends State<Cities> {
       if (data['message'] == 'success') {
         setState(() {
           cities.addAll(List<Map<String, dynamic>>.from(data['data']));
+          cityLength = cities.length;
         });
       } else {
         // Handle error message
@@ -51,20 +53,14 @@ class _CitiesState extends State<Cities> {
   String filter = '';
   String selectedCategory = 'All'; // Initially set to 'All'
 
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> filteredCities = cities.where((city) {
       return city['name'].toLowerCase().contains(filter) ||
           city['short_description'].toLowerCase().contains(filter);
     }).toList();
+
+    cityLength = filteredCities.length;
 
     return Scaffold(
       appBar: AppBar(
@@ -75,22 +71,6 @@ class _CitiesState extends State<Cities> {
           style: TextStyle(
               fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
         ),
-        actions: [
-          Text('Filter'),
-          SizedBox(
-            width: 10,
-          ),
-          IconButton(
-            onPressed: () {
-              setState(() {
-                selectedCategory = 'All'; // Set back to 'All'
-                filter = ''; // Clear the filter
-              });
-            },
-            icon: Icon(Ionicons.filter_outline,
-                color: Colors.black), // Clear filter button
-          ),
-        ],
       ),
       body: Container(
         child: Column(
@@ -145,16 +125,14 @@ class _CitiesState extends State<Cities> {
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: buildCard(filteredCities[firstIndex],
-                                      index),
+                                  child: buildCard(filteredCities[firstIndex]),
                                 ),
                               ),
                             if (secondIndex < filteredCities.length)
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: buildCard(filteredCities[secondIndex],
-                                     index),
+                                  child: buildCard(filteredCities[secondIndex]),
                                 ),
                               ),
                           ],
@@ -182,7 +160,7 @@ class _CitiesState extends State<Cities> {
     );
   }
 
-  Widget buildCard(Map<String, dynamic> city, filtered) {
+  Widget buildCard(Map<String, dynamic> city) {
     return Container(
       child: InkWell(
         onTap: () {
@@ -191,7 +169,7 @@ class _CitiesState extends State<Cities> {
         child: CityCard(
           imagePath: city['image'],
           id: city['id'],
-          cityLength: city.length.toString(),
+          cityLength: cityLength,
           cityname: city['name'],
           description: city['short_description'],
           rating: city['total_ratings'] ??
@@ -223,7 +201,7 @@ void main() {
 class CityCard extends StatelessWidget {
   final String? imagePath;
   final String? id;
-  final String? cityLength;
+  final int? cityLength;
   final String? cityname;
   final String? description;
   final String? rating;
@@ -249,11 +227,11 @@ class CityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // Calculate star rating based on total ratings
     double starRating = double.parse(rating!) / 5.0;
-    print(cityLength);
+
     return Card(
       elevation: 4,
       child: Container(
-        height: cityLength!.length > 1 ? 380 : 550,
+        height: cityLength! > 1 ? 280 : 430,
         child: Stack(
           children: [
             Column(
@@ -325,13 +303,6 @@ class CityCard extends StatelessWidget {
                       message: 'View Attractions',
                       child: Row(
                         children: [
-                          Text(
-                            'Attractions',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          SizedBox(
-                            width: 9,
-                          ),
                           Icon(
                             Ionicons.chevron_forward_circle,
                             color: Colors.white,
