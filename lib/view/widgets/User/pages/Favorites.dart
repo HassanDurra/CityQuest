@@ -1,9 +1,8 @@
-
 import 'package:flutter/material.dart';
 
-class FoodCard extends StatelessWidget {
+class FavoriteCard extends StatelessWidget {
   final String imagePath;
-  final String foodName;
+  final String FavoriteName;
   final String description;
   final double rating;
   final int reviewsCount;
@@ -11,9 +10,9 @@ class FoodCard extends StatelessWidget {
   final Color ratingTextColor;
   final Color reviewsCountColor;
 
-  const FoodCard({
+  const FavoriteCard({
     required this.imagePath,
-    required this.foodName,
+    required this.FavoriteName,
     required this.description,
     required this.rating,
     required this.reviewsCount,
@@ -45,7 +44,7 @@ class FoodCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              foodName,
+              FavoriteName,
               style: TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.bold,
@@ -101,12 +100,12 @@ class FoodCard extends StatelessWidget {
   }
 }
 
-class Food extends StatefulWidget {
+class Favorite extends StatefulWidget {
   @override
-  _FoodState createState() => _FoodState();
+  _FavoriteState createState() => _FavoriteState();
 }
 
-class _FoodState extends State<Food> {
+class _FavoriteState extends State<Favorite> {
   TextEditingController _controller = TextEditingController();
 
   @override
@@ -116,7 +115,7 @@ class _FoodState extends State<Food> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Food'),
+        title: Text('Favorite'),
       ),
       backgroundColor: Colors.white,
       body: Column(
@@ -164,10 +163,11 @@ class _FoodState extends State<Food> {
                 ),
                 itemCount: 8,
                 itemBuilder: (BuildContext context, int index) {
-                  return FoodCard(
+                  return FavoriteCard(
                     imagePath: 'images/pizza.jpeg',
-                    foodName: 'Pizza',
-                    description: 'pizza, dish of Italian origin consisting of a flattened disk of bread dough topped with some combination of olive oil, oregano, tomato, olives, mozzarella or other cheese, and many other ingredients, baked quickly—usually, in a commercial setting, using a wood-fired oven heated to a very high temperature—and served hot ...',
+                    FavoriteName: 'Pizza',
+                    description:
+                        'pizza, dish of Italian origin consisting of a flattened disk of bread dough topped with some combination of olive oil, oregano, tomato, olives, mozzarella or other cheese, and many other ingredients, baked quickly—usually, in a commercial setting, using a wood-fired oven heated to a very high temperature—and served hot ...',
                     rating: 5.0, // Always set to 5
                     reviewsCount: 800,
                   );
@@ -184,6 +184,6 @@ class _FoodState extends State<Food> {
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: Food(),
+    home: Favorite(),
   ));
 }

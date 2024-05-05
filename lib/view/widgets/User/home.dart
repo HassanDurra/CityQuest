@@ -200,7 +200,8 @@ class _HomeViewState extends State<HomeView> {
                       physics: NeverScrollableScrollPhysics(),
                       mainAxisSpacing: 16,
                       crossAxisSpacing: 16,
-                      childAspectRatio: MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 1.5),
+                      childAspectRatio: MediaQuery.of(context).size.width /
+                          (MediaQuery.of(context).size.height / 1.5),
                       // Adjust the childAspectRatio based on your design to fit two items in a row without horizontal scrolling
                       children: [
                         GridCard(
@@ -430,70 +431,77 @@ class CategoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        switch (text) {
-          case 'Things to Do':
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Attraction()),
-            );
-            break;
-          case 'Events':
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Attraction()),
-            );
-            break;
-          case 'Food & Drinks':
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Attraction()),
-            );
-            break;
-          case 'Restaurants':
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Attraction()),
-            );
-            break;
-          case 'Seas':
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Attraction()),
-            );
-            break;
-          case 'Parks':
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Attraction()),
-            );
-            break;
-          default:
-            break;
-        }
-      },
-      child: Card(
-        elevation: 4,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                size: 36,
-                color: const Color(0xFF00416A),
+    return Container(
+      color: Colors.white,
+      child: GestureDetector(
+        onTap: () {
+          switch (text) {
+            case 'Things to Do':
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Attraction()),
+              );
+              break;
+            case 'Events':
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Attraction()),
+              );
+              break;
+            case 'Food & Drinks':
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Attraction()),
+              );
+              break;
+            case 'Restaurants':
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Attraction()),
+              );
+              break;
+            case 'Seas':
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Attraction()),
+              );
+              break;
+            case 'Parks':
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Attraction()),
+              );
+              break;
+            default:
+              break;
+          }
+        },
+        child: Card(
+          elevation: 4,
+          child: Container(
+            decoration: BoxDecoration(
+                color: Color.fromARGB(216, 255, 255, 255), borderRadius: BorderRadius.circular(5)),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    icon,
+                    size: 36,
+                    color: const Color(0xFF00416A),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    text,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 8),
-              Text(
-                text,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),

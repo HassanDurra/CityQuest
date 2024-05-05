@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:cityquest/assets/colors.dart';
 import 'package:cityquest/view/widgets/User/home.dart';
 import 'package:cityquest/view/widgets/User/pages/Cities.dart';
-import 'package:cityquest/view/widgets/User/pages/Food.dart';
+import 'package:cityquest/view/widgets/User/pages/Favorites.dart';
 import 'package:cityquest/view/widgets/User/pages/Profile.dart';
 import 'package:cityquest/view/widgets/User/pages/Map.dart';
 import 'package:cityquest/view/widgets/User/pages/Listing.dart';
@@ -27,7 +27,7 @@ class _NavbarState extends State<Navbar> {
     MapView(),
     Listing(),
     Search(),
-    Food(),
+    Favorite(),
     HomeView()
   ];
   final PageStorageBucket bucket = PageStorageBucket();
@@ -160,7 +160,7 @@ class _NavbarState extends State<Navbar> {
                               : Colors.black54,
                         ),
                         Text(
-                          "Places",
+                          "Attractions",
                           style: TextStyle(
                               fontSize: 11,
                               fontFamily: 'poppins',
@@ -241,7 +241,7 @@ class _NavbarState extends State<Navbar> {
                   MaterialButton(
                     onPressed: () {
                       setState(() {
-                        currentScreen = Food();
+                        currentScreen = Favorite();
                         CurrentTab = 4;
                       });
                     },
@@ -250,13 +250,13 @@ class _NavbarState extends State<Navbar> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
-                          Ionicons.restaurant_outline,
+                          Ionicons.star_outline,
                           color: CurrentTab == 4
                               ? GlobalColors.mainColor
                               : Colors.black54,
                         ),
                         Text(
-                          "Foods",
+                          "Favorites",
                           style: TextStyle(
                               fontSize: 11,
                               fontFamily: 'poppins',

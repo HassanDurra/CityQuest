@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:cityquest/assets/colors.dart';
 import 'package:cityquest/config/webapi.dart';
 import 'package:cityquest/view/widgets/User/pages/Cities_details.dart';
 import 'package:cityquest/view/widgets/User/pages/attraction.dart';
@@ -187,6 +188,7 @@ class _CitiesState extends State<Cities> {
         },
         child: FoodCard(
           imagePath: city['image'],
+          id: city['id'],
           foodName: city['name'],
           description: city['short_description'],
           rating: city['id']
@@ -217,6 +219,7 @@ void main() {
 
 class FoodCard extends StatelessWidget {
   final String? imagePath;
+  final String? id;
   final String? foodName;
   final String? description;
   final String? rating;
@@ -228,6 +231,7 @@ class FoodCard extends StatelessWidget {
   const FoodCard({
     this.imagePath,
     this.foodName,
+    this.id,
     this.description,
     this.rating,
     this.reviewsCount,
@@ -299,13 +303,33 @@ class FoodCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text(
-                  '$reviewsCount reviews',
-                  style: TextStyle(
-                    fontSize: 12.0,
-                    color: reviewsCountColor,
+                ElevatedButton(
+                  onPressed: () {
+                    Get.to(Attraction(id: id));
+                  },
+                  child: Tooltip(
+                    message: 'View Attractions',
+                    child: Row(
+                      children: [
+                        Text(
+                          'Attractions',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        SizedBox(
+                          width: 9,
+                        ),
+                        Icon(
+                          Ionicons.chevron_forward_circle,
+                          color: Colors.white,
+                        )
+                      ],
+                    ),
                   ),
-                ),
+                  style: ButtonStyle(
+                      padding: MaterialStatePropertyAll(EdgeInsets.all(20)),
+                      backgroundColor:
+                          MaterialStatePropertyAll(GlobalColors.mainColor)),
+                )
               ],
             ),
           ),

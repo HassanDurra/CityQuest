@@ -18,6 +18,7 @@ class CityDetails extends StatefulWidget {
 }
 
 class _CityDetailsState extends State<CityDetails> {
+  final TextEditingController messageController = TextEditingController();
   int _currentIndex = 0;
   double _userRating = 0.0; // Track user's selected rating
 
@@ -39,6 +40,172 @@ class _CityDetailsState extends State<CityDetails> {
         setState(() {
           city_info = jsonData[0];
         });
+      }
+    }
+  }
+
+  Future<void> addFavorite() async {
+    var URL =
+        Uri.parse(ApiCredientals.base_path + "CityQuestWEB/Review/favorite");
+    var response = await http.post(URL, body: {
+      'user_id': '82',
+      'content_id': city_info['id'].toString() ?? "",
+      'content_type': 'city'
+    });
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      if (jsonData['message'] == 'success') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Row(
+                children: [
+                  Icon(
+                    Ionicons.checkbox_outline,
+                    color: Colors.white,
+                  ),
+                  SizedBox(
+                    width: 9,
+                  ),
+                  Text('City Added to Favorites!'),
+                ],
+              ),
+              backgroundColor: Colors.green,
+              duration: Duration(seconds: 2)),
+        );
+        setState(() {
+          messageController.text = "";
+          _userRating = 0;
+        });
+      } else if (jsonData['message'] == 'error') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Row(
+                children: [
+                  Icon(
+                    Ionicons.alert_circle_outline,
+                    color: Colors.white,
+                  ),
+                  SizedBox(
+                    width: 9,
+                  ),
+                  Text('An error occured \n while saving review'),
+                ],
+              ),
+              backgroundColor: Colors.red,
+              duration: Duration(seconds: 2)),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Row(
+                children: [
+                  Icon(
+                    Ionicons.alert_circle_outline,
+                    color: Colors.white,
+                  ),
+                  SizedBox(
+                    width: 9,
+                  ),
+                  Text('${jsonData['message']}'),
+                ],
+              ),
+              backgroundColor: Colors.red,
+              duration: Duration(seconds: 2)),
+        );
+      }
+    }
+  }
+
+  Future<void> give_reviews() async {
+    if (messageController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Row(
+              children: [
+                Icon(
+                  Ionicons.alert_circle_outline,
+                  color: Colors.white,
+                ),
+                SizedBox(
+                  width: 9,
+                ),
+                Text('Please Enter your Message'),
+              ],
+            ),
+            backgroundColor: Colors.red,
+            duration: Duration(seconds: 2)),
+      );
+    } else {
+      var URL =
+          Uri.parse(ApiCredientals.base_path + "CityQuestWEB/Review/store");
+      var response = await http.post(URL, body: {
+        'user_id': '82',
+        'content_id': city_info['id'].toString() ?? "",
+        'message': messageController.text,
+        'ratings': _userRating.toString(),
+        'type': 'city'
+      });
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(response.body);
+        if (jsonData['message'] == 'success') {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: Row(
+                  children: [
+                    Icon(
+                      Ionicons.checkbox_outline,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 9,
+                    ),
+                    Text('Thanks for your review!'),
+                  ],
+                ),
+                backgroundColor: Colors.green,
+                duration: Duration(seconds: 2)),
+          );
+          setState(() {
+            messageController.text = "";
+            _userRating = 0;
+          });
+        } else if (jsonData['message'] == 'error') {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: Row(
+                  children: [
+                    Icon(
+                      Ionicons.alert_circle_outline,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 9,
+                    ),
+                    Text('An error occured \n while saving review'),
+                  ],
+                ),
+                backgroundColor: Colors.red,
+                duration: Duration(seconds: 2)),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: Row(
+                  children: [
+                    Icon(
+                      Ionicons.alert_circle_outline,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 9,
+                    ),
+                    Text('${jsonData['message']}'),
+                  ],
+                ),
+                backgroundColor: Colors.red,
+                duration: Duration(seconds: 2)),
+          );
+        }
       }
     }
   }
@@ -84,57 +251,16 @@ class _CityDetailsState extends State<CityDetails> {
                     right: 16,
                     child: Column(
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                blurRadius: 2,
-                                spreadRadius: 1,
-                                offset: Offset(0, 2),
-                              )
-                            ],
-                          ),
-                          padding: EdgeInsets.all(10),
-                          child: InkWell(
-                            onTap: () {},
-                            child: Icon(
-                              Ionicons.heart_circle_outline,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ),
                         SizedBox(height: 16),
-                        Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                blurRadius: 2,
-                                spreadRadius: 1,
-                                offset: Offset(0, 2),
-                              )
-                            ],
-                          ),
-                          padding: EdgeInsets.all(10),
-                          child: InkWell(
-                            onTap: () {},
-                            child: Icon(
-                              Icons.location_on,
-                              color: Colors.blue,
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ),
                 ],
               ),
               SizedBox(height: 16),
+              SizedBox(
+                height: 10,
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
@@ -143,28 +269,88 @@ class _CityDetailsState extends State<CityDetails> {
                     Text(
                       city_info['name'] ?? "City Name",
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 30,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
-                        children: [
-                          Icon(Icons.star, color: Colors.yellow),
-                          Icon(Icons.star, color: Colors.yellow),
-                          Icon(Icons.star, color: Colors.yellow),
-                          Icon(Icons.star, color: Colors.yellow),
-                          Icon(Icons.star, color: Colors.grey),
-                          SizedBox(width: 8),
-                          Text(
-                            '4.0', // Replace with your average rating
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                    Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                blurRadius: 2,
+                                spreadRadius: 1,
+                                offset: Offset(0, 2),
+                              )
+                            ],
+                          ),
+                          padding: EdgeInsets.all(10),
+                          child: Tooltip(
+                            message: "Get Direction",
+                            child: InkWell(
+                              onTap: () {},
+                              child: Icon(
+                                Icons.location_on,
+                                color: Colors.blue,
+                              ),
                             ),
                           ),
-                        ],
+                        ),
+                        SizedBox(width: 20),
+                        Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  blurRadius: 2,
+                                  spreadRadius: 1,
+                                  offset: Offset(0, 2),
+                                )
+                              ],
+                            ),
+                            padding: EdgeInsets.all(10),
+                            child: Tooltip(
+                              message: 'Add to Favorites',
+                              child: InkWell(
+                                onTap: () {
+                                  addFavorite();
+                                },
+                                child: Icon(
+                                  Ionicons.heart_circle_outline,
+                                  color: Colors.red,
+                                ),
+                              ),
+                            )),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+
+              SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    Icon(Icons.star, color: Colors.yellow),
+                    Icon(Icons.star, color: Colors.yellow),
+                    Icon(Icons.star, color: Colors.yellow),
+                    Icon(Icons.star, color: Colors.yellow),
+                    Icon(Icons.star, color: Colors.grey),
+                    SizedBox(width: 8),
+                    Text(
+                      '4.0', // Replace with your average rating
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
@@ -241,11 +427,55 @@ class _CityDetailsState extends State<CityDetails> {
               CarouselSlider(
                 items: [
                   // Testimonial items
+
                   Container(
-                    child: Text('Testimonial 1'),
-                  ),
-                  Container(
-                    child: Text('Testimonial 2'),
+                    alignment: Alignment.center,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment
+                          .center, // Align items in the center vertically
+                      crossAxisAlignment: CrossAxisAlignment
+                          .center, // Align items in the center horizontally
+                      children: [
+                        CircleAvatar(
+                          backgroundImage:
+                              Image.asset('images/cocktail_bar.jpg').image,
+                          radius: 30,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text('Hassan'),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment
+                                .center, // Align stars in the center horizontally
+                            children: [
+                              Icon(Icons.star, color: Colors.yellow),
+                              Icon(Icons.star, color: Colors.yellow),
+                              Icon(Icons.star, color: Colors.yellow),
+                              Icon(Icons.star, color: Colors.yellow),
+                              Icon(Icons.star, color: Colors.grey),
+                              SizedBox(width: 8),
+                              Text(
+                                '4.0', // Replace with your average rating
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text('This is my message for you')
+                      ],
+                    ),
                   ),
                   Container(
                     alignment: Alignment.center,
@@ -296,12 +526,62 @@ class _CityDetailsState extends State<CityDetails> {
                       ],
                     ),
                   ),
-                ],
+                  Container(
+                    alignment: Alignment.center,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment
+                          .center, // Align items in the center vertically
+                      crossAxisAlignment: CrossAxisAlignment
+                          .center, // Align items in the center horizontally
+                      children: [
+                        CircleAvatar(
+                          backgroundImage:
+                              Image.asset('images/cocktail_bar.jpg').image,
+                          radius: 30,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text('Hassan'),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment
+                                .center, // Align stars in the center horizontally
+                            children: [
+                              Icon(Icons.star, color: Colors.yellow),
+                              Icon(Icons.star, color: Colors.yellow),
+                              Icon(Icons.star, color: Colors.yellow),
+                              Icon(Icons.star, color: Colors.yellow),
+                              Icon(Icons.star, color: Colors.grey),
+                              SizedBox(width: 8),
+                              Text(
+                                '4.0', // Replace with your average rating
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text('This is my message for you')
+                      ],
+                    ),
+                  ),
+                ].take(4).toList(),
                 options: CarouselOptions(
-                  autoPlay: true,
-                  height: 200,
-                  enlargeCenterPage: true,
-                ),
+                    autoPlay: true,
+                    height: 200,
+                    enlargeCenterPage: true,
+                    aspectRatio: 0.4,
+                    viewportFraction: 0.4),
               ),
 
               SizedBox(height: 8),
@@ -337,6 +617,7 @@ class _CityDetailsState extends State<CityDetails> {
                     ),
                     SizedBox(height: 8),
                     TextField(
+                      controller: messageController,
                       decoration: InputDecoration(
                         hintText: 'Write your review...',
                         border: OutlineInputBorder(),
@@ -346,10 +627,18 @@ class _CityDetailsState extends State<CityDetails> {
                     ),
                     SizedBox(height: 8),
                     ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStatePropertyAll(GlobalColors.mainColor),
+                          padding:
+                              MaterialStatePropertyAll(EdgeInsets.all(10))),
                       onPressed: () {
-                        // Add your logic to submit review
+                        give_reviews();
                       },
-                      child: Text('Submit Review'),
+                      child: Text(
+                        'Submit Review',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ],
                 ),
