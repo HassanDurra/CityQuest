@@ -134,6 +134,32 @@ class _CityDetailsState extends State<CityDetails> {
     }
   }
 
+  double calculateAverageRating() {
+    if (user_reviews.isEmpty) return 0.0;
+    double totalRating = 0.0;
+    user_reviews.forEach((review) {
+      totalRating += double.parse(review['ratings']);
+    });
+    return totalRating / user_reviews.length;
+  }
+
+  // Build star ratings dynamically
+  Widget buildStarRatings(double rating) {
+    int fullStars = rating.floor();
+    bool hasHalfStar = rating - fullStars > 0.5;
+    List<Widget> stars = [];
+    for (int i = 0; i < 5; i++) {
+      if (i < fullStars) {
+        stars.add(Icon(Icons.star, color: Colors.yellow));
+      } else if (i == fullStars && hasHalfStar) {
+        stars.add(Icon(Icons.star_half, color: Colors.yellow));
+      } else {
+        stars.add(Icon(Icons.star_border, color: Colors.yellow));
+      }
+    }
+    return Row(children: stars);
+  }
+
   Future<void> give_reviews() async {
     if (messageController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -252,9 +278,6 @@ class _CityDetailsState extends State<CityDetails> {
               Stack(
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      // Implement your logic to show preview on image click
-                    },
                     child: InstaImageViewer(
                       child: ClipRRect(
                         child: Image.asset(
@@ -295,32 +318,6 @@ class _CityDetailsState extends State<CityDetails> {
                     Row(
                       children: [
                         Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                blurRadius: 2,
-                                spreadRadius: 1,
-                                offset: Offset(0, 2),
-                              )
-                            ],
-                          ),
-                          padding: EdgeInsets.all(10),
-                          child: Tooltip(
-                            message: "Get Direction",
-                            child: InkWell(
-                              onTap: () {},
-                              child: Icon(
-                                Icons.location_on,
-                                color: Colors.blue,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 20),
-                        Container(
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.white,
@@ -359,14 +356,11 @@ class _CityDetailsState extends State<CityDetails> {
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
                   children: [
-                    Icon(Icons.star, color: Colors.yellow),
-                    Icon(Icons.star, color: Colors.yellow),
-                    Icon(Icons.star, color: Colors.yellow),
-                    Icon(Icons.star, color: Colors.yellow),
-                    Icon(Icons.star, color: Colors.grey),
+                    buildStarRatings(calculateAverageRating()),
                     SizedBox(width: 8),
                     Text(
-                      '4.0', // Replace with your average rating
+                      calculateAverageRating()
+                          .toStringAsFixed(1), // Display average rating
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

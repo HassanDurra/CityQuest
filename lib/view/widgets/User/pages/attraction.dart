@@ -179,15 +179,16 @@ class _AttractionState extends State<Attraction> {
       child: InkWell(
         onTap: () {
           // Navigate to attraction details page
-          Get.to(() => Details());
+          Get.to(() => AttractionDetails(
+                id: attraction['id'],
+              ));
         },
         child: AttractionCard(
           imagePath: attraction['image'],
           attractionName: attraction['title'],
           description: attraction['description'],
-          rating: attraction['no_views']
-              , // Assuming 'no_views' is the rating
-          reviewsCount:  "8" , // Assuming 'location' is the reviews count
+          rating: attraction['ratings'], // Assuming 'no_views' is the rating
+          reviewsCount: attraction['ratings'], // Assuming 'location' is the reviews count
         ),
       ),
     );

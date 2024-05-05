@@ -145,14 +145,16 @@ class _CitiesState extends State<Cities> {
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: buildCard(filteredCities[firstIndex]),
+                                  child: buildCard(filteredCities[firstIndex],
+                                      index),
                                 ),
                               ),
                             if (secondIndex < filteredCities.length)
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: buildCard(filteredCities[secondIndex]),
+                                  child: buildCard(filteredCities[secondIndex],
+                                     index),
                                 ),
                               ),
                           ],
@@ -180,21 +182,22 @@ class _CitiesState extends State<Cities> {
     );
   }
 
-  Widget buildCard(Map<String, dynamic> city) {
+  Widget buildCard(Map<String, dynamic> city, filtered) {
     return Container(
       child: InkWell(
         onTap: () {
           Get.to(() => CityDetails(id: city['id']));
         },
-        child: FoodCard(
+        child: CityCard(
           imagePath: city['image'],
           id: city['id'],
-          foodName: city['name'],
+          cityLength: city.length.toString(),
+          cityname: city['name'],
           description: city['short_description'],
-          rating: city['id']
-              .toString(), // Assuming 'rating' is a key in your city map
-          reviewsCount: city['country']
-              .toString(), // Assuming 'reviews_count' is a key in your city map
+          rating: city['total_ratings'] ??
+              "0", // Assuming 'rating' is a key in your city map
+          reviewsCount: city['total_reviews'] ??
+              "0", // Assuming 'reviews_count' is a key in your city map
         ),
       ),
     );
@@ -217,10 +220,11 @@ void main() {
   ));
 }
 
-class FoodCard extends StatelessWidget {
+class CityCard extends StatelessWidget {
   final String? imagePath;
   final String? id;
-  final String? foodName;
+  final String? cityLength;
+  final String? cityname;
   final String? description;
   final String? rating;
   final String? reviewsCount;
@@ -228,11 +232,12 @@ class FoodCard extends StatelessWidget {
   final Color? ratingTextColor;
   final Color? reviewsCountColor;
 
-  const FoodCard({
+  const CityCard({
     this.imagePath,
-    this.foodName,
+    this.cityname,
     this.id,
     this.description,
+    this.cityLength,
     this.rating,
     this.reviewsCount,
     this.starColor = Colors.amber,
@@ -242,98 +247,110 @@ class FoodCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Calculate star rating based on total ratings
+    double starRating = double.parse(rating!) / 5.0;
+    print(cityLength);
     return Card(
       elevation: 4,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AspectRatio(
-            aspectRatio: 4 / 3,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: Colors.grey[300],
-                image: DecorationImage(
-                  image: NetworkImage(imagePath!),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              foodName!,
-              style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              description!,
-              style: TextStyle(fontSize: 12.0),
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Container(
+        height: cityLength!.length > 1 ? 380 : 550,
+        child: Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Icon(
-                      Icons.star,
-                      size: 16,
-                      color: starColor,
-                    ),
-                    SizedBox(width: 2),
-                    Text(
-                      '$rating',
-                      style: TextStyle(
-                        fontSize: 12.0,
-                        color: ratingTextColor,
+                AspectRatio(
+                  aspectRatio: 4 / 3,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: Colors.grey[300],
+                      image: DecorationImage(
+                        image: NetworkImage(imagePath!),
+                        fit: BoxFit.cover,
                       ),
                     ),
-                  ],
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Get.to(Attraction(id: id));
-                  },
-                  child: Tooltip(
-                    message: 'View Attractions',
-                    child: Row(
-                      children: [
-                        Text(
-                          'Attractions',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        SizedBox(
-                          width: 9,
-                        ),
-                        Icon(
-                          Ionicons.chevron_forward_circle,
-                          color: Colors.white,
-                        )
-                      ],
-                    ),
                   ),
-                  style: ButtonStyle(
-                      padding: MaterialStatePropertyAll(EdgeInsets.all(20)),
-                      backgroundColor:
-                          MaterialStatePropertyAll(GlobalColors.mainColor)),
-                )
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    cityname!,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text(
+                    description!,
+                    style: TextStyle(fontSize: 12.0),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ],
             ),
-          ),
-        ],
+            Positioned(
+              left: 8,
+              right: 8,
+              bottom: 8,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Star Rating
+                  Row(
+                    children: List.generate(
+                      5,
+                      (index) => Icon(
+                        index < starRating.floor()
+                            ? Icons.star
+                            : index < starRating.ceil()
+                                ? Icons.star_half
+                                : Icons.star_border,
+                        size: 16,
+                        color: starColor,
+                      ),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Get.to(Attraction(id: id));
+                    },
+                    child: Tooltip(
+                      message: 'View Attractions',
+                      child: Row(
+                        children: [
+                          Text(
+                            'Attractions',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          SizedBox(
+                            width: 9,
+                          ),
+                          Icon(
+                            Ionicons.chevron_forward_circle,
+                            color: Colors.white,
+                          )
+                        ],
+                      ),
+                    ),
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all(EdgeInsets.all(20)),
+                      backgroundColor: MaterialStateProperty.all(
+                        GlobalColors.mainColor,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
