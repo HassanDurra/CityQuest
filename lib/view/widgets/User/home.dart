@@ -62,7 +62,6 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-         
           IconButton(
             icon: Icon(Icons.power_settings_new),
             onPressed: () {
@@ -279,7 +278,8 @@ class _CarouselWithCardsState extends State<CarouselWithCards> {
             autoPlay: true,
             enlargeCenterPage: true,
             aspectRatio: 16 / 9,
-            viewportFraction: 0.95,
+            viewportFraction:
+                0.8, // Carousel ka width ko adjust karne ke liye viewportFraction ka use kiya gaya hai
             enableInfiniteScroll: false,
             pauseAutoPlayOnTouch: true,
             autoPlayAnimationDuration: Duration(seconds: 1),
