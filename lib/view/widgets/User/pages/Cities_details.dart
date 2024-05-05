@@ -26,10 +26,11 @@ class _CityDetailsState extends State<CityDetails> {
   void initState() {
     super.initState();
     get_city();
+    getReviews();
   }
 
   Map<String, dynamic> city_info = {};
-
+  List<Map<String, dynamic>> user_reviews = [];
   Future<void> get_city() async {
     var Url = Uri.parse(ApiCredientals.base_path +
         'CityQuestWEB/City/single_city?id=${widget.id}');
@@ -40,6 +41,23 @@ class _CityDetailsState extends State<CityDetails> {
         setState(() {
           city_info = jsonData[0];
         });
+      }
+    }
+  }
+
+  Future<void> getReviews() async {
+    var Url = Uri.parse(ApiCredientals.base_path +
+        'CityQuestWEB/City/getCityReviews?type=city&id=${widget.id}');
+    var response = await http.get(Url);
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      if (jsonData['message'] == 'success') {
+        if (jsonData['data'] != null) {
+          setState(() {
+            user_reviews
+                .addAll(List<Map<String, dynamic>>.from(jsonData['data']));
+          });
+        }
       }
     }
   }
@@ -168,6 +186,7 @@ class _CityDetailsState extends State<CityDetails> {
           setState(() {
             messageController.text = "";
             _userRating = 0;
+            getReviews();
           });
         } else if (jsonData['message'] == 'error') {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -424,165 +443,64 @@ class _CityDetailsState extends State<CityDetails> {
               ),
               SizedBox(height: 8),
               // Add your testimonials slider here
-              CarouselSlider(
-                items: [
-                  // Testimonial items
-
-                  Container(
-                    alignment: Alignment.center,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment
-                          .center, // Align items in the center vertically
-                      crossAxisAlignment: CrossAxisAlignment
-                          .center, // Align items in the center horizontally
-                      children: [
-                        CircleAvatar(
-                          backgroundImage:
-                              Image.asset('images/cocktail_bar.jpg').image,
-                          radius: 30,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text('Hassan'),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment
-                                .center, // Align stars in the center horizontally
+              user_reviews != null
+                  ? CarouselSlider(
+                      items: user_reviews.map((review) {
+                        return Container(
+                          alignment: Alignment.center,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Icon(Icons.star, color: Colors.yellow),
-                              Icon(Icons.star, color: Colors.yellow),
-                              Icon(Icons.star, color: Colors.yellow),
-                              Icon(Icons.star, color: Colors.yellow),
-                              Icon(Icons.star, color: Colors.grey),
-                              SizedBox(width: 8),
-                              Text(
-                                '4.0', // Replace with your average rating
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
+                              CircleAvatar(
+                                backgroundImage:
+                                    NetworkImage(review['user_image']),
+                                radius: 30,
+                              ),
+                              SizedBox(height: 10),
+                              Text(review['user_name']),
+                              SizedBox(height: 5),
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 16),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    for (int i = 0;
+                                        i < int.parse(review['ratings']);
+                                        i++)
+                                      Icon(Icons.star, color: Colors.yellow),
+                                    for (int i = 0;
+                                        i < 5 - int.parse(review['ratings']);
+                                        i++)
+                                      Icon(Icons.star, color: Colors.grey),
+                                    SizedBox(width: 8),
+                                    Text(
+                                      review['ratings'],
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
+                              SizedBox(height: 5),
+                              Text(review['message']),
                             ],
                           ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text('This is my message for you')
-                      ],
+                        );
+                      }).toList(),
+                      options: CarouselOptions(
+                        autoPlay: true,
+                        height: 200,
+                        enlargeCenterPage: true,
+                        aspectRatio: 0.4,
+                        viewportFraction: 0.4,
+                      ),
+                    )
+                  : Center(
+                      child: Text("No Reviews"),
                     ),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment
-                          .center, // Align items in the center vertically
-                      crossAxisAlignment: CrossAxisAlignment
-                          .center, // Align items in the center horizontally
-                      children: [
-                        CircleAvatar(
-                          backgroundImage:
-                              Image.asset('images/cocktail_bar.jpg').image,
-                          radius: 30,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text('Hassan'),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment
-                                .center, // Align stars in the center horizontally
-                            children: [
-                              Icon(Icons.star, color: Colors.yellow),
-                              Icon(Icons.star, color: Colors.yellow),
-                              Icon(Icons.star, color: Colors.yellow),
-                              Icon(Icons.star, color: Colors.yellow),
-                              Icon(Icons.star, color: Colors.grey),
-                              SizedBox(width: 8),
-                              Text(
-                                '4.0', // Replace with your average rating
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text('This is my message for you')
-                      ],
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment
-                          .center, // Align items in the center vertically
-                      crossAxisAlignment: CrossAxisAlignment
-                          .center, // Align items in the center horizontally
-                      children: [
-                        CircleAvatar(
-                          backgroundImage:
-                              Image.asset('images/cocktail_bar.jpg').image,
-                          radius: 30,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text('Hassan'),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment
-                                .center, // Align stars in the center horizontally
-                            children: [
-                              Icon(Icons.star, color: Colors.yellow),
-                              Icon(Icons.star, color: Colors.yellow),
-                              Icon(Icons.star, color: Colors.yellow),
-                              Icon(Icons.star, color: Colors.yellow),
-                              Icon(Icons.star, color: Colors.grey),
-                              SizedBox(width: 8),
-                              Text(
-                                '4.0', // Replace with your average rating
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text('This is my message for you')
-                      ],
-                    ),
-                  ),
-                ].take(4).toList(),
-                options: CarouselOptions(
-                    autoPlay: true,
-                    height: 200,
-                    enlargeCenterPage: true,
-                    aspectRatio: 0.4,
-                    viewportFraction: 0.4),
-              ),
 
               SizedBox(height: 8),
               // Add your review section here
