@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:cityquest/config/webapi.dart';
+import 'package:cityquest/view/widgets/User/pages/Cities_details.dart';
 import 'package:cityquest/view/widgets/User/pages/attraction.dart';
 import 'package:cityquest/view/widgets/User/partial/navbar.dart';
 import 'package:flutter/material.dart';
@@ -182,7 +183,7 @@ class _CitiesState extends State<Cities> {
     return Container(
       child: InkWell(
         onTap: () {
-          Get.to(() => Attraction(id: city['id']));
+          Get.to(() => CityDetails(id: city['id']));
         },
         child: FoodCard(
           imagePath: city['image'],

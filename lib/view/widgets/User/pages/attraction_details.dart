@@ -1,8 +1,6 @@
-import 'package:cityquest/assets/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ionicons/ionicons.dart';
-import 'custom_carousel_indicator.dart'; // Import the custom carousel indicator
 import 'package:insta_image_viewer/insta_image_viewer.dart';
 
 class Details extends StatefulWidget {
@@ -14,6 +12,7 @@ class Details extends StatefulWidget {
 
 class _DetailsState extends State<Details> {
   int _currentIndex = 0;
+  double _userRating = 0.0; // Track user's selected rating
 
   final List<String> _images = [
     'images/quaid.jpg',
@@ -28,7 +27,7 @@ class _DetailsState extends State<Details> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Details'),
+        title: Text('Mazar e Quaid'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -76,46 +75,50 @@ class _DetailsState extends State<Details> {
                   child: Column(
                     children: [
                       Container(
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  blurRadius: 2,
-                                  spreadRadius: 1,
-                                  offset: Offset(0, 2),
-                                )
-                              ]),
-                          padding: EdgeInsets.all(10),
-                          child: InkWell(
-                            onTap: () {},
-                            child: Icon(
-                              Ionicons.heart_circle_outline,
-                              color: Colors.red,
-                            ),
-                          )),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              blurRadius: 2,
+                              spreadRadius: 1,
+                              offset: Offset(0, 2),
+                            )
+                          ],
+                        ),
+                        padding: EdgeInsets.all(10),
+                        child: InkWell(
+                          onTap: () {},
+                          child: Icon(
+                            Ionicons.heart_circle_outline,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ),
                       SizedBox(height: 16),
                       Container(
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  blurRadius: 2,
-                                  spreadRadius: 1,
-                                  offset: Offset(0, 2),
-                                )
-                              ]),
-                          padding: EdgeInsets.all(10),
-                          child: InkWell(
-                            onTap: () {},
-                            child: Icon(
-                              Icons.location_on,
-                              color: GlobalColors.mainColor,
-                            ),
-                          )),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              blurRadius: 2,
+                              spreadRadius: 1,
+                              offset: Offset(0, 2),
+                            )
+                          ],
+                        ),
+                        padding: EdgeInsets.all(10),
+                        child: InkWell(
+                          onTap: () {},
+                          child: Icon(
+                            Icons.location_on,
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -134,16 +137,25 @@ class _DetailsState extends State<Details> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  // Add your star rating widget here
-                  // Replace this with your star rating widget
-                  Row(
-                    children: [
-                      Icon(Icons.star, color: Colors.yellow),
-                      Icon(Icons.star, color: Colors.yellow),
-                      Icon(Icons.star, color: Colors.yellow),
-                      Icon(Icons.star, color: Colors.yellow),
-                      Icon(Icons.star, color: Colors.grey),
-                    ],
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      children: [
+                        Icon(Icons.star, color: Colors.yellow),
+                        Icon(Icons.star, color: Colors.yellow),
+                        Icon(Icons.star, color: Colors.yellow),
+                        Icon(Icons.star, color: Colors.yellow),
+                        Icon(Icons.star, color: Colors.grey),
+                        SizedBox(width: 8),
+                        Text(
+                          '4.0', // Replace with your average rating
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -193,40 +205,8 @@ class _DetailsState extends State<Details> {
               ),
             ),
             SizedBox(height: 16),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                'Contacts',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            SizedBox(height: 8),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Phone: +39 031 950 205',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[700],
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Email: info@bellagio.com',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[700],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+           
+           
             SizedBox(height: 16),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
@@ -236,73 +216,6 @@ class _DetailsState extends State<Details> {
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.red, // Change color as needed
-                ),
-              ),
-            ),
-            SizedBox(height: 8),
-            // Add your star rating widget here
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  Icon(Icons.star, color: Colors.yellow),
-                  Icon(Icons.star, color: Colors.yellow),
-                  Icon(Icons.star, color: Colors.yellow),
-                  Icon(Icons.star, color: Colors.yellow),
-                  Icon(Icons.star, color: Colors.grey),
-                  SizedBox(width: 8),
-                  Text(
-                    '4.0', // Replace with your average rating
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 8),
-            // Add your review section here
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Write a Review',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  // Add your review form here
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Write your review...',
-                      border: OutlineInputBorder(),
-                    ),
-                    minLines: 3,
-                    maxLines: 5,
-                  ),
-                  SizedBox(height: 8),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Add your logic to submit review
-                    },
-                    child: Text('Submit Review'),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 16),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                'Testimonials',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
@@ -327,6 +240,61 @@ class _DetailsState extends State<Details> {
                 enlargeCenterPage: true,
               ),
             ),
+            SizedBox(height: 16),
+
+            SizedBox(height: 8),
+            // Add your review section here
+            Row(
+              children: [
+                for (int i = 1; i <= 5; i++)
+                  IconButton(
+                    icon: Icon(
+                      _userRating >= i ? Icons.star : Icons.star_border,
+                      color: Colors.yellow,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _userRating = i.toDouble();
+                      });
+                    },
+                  ),
+              ],
+            ),
+            SizedBox(height: 8),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Write a Review',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Write your review...',
+                      border: OutlineInputBorder(),
+                    ),
+                    minLines: 3,
+                    maxLines: 5,
+                  ),
+                  SizedBox(height: 8),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Add your logic to submit review
+                    },
+                    child: Text('Submit Review'),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            )
           ],
         ),
       ),

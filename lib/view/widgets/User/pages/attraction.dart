@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:cityquest/config/webapi.dart';
-import 'package:cityquest/view/widgets/User/pages/details.dart';
+import 'package:cityquest/view/widgets/User/pages/attraction_details.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
