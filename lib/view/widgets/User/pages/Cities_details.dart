@@ -289,7 +289,8 @@ class _CityDetailsState extends State<CityDetails> {
                   GestureDetector(
                     child: InstaImageViewer(
                       child: ClipRRect(
-                        child: Image.asset(
+                        child: city_info['image'] != "" ?  Image.network(city_info['image'] , width: screenWidth,
+                          fit: BoxFit.cover) :  Image.asset(
                           'images/cocktail_bar.jpg',
                           width: screenWidth,
                           fit: BoxFit.cover,

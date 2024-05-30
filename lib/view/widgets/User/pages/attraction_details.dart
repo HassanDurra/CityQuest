@@ -36,7 +36,6 @@ class _AttractionDetailsState extends State<AttractionDetails> {
     userData = jsonDecode(user.toString());
   }
 
-
   double _userRating = 0.0; // Track user's selected rating
 
   Map<String, dynamic> attraction_info = {};
@@ -291,11 +290,17 @@ class _AttractionDetailsState extends State<AttractionDetails> {
                   GestureDetector(
                     child: InstaImageViewer(
                       child: ClipRRect(
-                        child: Image.asset(
-                          'images/cocktail_bar.jpg',
-                          width: screenWidth,
-                          fit: BoxFit.cover,
-                        ),
+                        child: attraction_info['image'] != ""
+                            ? Image.network(
+                                attraction_info['image'],
+                                width: screenWidth,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.asset(
+                                'images/cocktail_bar.jpg',
+                                width: screenWidth,
+                                fit: BoxFit.cover,
+                              ),
                       ),
                     ),
                   ),
